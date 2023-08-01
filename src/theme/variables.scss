@@ -74,9 +74,14 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --font-family: 'Helvetica', sans-serif;
+  --background-color : #EDF7FF;
+  --toolbar-background-color: #202F79;
+
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   /*
    * Dark Colors
    * -------------------------------------------
@@ -233,4 +238,8 @@
 
     --ion-card-background: #1e1e1e;
   }
+  
 }
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
