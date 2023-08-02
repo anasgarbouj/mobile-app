@@ -1,0 +1,14 @@
+.toolbar-custom-background-color{
+ --background: var(--toolbar-background-color);
+}
+
+.custom-thumbnail {
+    width: 5rem;
+    height: 3rem;
+}
+
+.custom-thumbnail ion-img {
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
