@@ -4,9 +4,13 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    --background: #000;
 }
 
 .text {
     font-size: 12px;
+}
+
+.link{
+    color: blue;
+    text-decoration: underline;
 }
