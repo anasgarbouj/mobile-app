@@ -1,1 +1,14 @@
-<p>labs works!</p>
+<ion-content>
+
+  <div class="container">
+    <h2 class="title">Laboratoires</h2>
+    <p class="text">Veuillez choisir le laboratoire qui vous convient.</p>
+    <app-search-bar placeholder="Recherche laboratoire"></app-search-bar>
+
+    <ion-list>
+        <app-lab-card *ngFor="let item of items; let index" img="https://picsum.photos/80/80?random={{index}}" name="{{item}}" address = "Adresse {{index}}"></app-lab-card>
+    </ion-list>
+
+  </div>
+</ion-content>
+

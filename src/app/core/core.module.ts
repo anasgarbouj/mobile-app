@@ -8,7 +8,7 @@ import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.co
 import { SharedModule } from '../shared/shared.module';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
 import { CoreComponent } from './core.component';
-
+import { LabCardComponent } from './components/lab-card/lab-card.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +17,7 @@ import { CoreComponent } from './core.component';
     TicketDetailsComponent,
     LoaderSpinnerComponent,
     CoreComponent,
+    LabCardComponent,
   ],
   imports: [
     SharedModule,

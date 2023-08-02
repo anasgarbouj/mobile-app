@@ -2,12 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from './components/header/header.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    SearchBarComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { HeaderComponent } from './components/header/header.component';
   ],
   exports: [
     IonicModule,
-    HeaderComponent
+    HeaderComponent,
+    SearchBarComponent
   ]
 })
 export class SharedModule { }

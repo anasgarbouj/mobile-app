@@ -25,11 +25,15 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-ion-app {
+ion-content{
     background-color: var(--background-color);
+    --background: var(--background-color);
 
   }
 
 * {
     font-family: var(--font-family);
+    color: var(--text-color);
+
 }
+
