@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
       const result: Position = await Geolocation.getCurrentPosition(options);
       console.log('GPS permission granted', result);
       console.log(result.coords.latitude, result.coords.longitude);
-      this._router.navigate(["/appointment"])
+      this._router.navigate(["/labs"])
       return {
         "lat": result.coords.latitude,
         "lng": result.coords.longitude

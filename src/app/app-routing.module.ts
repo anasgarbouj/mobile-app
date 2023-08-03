@@ -3,18 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
-
   {
     path: '',
-    component: AppComponent,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./core/core.module').then(m => m.CoreModule)
-      }
-    ]
-  },
-
+    loadChildren: () => import('./core/core.module').then(m => m.CoreModule)
+  }
 ];
 
 @NgModule({
