@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -8,4 +9,18 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class MainPageComponent {
 
+  constructor(private _router: Router) { }
+
+
+  navigateToServiceList() {
+    console.log("rdv clicked");
+    this._router.navigate(["/service-list"])
+
+  }
+
+  navigateToIdentification() {
+    console.log("identification clicked");
+    this._router.navigate(["/identify"])
+
+  }
 }
