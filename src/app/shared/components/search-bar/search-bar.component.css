@@ -1,9 +1,8 @@
-
 ion-searchbar {
-    --border-radius: 8px; 
+    --border-radius: 8px;
     --border: 1px solid #C4C4C4;
     --background: #F1F1F1;
-    --box-shadow: none; 
-    --searchbar-input-padding-start: 10px; 
+    --box-shadow: none;
+    --searchbar-input-padding-start: 10px;
     --searchbar-input-padding-end: 10px;
 }

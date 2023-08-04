@@ -23,12 +23,10 @@ const routes: Routes = [
       {
         path: 'identify',
         component: IdentificationComponent,
-        children: [
-          {
-            path: 'email-confirmation',
-            component: EmailConfirmationComponent
-          }
-        ]
+      },
+      {
+        path: 'email-confirmation',
+        component: EmailConfirmationComponent
       },
       {
         path: '**',
