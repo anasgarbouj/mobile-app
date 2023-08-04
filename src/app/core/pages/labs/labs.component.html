@@ -6,9 +6,9 @@
     <app-search-bar placeholder="Recherche laboratoire"></app-search-bar>
 
     <ion-list>
-        <app-lab-card *ngFor="let item of items; let index" img="https://picsum.photos/80/80?random={{index}}" name="{{item}}" address = "Adresse {{index}}"></app-lab-card>
+      <app-lab-card (click)="navigateToIdentification(item)" *ngFor="let item of items; let index"
+        img="https://picsum.photos/80/80?random={{index}}" name="{{item}}" address="Adresse {{index}}"></app-lab-card>
     </ion-list>
 
   </div>
 </ion-content>
-

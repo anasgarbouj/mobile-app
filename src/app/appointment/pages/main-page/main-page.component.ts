@@ -14,13 +14,13 @@ export class MainPageComponent {
 
   navigateToServiceList() {
     console.log("rdv clicked");
-    this._router.navigate(["/service-list"])
+    this._router.navigate(["/appointment/service-list"])
 
   }
 
   navigateToIdentification() {
     console.log("identification clicked");
-    this._router.navigate(["/identify"])
+    this._router.navigate(["/appointment/identify"])
 
   }
 }

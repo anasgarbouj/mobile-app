@@ -13,15 +13,5 @@ export class LabCardComponent {
   @Input() name: string = ""
   @Input() address: string = ""
 
-  @HostListener("click") onClick() {
-    this.navigateToIdentification()
-  }
-
-  constructor(private _router: Router) { }
-
-  navigateToIdentification() {
-    console.log("clicked on " + this.name);
-    this._router.navigate(["/appointment"])
-  }
 
 }
