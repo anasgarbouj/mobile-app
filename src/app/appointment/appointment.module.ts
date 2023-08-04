@@ -8,6 +8,7 @@ import { ServiceListComponent } from './pages/service-list/service-list.componen
 import { IdentificationComponent } from './pages/identification/identification.component';
 import { AppointmentComponent } from './appointment.component';
 import { SharedModule } from '../shared/shared.module';
+import { SquareRoundedIconButtonComponent } from './components/square-rounded-icon-button/square-rounded-icon-button.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
     MainPageComponent,
     ServiceListComponent,
     IdentificationComponent,
-    AppointmentComponent
+    AppointmentComponent,
+    SquareRoundedIconButtonComponent
   ],
   imports: [
     CommonModule,
