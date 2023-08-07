@@ -1,0 +1,28 @@
+.container {
+    padding: 16px;
+}
+
+.title {
+    color: #202F79;
+    text-align: center;
+    font-family: Helvetica;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    /* 33.6px */
+}
+
+.text {
+    font-family: Helvetica;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+ion-list {
+    background-color: var(--background-color);
+
+}
