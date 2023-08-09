@@ -3,7 +3,7 @@
 }
 
 .title {
-    color: #202F79;
+    color: var(--toolbar-background-color);
     text-align: center;
     font-family: Helvetica;
     font-style: normal;
