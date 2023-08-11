@@ -3,7 +3,7 @@
 }
 
 .title {
-    color: var(--toolbar-background-color);
+    color: var(--main-background-color);
     text-align: center;
     font-family: Helvetica;
     font-style: normal;
@@ -20,6 +20,7 @@
     line-height: normal;
     margin-top: 16px;
     margin-bottom: 16px;
+    padding: 0px 8px;
 }
 
 ion-list {
