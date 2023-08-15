@@ -9,6 +9,7 @@ import { SharedModule } from '../shared/shared.module';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
 import { CoreComponent } from './core.component';
 import { LabCardComponent } from './components/lab-card/lab-card.component';
+import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LabCardComponent } from './components/lab-card/lab-card.component';
     LoaderSpinnerComponent,
     CoreComponent,
     LabCardComponent,
+    IdentifyLabComponent,
   ],
   imports: [
     SharedModule,

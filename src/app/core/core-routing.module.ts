@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { LabsComponent } from './pages/labs/labs.component';
 import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
 import { CoreComponent } from './core.component';
+import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent
+      },
+      {
+        path: 'identify-lab',
+        component: IdentifyLabComponent
       },
       {
         path: 'labs',
