@@ -1,5 +1,9 @@
-.toolbar-custom-background-color{
- --background: var(--toolbar-background-color);
+ion-header {
+    width: 100%;
+}
+
+.toolbar-custom-background-color {
+    --background: var(--toolbar-background-color);
 }
 
 .custom-thumbnail {
