@@ -1,0 +1,96 @@
+.container {
+    padding: 16px;
+    margin-top: 36px;
+}
+
+.title {
+    color: var(--main-background-color);
+    text-align: center;
+    font-family: Helvetica;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    /* 33.6px */
+}
+
+ion-label.id_label {
+    color: #333;
+    font-family: Helvetica;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    /* 19.6px */
+}
+
+ion-input.id_input {
+    min-height: 38px;
+    height: 38px;
+    --border-width: 0;
+
+    border-radius: 8px;
+    border: 1px solid #C4C4C4;
+    background: #fff;
+}
+
+ion-list {
+    background-color: var(--background-color);
+
+}
+
+/* Styles for the divider */
+.divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background-color: #C4C4C4;
+    flex-basis: 20px;
+}
+
+.divider-text {
+    padding: 0px 20px;
+    color: #666;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+}
+
+.img_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img_container ion-image.qr_scan_img {
+    --min-width: 216px;
+    --min-height: 216px;
+    width: 216px;
+    height: 216px;
+
+}
+
+ion-button.send_btn {
+    min-height: 48px;
+    height: 48px;
+    --border-radius: 8px;
+    --background: var(--main-background-color);
+
+    color: #fff;
+    /* font-family: Roboto; */
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 140%;
+    /* 19.6px */
+    text-transform: capitalize;
+
+}
