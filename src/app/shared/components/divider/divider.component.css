@@ -1,0 +1,24 @@
+.divider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    background-color: #C4C4C4;
+    flex-basis: 20px;
+}
+
+.divider-text {
+    padding: 0px 20px;
+    color: #666;
+    text-align: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+}

@@ -8,4 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class EmailConfirmationComponent {
 
+  isModalOpen = false
+
+  openModal() {
+    this.isModalOpen = true
+  }
 }

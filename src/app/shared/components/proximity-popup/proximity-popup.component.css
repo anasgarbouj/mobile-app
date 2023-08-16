@@ -1,0 +1,32 @@
+::ng-deep .custom-diag .alert-wrapper {
+    height: 350px;
+    border-radius: 8px;
+
+}
+
+/* ::ng-deep .custom-diag .alert-head {
+    padding-top: 0px;
+} */
+
+::ng-deep .custom-diag .alert-message {
+    max-height: 350px;
+    overflow-y: hidden;
+}
+
+::ng-deep .custom-diag .alert-button-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid #E0E0E0;
+}
+
+::ng-deep .custom-diag .custom-btn .alert-button-inner {
+    text-transform: capitalize;
+    color: #0072F0;
+    text-align: center;
+    font-family: Helvetica;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 16px;
+}
