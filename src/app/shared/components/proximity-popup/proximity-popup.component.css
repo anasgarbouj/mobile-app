@@ -1,32 +1,39 @@
-::ng-deep .custom-diag .alert-wrapper {
-    height: 350px;
+::ng-deep .modal-content {
+    margin: 40px;
     border-radius: 8px;
 
 }
 
-/* ::ng-deep .custom-diag .alert-head {
-    padding-top: 0px;
-} */
-
-::ng-deep .custom-diag .alert-message {
-    max-height: 350px;
-    overflow-y: hidden;
+.custom-container {
+    padding: 15px;
+    padding-bottom: 0px;
 }
 
-::ng-deep .custom-diag .alert-button-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 1px solid #E0E0E0;
+.custom-text {
+    color: #212121;
+    font-family: Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 32px 0px;
 }
 
-::ng-deep .custom-diag .custom-btn .alert-button-inner {
-    text-transform: capitalize;
+.custom-img {
+    width: 132px;
+    height: auto;
+    margin: auto;
+}
+
+.custom-btn {
     color: #0072F0;
-    text-align: center;
+    display: block;
     font-family: Helvetica;
     font-size: 12px;
-    font-style: normal;
     font-weight: 700;
     line-height: 16px;
+    text-transform: capitalize;
+}
+
+.divider-line {
+    height: 1px;
+    background-color: #E0E0E0;
 }
