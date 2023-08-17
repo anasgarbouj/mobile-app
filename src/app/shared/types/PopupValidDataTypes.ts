@@ -1,4 +1,6 @@
 export enum PopupValidDataTypes {
     Proximity = 'proximity',
-    Email = 'email'
+    Lab_Proximity = 'lab_proximity',
+    Email_Sent = 'email_sent',
+    Ticket_Success = 'ticket_success',
 }
