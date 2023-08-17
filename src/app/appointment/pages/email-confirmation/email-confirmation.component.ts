@@ -12,13 +12,10 @@ import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 })
 export class EmailConfirmationComponent {
 
-  constructor(private popUpService: PopupService, private modalService: NgbModal) { }
+  constructor(private popUpService: PopupService) { }
 
   openModal() {
-    // this.modalService.open(ProximityPopupComponent, {
-    //   centered: true,
-    //   size: 'md',
-    // })
-    this.popUpService.openPopup(PopupValidDataTypes.Proximity)
+
+    this.popUpService.openPopup(PopupValidDataTypes.Email_Sent)
   }
 }

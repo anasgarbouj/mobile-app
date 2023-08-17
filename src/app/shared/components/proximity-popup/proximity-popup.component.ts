@@ -6,11 +6,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./proximity-popup.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProximityPopupComponent implements OnInit {
+export class ProximityPopupComponent {
 
   constructor(private activeModel: NgbActiveModal) { }
-
-  ngOnInit(): void { }
 
   public dismiss() {
     this.activeModel.dismiss()

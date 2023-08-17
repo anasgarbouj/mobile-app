@@ -10,6 +10,7 @@ import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinn
 import { CoreComponent } from './core.component';
 import { LabCardComponent } from './components/lab-card/lab-card.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
+import { LabProximityPopupComponent } from './components/lab-proximity-popup/lab-proximity-popup.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.componen
     CoreComponent,
     LabCardComponent,
     IdentifyLabComponent,
+    LabProximityPopupComponent,
   ],
   imports: [
     SharedModule,
