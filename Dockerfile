@@ -8,4 +8,4 @@ RUN npm run-script build:prod
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/www/ /usr/share/nginx/html/
-EXSPOSE 80
+EXPOSE 80
