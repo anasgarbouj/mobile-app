@@ -1,4 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProximityPopupComponent } from 'src/app/shared/components/proximity-popup/proximity-popup.component';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -8,9 +12,13 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class EmailConfirmationComponent {
 
-  isModalOpen = false
+  constructor(private popUpService: PopupService, private modalService: NgbModal) { }
 
   openModal() {
-    this.isModalOpen = true
+    // this.modalService.open(ProximityPopupComponent, {
+    //   centered: true,
+    //   size: 'md',
+    // })
+    this.popUpService.openPopup(PopupValidDataTypes.Proximity)
   }
 }
