@@ -13,7 +13,6 @@ import { ServiceCardComponent } from './components/service-card/service-card.com
 import { EmailSentPopupComponent } from './components/email-sent-popup/email-sent-popup.component';
 import { TicketSuccessPopupComponent } from './components/ticket-success-popup/ticket-success-popup.component';
 
-
 @NgModule({
   declarations: [
     EmailConfirmationComponent,
@@ -24,7 +23,7 @@ import { TicketSuccessPopupComponent } from './components/ticket-success-popup/t
     SquareRoundedIconButtonComponent,
     ServiceCardComponent,
     EmailSentPopupComponent,
-    TicketSuccessPopupComponent
+    TicketSuccessPopupComponent,
   ],
   imports: [
     CommonModule,
