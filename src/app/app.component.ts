@@ -1,4 +1,6 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,12 @@ import { Component, ViewEncapsulation } from '@angular/core';
   styleUrls: ['app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent {
-  constructor() { }
+export class AppComponent implements OnInit {
+  constructor(private platform: Platform, private router: Router) { }
+
+  ngOnInit(): void {
+    if (!this.platform.is('mobileweb')) {
+      this.router.navigate(['/access-denied']);
+    }
+  }
 }
