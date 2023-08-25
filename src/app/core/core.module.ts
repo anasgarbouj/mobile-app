@@ -11,6 +11,7 @@ import { CoreComponent } from './core.component';
 import { LabCardComponent } from './components/lab-card/lab-card.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 import { LabProximityPopupComponent } from './components/lab-proximity-popup/lab-proximity-popup.component';
+import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { LabProximityPopupComponent } from './components/lab-proximity-popup/lab
     LabCardComponent,
     IdentifyLabComponent,
     LabProximityPopupComponent,
+    AccessDeniedComponent,
   ],
   imports: [
     SharedModule,

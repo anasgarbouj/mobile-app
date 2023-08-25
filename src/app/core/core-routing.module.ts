@@ -5,12 +5,17 @@ import { LabsComponent } from './pages/labs/labs.component';
 import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
 import { CoreComponent } from './core.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
+import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 
 const routes: Routes = [
   {
     path: '',
     component: CoreComponent,
     children: [
+      {
+        path: 'access-denied',
+        component: AccessDeniedComponent
+      },
       {
         path: 'home',
         component: HomeComponent
