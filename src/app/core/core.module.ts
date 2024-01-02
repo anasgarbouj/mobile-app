@@ -12,6 +12,7 @@ import { LabCardComponent } from './components/lab-card/lab-card.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 import { LabProximityPopupComponent } from './components/lab-proximity-popup/lab-proximity-popup.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { CalledTicketComponent } from './pages/called-ticket/called-ticket.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AccessDeniedComponent } from './pages/access-denied/access-denied.compo
     IdentifyLabComponent,
     LabProximityPopupComponent,
     AccessDeniedComponent,
+    CalledTicketComponent
   ],
   imports: [
     SharedModule,
