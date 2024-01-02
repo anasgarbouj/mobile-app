@@ -3,4 +3,6 @@ export enum PopupValidDataTypes {
     Lab_Proximity = 'lab_proximity',
     Email_Sent = 'email_sent',
     Ticket_Success = 'ticket_success',
+    //verify with backend
+    Delete_Warning = 'delete_warning',
 }

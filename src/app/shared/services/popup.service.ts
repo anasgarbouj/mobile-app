@@ -5,6 +5,7 @@ import { ProximityPopupComponent } from '../components/proximity-popup/proximity
 import { EmailSentPopupComponent } from 'src/app/appointment/components/email-sent-popup/email-sent-popup.component';
 import { TicketSuccessPopupComponent } from 'src/app/appointment/components/ticket-success-popup/ticket-success-popup.component';
 import { LabProximityPopupComponent } from 'src/app/core/components/lab-proximity-popup/lab-proximity-popup.component';
+import { WarningDeleteTicketPopupComponent } from 'src/app/core/components/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,9 @@ export class PopupService {
         break
       case PopupValidDataTypes.Lab_Proximity:
         this.open(LabProximityPopupComponent)
+        break
+      case PopupValidDataTypes.Delete_Warning:
+        this.open(WarningDeleteTicketPopupComponent)
         break
     }
 
