@@ -6,6 +6,7 @@ import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.co
 import { CoreComponent } from './core.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { CalledTicketComponent } from './pages/called-ticket/called-ticket.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'lab/:ticket-id',
         component: TicketDetailsComponent
+      },
+      {
+        path: 'lab/:ticket-id/:status',
+        component: CalledTicketComponent
       },
       {
         path: 'appointment',
