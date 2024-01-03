@@ -13,10 +13,14 @@ import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.componen
 import { LabProximityPopupComponent } from './components/lab-proximity-popup/lab-proximity-popup.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 <<<<<<< HEAD
+import { WarningDeleteTicketPopupComponent } from './components/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
+=======
+<<<<<<< HEAD
 import { TicketCalledPopupComponent } from './components/ticket-called-popup/ticket-called-popup.component';
 =======
 import { CalledTicketComponent } from './pages/called-ticket/called-ticket.component';
 >>>>>>> cb9d4011bf5c90301b41f9a90615c07c664268a2
+>>>>>>> e647e27b73d75b77bc91d6f963dbcc378243b161
 
 @NgModule({
   declarations: [
@@ -30,10 +34,14 @@ import { CalledTicketComponent } from './pages/called-ticket/called-ticket.compo
     LabProximityPopupComponent,
     AccessDeniedComponent,
 <<<<<<< HEAD
+    WarningDeleteTicketPopupComponent,
+=======
+<<<<<<< HEAD
     TicketCalledPopupComponent
 =======
     CalledTicketComponent
 >>>>>>> cb9d4011bf5c90301b41f9a90615c07c664268a2
+>>>>>>> e647e27b73d75b77bc91d6f963dbcc378243b161
   ],
   imports: [
     SharedModule,
