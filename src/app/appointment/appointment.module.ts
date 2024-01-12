@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AppointmentRoutingModule } from './appointment-routing.module';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
@@ -10,8 +9,6 @@ import { AppointmentComponent } from './appointment.component';
 import { SharedModule } from '../shared/shared.module';
 import { SquareRoundedIconButtonComponent } from './components/square-rounded-icon-button/square-rounded-icon-button.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
-import { EmailSentPopupComponent } from './components/email-sent-popup/email-sent-popup.component';
-import { TicketSuccessPopupComponent } from './components/ticket-success-popup/ticket-success-popup.component';
 
 @NgModule({
   declarations: [
@@ -22,8 +19,6 @@ import { TicketSuccessPopupComponent } from './components/ticket-success-popup/t
     AppointmentComponent,
     SquareRoundedIconButtonComponent,
     ServiceCardComponent,
-    EmailSentPopupComponent,
-    TicketSuccessPopupComponent,
   ],
   imports: [
     CommonModule,

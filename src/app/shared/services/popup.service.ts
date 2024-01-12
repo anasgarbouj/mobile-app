@@ -1,12 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { PopupValidDataTypes } from '../types/PopupValidDataTypes';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProximityPopupComponent } from '../components/proximity-popup/proximity-popup.component';
-import { EmailSentPopupComponent } from 'src/app/appointment/components/email-sent-popup/email-sent-popup.component';
-import { TicketSuccessPopupComponent } from 'src/app/appointment/components/ticket-success-popup/ticket-success-popup.component';
-import { LabProximityPopupComponent } from 'src/app/core/components/lab-proximity-popup/lab-proximity-popup.component';
-import { WarningDeleteTicketPopupComponent } from 'src/app/core/components/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
-import { TicketCalledPopupComponent } from 'src/app/core/components/ticket-called-popup/ticket-called-popup.component';
+import { ProximityPopupComponent } from '../components/popups/proximity-popup/proximity-popup.component';
+import { TicketSuccessPopupComponent } from 'src/app/shared/components/popups/ticket-success-popup/ticket-success-popup.component';
+import { LabProximityPopupComponent } from 'src/app/shared/components/popups/lab-proximity-popup/lab-proximity-popup.component';
+import { WarningDeleteTicketPopupComponent } from 'src/app/shared/components/popups/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
+import { TicketCalledPopupComponent } from 'src/app/shared/components/popups/ticket-called-popup/ticket-called-popup.component';
+import { EmailSentPopupComponent } from '../components/popups/email-sent-popup/email-sent-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,7 @@ export class PopupService {
         this.open(ProximityPopupComponent)
         break
       case PopupValidDataTypes.Email_Sent:
+        console.log('Play clicked');
         this.open(EmailSentPopupComponent)
         break
       case PopupValidDataTypes.Ticket_Success:

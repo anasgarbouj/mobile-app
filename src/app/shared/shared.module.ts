@@ -3,8 +3,13 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from './components/header/header.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
-import { ProximityPopupComponent } from './components/proximity-popup/proximity-popup.component';
+import { ProximityPopupComponent } from './components/popups/proximity-popup/proximity-popup.component';
 import { DividerComponent } from './components/divider/divider.component';
+import { EmailSentPopupComponent } from './components/popups/email-sent-popup/email-sent-popup.component';
+import { TicketCalledPopupComponent } from './components/popups/ticket-called-popup/ticket-called-popup.component';
+import { TicketSuccessPopupComponent } from './components/popups/ticket-success-popup/ticket-success-popup.component';
+import { WarningDeleteTicketPopupComponent } from './components/popups/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
+import { LabProximityPopupComponent } from './components/popups/lab-proximity-popup/lab-proximity-popup.component';
 
 
 
@@ -12,8 +17,14 @@ import { DividerComponent } from './components/divider/divider.component';
   declarations: [
     HeaderComponent,
     SearchBarComponent,
+    DividerComponent,
+    // Popups
+    EmailSentPopupComponent,
+    LabProximityPopupComponent,
     ProximityPopupComponent,
-    DividerComponent
+    TicketCalledPopupComponent,
+    TicketSuccessPopupComponent,
+    WarningDeleteTicketPopupComponent
   ],
   imports: [
     CommonModule,
@@ -22,12 +33,10 @@ import { DividerComponent } from './components/divider/divider.component';
     })
   ],
   exports: [
-    IonicModule,
     HeaderComponent,
     SearchBarComponent,
-    ProximityPopupComponent,
     DividerComponent,
-
+    IonicModule
   ]
 })
 export class SharedModule { }
