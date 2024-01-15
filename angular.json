@@ -141,7 +141,16 @@
   },
   "schematics": {
     "@ionic/angular-toolkit:component": {
-      "styleext": "scss"
+      "styleext": "css",
+<<<<<<< HEAD
+      "spec": false
+=======
+<<<<<<< HEAD
+      "spec":false
+=======
+      "spec" : false
+>>>>>>> cb9d4011bf5c90301b41f9a90615c07c664268a2
+>>>>>>> e647e27b73d75b77bc91d6f963dbcc378243b161
     },
     "@ionic/angular-toolkit:page": {
       "styleext": "scss"

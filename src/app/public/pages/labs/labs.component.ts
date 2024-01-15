@@ -25,6 +25,6 @@ export class LabsComponent implements OnInit {
   }
   navigateToIdentification(item: any) {
     console.log("clicked on " + item);
-    this._router.navigate(["/appointment"])
+    this._router.navigate(["/main-app"])
   }
 }
