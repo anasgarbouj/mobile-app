@@ -12,10 +12,5 @@ export class AppComponent implements OnInit {
   constructor(private platform: Platform, private router: Router) { }
 
   ngOnInit(): void {
-    // if (!this.platform.is('mobile')) {
-    //   this.router.navigate(['/access-denied']);
-    //   console.log("Cannot open app in this device...");
-      
-    // }
-  }
+    }
 }

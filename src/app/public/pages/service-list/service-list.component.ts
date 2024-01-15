@@ -34,6 +34,6 @@ export class ServiceListComponent {
   }
   navigateToEmail(item: any) {
     console.log("clicked on " + item.name);
-    this._router.navigate(["/appointment/email-confirmation"])
+    this._router.navigate(["/email-confirmation"])
   }
 }
