@@ -1,0 +1,23 @@
+<ion-content>
+  <div class="custom-container">
+      <p class="title">{{ticketTitle}} :</p>
+      <div class="ticket-container">
+          <p class="ticket-title">nom proprietaire</p>
+          <p class="ticket-text">Information du propriétaire</p>
+          <p class="ticket-text">Vous étes enregistré pour le service</p>
+          <p class="ticket-medium-title">{{ticketService}}</p>
+          <p class="ticket-text">Vous serez appelé sur le moniteur<br>vidéo avec le numéro de ticket</p>
+          <p class="ticket-big-title" *ngIf="!isTicketCalled">{{ticketServicePrefix}}{{ticketNumber}}</p>
+          <p class="ticket-called-big-title" *ngIf="isTicketCalled">{{ticketServicePrefix}}{{ticketNumber}} > {{ticketRoom}}</p>
+          <p class="ticket-text">Votre temps d'attente est estimé a {{waitingTime}} min</p>
+          <br>
+          <img src="/assets/images/bars.svg" alt="code a barres">
+          <br>
+          <p class="ticket-text">Votre ticket a été imprimé le<br>{{date}} à {{time}}</p>
+          <p class="ticket-small-text">{{website}}</p>
+
+      </div>
+      <ion-button class="send_btn" expand="block" *ngIf="toDelete">Supprimer</ion-button>
+
+  </div>
+</ion-content>
