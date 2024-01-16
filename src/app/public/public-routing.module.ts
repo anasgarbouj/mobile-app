@@ -7,8 +7,8 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
 import { IdentificationComponent } from './pages/identification/identification.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
-import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
-import { CalledTicketComponent } from './pages/called-ticket/called-ticket.component';
+import { TicketDetailsComponent } from '../private/pages/ticket-details/ticket-details.component';
+import { CalledTicketComponent } from '../private/pages/called-ticket/called-ticket.component';
 import { PublicComponent } from './public.component';
 
 const routes: Routes = [

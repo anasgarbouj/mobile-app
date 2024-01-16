@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PublicRoutingModule } from './public-routing.module';
 import { HomeComponent } from './pages/home/home.component';
 import { LabsComponent } from './pages/labs/labs.component';
-import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
+import { TicketDetailsComponent } from '../private/pages/ticket-details/ticket-details.component';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
 import { LabCardComponent } from './components/lab-card/lab-card.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
