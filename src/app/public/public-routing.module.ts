@@ -7,8 +7,6 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
 import { IdentificationComponent } from './pages/identification/identification.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
-import { TicketDetailsComponent } from '../private/pages/ticket-details/ticket-details.component';
-import { CalledTicketComponent } from '../private/pages/called-ticket/called-ticket.component';
 import { PublicComponent } from './public.component';
 
 const routes: Routes = [
@@ -44,14 +42,7 @@ const routes: Routes = [
         path: 'email-confirmation',
         component: EmailConfirmationComponent
       },
-      {
-        path: 'lab/:ticket-id',
-        component: TicketDetailsComponent
-      },
-      {
-        path: 'lab/:ticket-id/:status',
-        component: CalledTicketComponent
-      },
+    
       {
         path: '',
         redirectTo: 'home',
