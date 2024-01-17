@@ -1,21 +1,6 @@
 <ion-content>
-    <div class="custom-container">
-        <p class="title">Lorem ipsum dolor sit amet consectetur :</p>
-        <div class="ticket-container">
-            <p class="ticket-title">nom proprietaire</p>
-            <p class="ticket-text">Information du propriétaire</p>
-            <p class="ticket-text">Vous étes enregistré pour le service</p>
-            <p class="ticket-medium-title">prise de sang</p>
-            <p class="ticket-text">Vous serez appelé sur le moniteur<br>vidéo avec le numéro de ticket</p>
-            <p class="ticket-big-title">p056</p>
-            <p class="ticket-text">Votre temps d'attente est estimé a 0 min</p>
-            <br>
-            <br>
-            <p class="ticket-text">Votre ticket a été imprimé le<br>12/06/2022 à 15:20</p>
-            <p class="ticket-small-text">https://www.siteweb.fr/</p>
-
-        </div>
-        <ion-button class="send_btn" expand="block">Supprimer</ion-button>
-
-    </div>
+    <app-ticket [toDelete]="true"
+    [isTicketCalled]="false"
+    ticketTitle="Voulez vous supprimer votre ticket? "
+    waitingTime ="5"></app-ticket>
 </ion-content>
