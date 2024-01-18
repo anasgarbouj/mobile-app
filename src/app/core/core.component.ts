@@ -12,9 +12,31 @@ export class CoreComponent {
     constructor(private platform: Platform, private router: Router) { }
 
     ngOnInit(): void {
-      if (!this.platform.is('mobile')) {
+      if (this.platform.is('mobile')) {
       this.router.navigate(['/access-denied']);
       console.log("Cannot open app in this device...");
+      }
+
+      console.log("Checking browser compatibility..");
+      this.checkBrowserCompatibility();
+      
+    }
+
+    checkBrowserCompatibility () {
+      if (!('serviceWorker' in navigator)) {
+        console.log("Service Worker isn't supported on this browser");
+        return;
+      }
+      else{
+        console.log("Service Worker is supported on this browser");
+      }
+    
+      if (!('PushManager' in window)) {
+        console.log("Push isn't supported on this browser");
+        return;
+      }
+      else {
+        console.log("Push is supported on this browser");
       }
     }
 }
