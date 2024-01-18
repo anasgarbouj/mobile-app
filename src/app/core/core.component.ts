@@ -19,7 +19,7 @@ export class CoreComponent {
 
       console.log("Checking browser compatibility..");
       this.checkBrowserCompatibility();
-      
+
     }
 
     checkBrowserCompatibility () {
@@ -29,6 +29,8 @@ export class CoreComponent {
       }
       else{
         console.log("Service Worker is supported on this browser");
+        let res = this.registerServiceWorker();
+        console.log(res)
       }
     
       if (!('PushManager' in window)) {
@@ -39,4 +41,16 @@ export class CoreComponent {
         console.log("Push is supported on this browser");
       }
     }
+
+    async registerServiceWorker(): Promise<ServiceWorkerRegistration | void> {
+      return navigator.serviceWorker.register("/assets/js/service-worker.js")
+        .then((registration: ServiceWorkerRegistration) => {
+          console.log('Service worker successfully registered.');
+          return registration;
+        })
+        .catch((err: Error) => {
+          console.error('Unable to register service worker.', err);
+        });
+    }
+    
 }
