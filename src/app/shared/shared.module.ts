@@ -11,7 +11,7 @@ import { TicketSuccessPopupComponent } from './components/popups/ticket-success-
 import { WarningDeleteTicketPopupComponent } from './components/popups/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
 import { LabProximityPopupComponent } from './components/popups/lab-proximity-popup/lab-proximity-popup.component';
 import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-
+import {HttpClientModule} from '@angular/common/http';
 
 LOAD_WASM().subscribe();
 
@@ -30,6 +30,7 @@ LOAD_WASM().subscribe();
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     IonicModule.forRoot({
       innerHTMLTemplatesEnabled: true
     })

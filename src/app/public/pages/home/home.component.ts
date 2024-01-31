@@ -1,7 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Geolocation, Position } from '@capacitor/geolocation';
-
+import {LabsService} from '../../../shared/services/labs.service'
+import { take,map } from 'rxjs';
+import { ILocation } from 'src/app/shared/interfaces/location';
+import { ILab } from 'src/app/shared/interfaces/Lab';
 
 @Component({
   selector: 'app-home',
@@ -12,15 +15,18 @@ import { Geolocation, Position } from '@capacitor/geolocation';
 export class HomeComponent implements OnInit {
 
   constructor(private _router: Router) { }
-
+  private readonly labsService = inject(LabsService)
   ngOnInit() {
     console.log("Checking GPS permission...");
 
-    this.getCurrentPosition().then(elem => {
-      console.log(elem);
-      if (elem == null) {
-        this.checkAndRequestPermission();
-      }
+    this.getCurrentPosition().then((position) => {
+      console.log(position);
+      if (!position) this.checkAndRequestPermission();
+      this.labsService.fetchLabs(position as ILocation,'')
+      .pipe(take(1),map(res=>res.data as ILab[]))
+      .subscribe((data)=>{
+        console.log(data)
+      })
     })
   }
 
@@ -59,7 +65,7 @@ export class HomeComponent implements OnInit {
       this._router.navigate(["/identify-lab"])
       return {
         "lat": result.coords.latitude,
-        "lng": result.coords.longitude
+        "long": result.coords.longitude
       }
 
     } catch (error) {
@@ -72,4 +78,5 @@ export class HomeComponent implements OnInit {
     console.log("Reloading...");
     window.location.reload();
   }
+
 }
