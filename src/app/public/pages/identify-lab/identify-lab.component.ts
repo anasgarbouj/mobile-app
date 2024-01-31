@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxScannerQrcodeComponent, ScannerQRCodeResult, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-identify-lab',
@@ -8,6 +9,10 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IdentifyLabComponent {
+
+  public qrCodeResult: ScannerQRCodeSelectedFiles[] = [];
+  public qrCodeResult2: ScannerQRCodeSelectedFiles[] = [];
+
   constructor(private _router: Router) {
 
   }
@@ -16,35 +21,21 @@ export class IdentifyLabComponent {
   }
 
   
-  async startQrScan(){
-    console.log("qr code clicked...");
-    const cameraPermissionState = await this.checkAndRequestCameraPermission()
-    
-    if(!cameraPermissionState){
-      console.log("Exit Qr Scan ..No camera permission was granted...");
-      return;
+
+  public handle(action: any, fn: string): void {
+    const playDeviceFacingBack = (devices: any[]) => {
+      // front camera or back camera check here!
+      const device = devices.find(f => (/back|rear|environment/gi.test(f.label)));
+      action.playDevice(device ? device.deviceId : devices[0].deviceId);
     }
-    console.log("Starting Qr Code Scan...");
 
-  }
-
-   async checkAndRequestCameraPermission() : Promise<boolean>{
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      console.log('Camera permission already granted:', stream);
-      return true;
-  
-    } catch (error) {
-      console.warn('Camera permission not granted. Requesting permission...');
-      try {
-        await navigator.mediaDevices.getUserMedia({ video: true });
-        console.log('Camera permission granted after requesting.');
-        return true;
-
-      } catch (error) {
-        console.error('Failed to get camera permission:', error);
-        return false;
-      }
+    if (fn === 'start') {
+      action[fn](playDeviceFacingBack).subscribe((r: any) => console.log(fn, r), alert);
+    } else {
+      action[fn]().subscribe((r: any) => console.log(fn, r), alert);
     }
   }
-}
+
+
+
+} 

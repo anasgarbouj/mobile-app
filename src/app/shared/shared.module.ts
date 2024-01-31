@@ -10,8 +10,10 @@ import { TicketCalledPopupComponent } from './components/popups/ticket-called-po
 import { TicketSuccessPopupComponent } from './components/popups/ticket-success-popup/ticket-success-popup.component';
 import { WarningDeleteTicketPopupComponent } from './components/popups/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
 import { LabProximityPopupComponent } from './components/popups/lab-proximity-popup/lab-proximity-popup.component';
+import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 
+LOAD_WASM().subscribe();
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { LabProximityPopupComponent } from './components/popups/lab-proximity-po
     HeaderComponent,
     SearchBarComponent,
     DividerComponent,
-    IonicModule
+    IonicModule,
+    NgxScannerQrcodeModule
   ]
 })
 export class SharedModule { }
