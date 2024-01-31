@@ -7,6 +7,8 @@ import { LabProximityPopupComponent } from 'src/app/shared/components/popups/lab
 import { WarningDeleteTicketPopupComponent } from 'src/app/shared/components/popups/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
 import { TicketCalledPopupComponent } from 'src/app/shared/components/popups/ticket-called-popup/ticket-called-popup.component';
 import { EmailSentPopupComponent } from '../components/popups/email-sent-popup/email-sent-popup.component';
+import { ScannedLabNotFoundComponent } from '../components/popups/scanned-lab-not-found/scanned-lab-not-found.component';
+import { InvalidLabQrComponent } from '../components/popups/invalid-lab-qr/invalid-lab-qr.component';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,13 @@ export class PopupService {
       case PopupValidDataTypes.Ticket_Called:
         this.open(TicketCalledPopupComponent)
         break
+      case PopupValidDataTypes.Scanned_Qr_Not_Found:
+        this.open(ScannedLabNotFoundComponent)
+        break
+      case PopupValidDataTypes.Invalid_Lab:
+        this.open(InvalidLabQrComponent)
+        break
+    
     }
 
   }
