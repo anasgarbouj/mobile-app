@@ -12,6 +12,8 @@ import { WarningDeleteTicketPopupComponent } from './components/popups/warning-d
 import { LabProximityPopupComponent } from './components/popups/lab-proximity-popup/lab-proximity-popup.component';
 import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import {HttpClientModule} from '@angular/common/http';
+import { InvalidLabQrComponent } from './components/popups/invalid-lab-qr/invalid-lab-qr.component';
+import { ScannedLabNotFoundComponent } from './components/popups/scanned-lab-not-found/scanned-lab-not-found.component';
 
 LOAD_WASM().subscribe();
 
@@ -26,7 +28,9 @@ LOAD_WASM().subscribe();
     ProximityPopupComponent,
     TicketCalledPopupComponent,
     TicketSuccessPopupComponent,
-    WarningDeleteTicketPopupComponent
+    WarningDeleteTicketPopupComponent,
+    InvalidLabQrComponent,
+    ScannedLabNotFoundComponent
   ],
   imports: [
     CommonModule,
