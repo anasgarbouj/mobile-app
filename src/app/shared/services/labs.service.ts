@@ -11,7 +11,7 @@ import { ILab } from '../interfaces/Lab';
 })
 export class LabsService {
 
-  private baseUrl : string = "http://192.168.1.106:9000/ui";
+  private baseUrl : string = "https://kioskbackend.xtend.tv/ui";
   constructor() { }
   private readonly http = inject(HttpClient)
   public fetchLabs(location:ILocation,search:string=''){
