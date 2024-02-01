@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxScannerQrcodeComponent, ScannerQRCodeResult, ScannerQRCodeSelectedFiles } from 'ngx-scanner-qrcode';
 
@@ -8,19 +8,20 @@ import { NgxScannerQrcodeComponent, ScannerQRCodeResult, ScannerQRCodeSelectedFi
   styleUrls: ['./identify-lab.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IdentifyLabComponent {
+export class IdentifyLabComponent  {
 
-  public qrCodeResult: ScannerQRCodeSelectedFiles[] = [];
-  public qrCodeResult2: ScannerQRCodeSelectedFiles[] = [];
+  private debounceTimer: any;
+  private debounceTime = 300; // milliseconds
 
   constructor(private _router: Router) {
 
   }
+
+
   navigateToLabs() {
     this._router.navigate(["/labs"])
   }
 
-  
 
   public handle(action: any, fn: string): void {
     const playDeviceFacingBack = (devices: any[]) => {
@@ -37,5 +38,14 @@ export class IdentifyLabComponent {
   }
 
 
+  handleEvent(event : ScannerQRCodeResult[]){
+    clearTimeout(this.debounceTimer);
+    this.debounceTimer = setTimeout(() => {
+     console.log(event[0].value);
+    }, this.debounceTime);
 
-} 
+  }
+
+
+
+}
