@@ -5,6 +5,8 @@ import {LabsService} from '../../../shared/services/labs.service'
 import { take,map } from 'rxjs';
 import { ILocation } from 'src/app/shared/interfaces/location';
 import { ILab } from 'src/app/shared/interfaces/Lab';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,8 @@ import { ILab } from 'src/app/shared/interfaces/Lab';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router , private popUpService: PopupService) { }
+
   private readonly labsService = inject(LabsService)
   ngOnInit() {
     console.log("Checking GPS permission...");
@@ -23,11 +26,15 @@ export class HomeComponent implements OnInit {
       console.log(position);
       if (!position) this.checkAndRequestPermission();
       this.labsService.fetchLabs(position as ILocation,'')
-      .pipe(take(1),map(res=>res.data as ILab[]))
-      .subscribe((data)=>{
-        console.log(data)
+      .pipe(take(1),map(res=>{
+        return { info: res.info, data: res.data }
+      }))
+      .subscribe((response)=>{
+        console.log("Response Info : ",response.info);
+        console.log("Response Data : ",response.data);
       })
     })
+
   }
 
   async checkAndRequestPermission() {
