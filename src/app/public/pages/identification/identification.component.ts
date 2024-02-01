@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 
 @Component({
@@ -9,8 +10,12 @@ import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 })
 export class IdentificationComponent {
 
-  private debounceTimer: any;
-  private debounceTime = 300;
+  // private debounceTimer: any;
+  // private debounceTime = 300;
+
+  constructor(private _router: Router) {
+
+  }
 
   public handle(action: any, fn: string): void {
     const playDeviceFacingBack = (devices: any[]) => {
@@ -27,12 +32,22 @@ export class IdentificationComponent {
   }
 
 
-  handleEvent(event : ScannerQRCodeResult[]){
-    clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => {
-     console.log(event[0].value);
-    }, this.debounceTime);
+  // handleEvent(event : ScannerQRCodeResult[]){
+  //   clearTimeout(this.debounceTimer);
+  //   this.debounceTimer = setTimeout(() => {
+  //    console.log(event[0].value);
+  //   }, this.debounceTime);
 
+  // }
+
+  private stopScanning : boolean = false ;
+
+  handleEvent(event : ScannerQRCodeResult[]){
+    if(!this.stopScanning) {
+      console.log((event[0].value));
+      this.stopScanning = ! this.stopScanning ;
+      this._router.navigate(["/labs"])
+    }
   }
 
 }

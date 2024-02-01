@@ -10,8 +10,8 @@ import { NgxScannerQrcodeComponent, ScannerQRCodeResult, ScannerQRCodeSelectedFi
 })
 export class IdentifyLabComponent  {
 
-  private debounceTimer: any;
-  private debounceTime = 300; // milliseconds
+  // private debounceTimer: any;
+  // private debounceTime = 300; // milliseconds
 
   constructor(private _router: Router) {
 
@@ -38,11 +38,24 @@ export class IdentifyLabComponent  {
   }
 
 
+  // handleEvent(event : ScannerQRCodeResult[]){
+  //   clearTimeout(this.debounceTimer);
+  //   this.debounceTimer = setTimeout(() => {
+  //    console.log(event[0].value);
+  //   }, this.debounceTime);
+
+  // }
+
+  private stopScanning : boolean = false ;
+
   handleEvent(event : ScannerQRCodeResult[]){
-    clearTimeout(this.debounceTimer);
-    this.debounceTimer = setTimeout(() => {
-     console.log(event[0].value);
-    }, this.debounceTime);
+    if(!this.stopScanning) {
+      console.log((event[0].value));
+      this.stopScanning = ! this.stopScanning ;
+      this._router.navigate(["/labs"])
+    }
+
+
 
   }
 

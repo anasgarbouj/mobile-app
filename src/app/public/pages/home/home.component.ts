@@ -4,9 +4,7 @@ import { Geolocation, Position } from '@capacitor/geolocation';
 import {LabsService} from '../../../shared/services/labs.service'
 import { take,map } from 'rxjs';
 import { ILocation } from 'src/app/shared/interfaces/location';
-import { ILab } from 'src/app/shared/interfaces/Lab';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-home',
