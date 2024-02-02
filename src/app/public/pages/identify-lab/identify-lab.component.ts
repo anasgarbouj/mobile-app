@@ -5,6 +5,8 @@ import { map, take } from 'rxjs';
 import { ILocation } from 'src/app/shared/interfaces/location';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { LabsService } from 'src/app/shared/services/labs.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-identify-lab',
@@ -20,7 +22,7 @@ export class IdentifyLabComponent  {
   private readonly labsService = inject (LabsService)
   private readonly geolocationService = inject (GeolocationService)
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router ,private popUpService: PopupService) {
 
   }
 
@@ -45,13 +47,6 @@ export class IdentifyLabComponent  {
   }
 
 
-  // handleEvent(event : ScannerQRCodeResult[]){
-  //   clearTimeout(this.debounceTimer);
-  //   this.debounceTimer = setTimeout(() => {
-  //    console.log(event[0].value);
-  //   }, this.debounceTime);
-
-  // }
 
   private stopScanning : boolean = false ;
 
@@ -60,9 +55,10 @@ export class IdentifyLabComponent  {
       console.log((event[0].value));
       this.stopScanning = ! this.stopScanning ;
 
-      this.geolocationService.getCurrentPosition("/labs").then((position) => {
+      this.geolocationService.getCurrentPosition().then((position) => {
         console.log(position);
         if (!position) this.geolocationService.checkAndRequestPermission();
+
         this.labsService.fetchLabs(position as ILocation,event[0].value)
         .pipe(take(1),map(res=>{
           return { info: res.info, data: res.data }
@@ -70,6 +66,7 @@ export class IdentifyLabComponent  {
         .subscribe((response)=>{
           console.log("Response Info : ",response.info);
           console.log("Response Data : ",response.data);
+          this.checkResponse(response.info);
         })
       })
 
@@ -77,6 +74,22 @@ export class IdentifyLabComponent  {
 
 
 
+  }
+
+  checkResponse(info:string){
+    switch(info){
+      case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
+        this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
+        break
+      case "UNKNOWN_KIOSK_GROUP":
+        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
+        break
+      case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
+        this._router.navigate(["/main-app"]);
+        console.log("navigating to : main-app");
+        break
+
+    }
   }
 
 

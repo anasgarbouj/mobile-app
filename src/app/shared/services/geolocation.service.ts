@@ -36,7 +36,7 @@ export class GeolocationService {
 
 
 
-  public async getCurrentPosition(navigateTo: string ="") {
+  public async getCurrentPosition() {
     const options: PositionOptions = {
       enableHighAccuracy: true,
     };
@@ -44,11 +44,11 @@ export class GeolocationService {
       const result: Position = await Geolocation.getCurrentPosition(options);
       console.log('GPS permission granted', result);
       console.log(result.coords.latitude, result.coords.longitude);
-      if(navigateTo !== ""){
-        this._router.navigate([navigateTo]);
-        console.log("navigating to :" , navigateTo);
+      // if(navigateTo !== ""){
+      //   this._router.navigate([navigateTo]);
+      //   console.log("navigating to :" , navigateTo);
 
-      }
+      // }
       return {
         "lat": result.coords.latitude,
         "long": result.coords.longitude

@@ -5,6 +5,7 @@ import { take,map } from 'rxjs';
 import { ILocation } from 'src/app/shared/interfaces/location';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
+import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     console.log("Checking GPS permission...");
 
-    this.geolocationService.getCurrentPosition("/identify-lab").then((position) => {
+    this.geolocationService.getCurrentPosition().then((position) => {
       console.log(position);
       if (!position) this.geolocationService.checkAndRequestPermission();
       this.labsService.fetchLabs(position as ILocation,'')
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
       .subscribe((response)=>{
         console.log("Response Info : ",response.info);
         console.log("Response Data : ",response.data);
+        this.checkResponse(response.info);
       })
     })
 
@@ -43,4 +45,21 @@ export class HomeComponent implements OnInit {
     window.location.reload();
   }
 
+
+
+  checkResponse(info:string){
+    switch(info){
+      case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
+        this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
+        break
+      case "UNKNOWN_KIOSK_GROUP":
+        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
+        break
+      case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
+        this._router.navigate(["/identify-lab"])
+        console.log("navigating to : identify-lab");
+        break
+
+    }
+  }
 }
