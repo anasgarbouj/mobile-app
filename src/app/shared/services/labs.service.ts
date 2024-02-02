@@ -17,4 +17,8 @@ export class LabsService {
   public fetchLabs(location:ILocation,search:string=''){
     return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search-sites/?lat=${location.lat}&long=${location.long}&search=${search}`)
   }
+
+  public fetchLabsByQrCode(location:ILocation,qrCodeValue:string=''){
+    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search-sites/?lat=${location.lat}&long=${location.long}&search=${qrCodeValue}`)
+  }
 }
