@@ -6,6 +6,7 @@ import { ILocation } from 'src/app/shared/interfaces/location';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
+import { ILab } from 'src/app/shared/interfaces/Lab';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +34,8 @@ export class HomeComponent implements OnInit {
       .subscribe((response)=>{
         console.log("Response Info : ",response.info);
         console.log("Response Data : ",response.data);
-        this.checkResponse(response.info);
+        console.log("Response Data As Array : ",response.data as ILab[]);
+        this.checkResponse(response.info , response.data as ILab[]);
       })
     })
 
@@ -47,7 +49,7 @@ export class HomeComponent implements OnInit {
 
 
 
-  checkResponse(info:string){
+  checkResponse(info:string, labsList : ILab[]){
     switch(info){
       case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
         this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
@@ -56,7 +58,8 @@ export class HomeComponent implements OnInit {
         this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
         break
       case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
-        this._router.navigate(["/identify-lab"])
+        console.log("lab list test",labsList);
+        this._router.navigate(["/identify-lab"], { state : { labs : labsList}});
         console.log("navigating to : identify-lab");
         break
 

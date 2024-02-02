@@ -8,5 +8,6 @@ export enum PopupValidDataTypes {
     //
     Ticket_Called = 'ticket_called',
     Scanned_Qr_Not_Found ="scanned_qr_not_found",
-    Invalid_Lab = "Invalid_Lab"
+    Invalid_Lab = "Invalid_Lab",
+    NoNearbyLabs = "No_Nearby_Labs"
 }

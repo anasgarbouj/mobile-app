@@ -14,6 +14,7 @@ import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import {HttpClientModule} from '@angular/common/http';
 import { InvalidLabQrComponent } from './components/popups/invalid-lab-qr/invalid-lab-qr.component';
 import { ScannedLabNotFoundComponent } from './components/popups/scanned-lab-not-found/scanned-lab-not-found.component';
+import { NoNearbyLabsComponent } from './components/popups/no-nearby-labs/no-nearby-labs.component';
 
 LOAD_WASM().subscribe();
 
@@ -30,7 +31,8 @@ LOAD_WASM().subscribe();
     TicketSuccessPopupComponent,
     WarningDeleteTicketPopupComponent,
     InvalidLabQrComponent,
-    ScannedLabNotFoundComponent
+    ScannedLabNotFoundComponent,
+    NoNearbyLabsComponent,
   ],
   imports: [
     CommonModule,

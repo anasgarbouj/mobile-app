@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {  ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { map, take } from 'rxjs';
+import { ILab } from 'src/app/shared/interfaces/Lab';
 import { ILocation } from 'src/app/shared/interfaces/location';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { LabsService } from 'src/app/shared/services/labs.service';
@@ -14,21 +15,31 @@ import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
   styleUrls: ['./identify-lab.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class IdentifyLabComponent  {
+export class IdentifyLabComponent implements OnInit {
 
   // private debounceTimer: any;
   // private debounceTime = 300; // milliseconds
 
   private readonly labsService = inject (LabsService)
   private readonly geolocationService = inject (GeolocationService)
+  private labs : ILab[] = [];
 
-  constructor(private _router: Router ,private popUpService: PopupService) {
+
+  constructor(private _router: Router ,private popUpService: PopupService ,private route: ActivatedRoute) {
+
+
+  }
+  ngOnInit(): void {
+   const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
+   console.log("List Of Labs Recieved From Home :",labs);
+   this.labs = labs ;
 
   }
 
-
   navigateToLabs() {
-    this._router.navigate(["/labs"])
+    console.log("test", this.labs);
+
+    this._router.navigate(["/labs"], {state : {labs : this.labs}})
   }
 
 
@@ -87,6 +98,7 @@ export class IdentifyLabComponent  {
       case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
         this._router.navigate(["/main-app"]);
         console.log("navigating to : main-app");
+
         break
 
     }

@@ -9,6 +9,7 @@ import { TicketCalledPopupComponent } from 'src/app/shared/components/popups/tic
 import { EmailSentPopupComponent } from '../components/popups/email-sent-popup/email-sent-popup.component';
 import { ScannedLabNotFoundComponent } from '../components/popups/scanned-lab-not-found/scanned-lab-not-found.component';
 import { InvalidLabQrComponent } from '../components/popups/invalid-lab-qr/invalid-lab-qr.component';
+import { NoNearbyLabsComponent } from '../components/popups/no-nearby-labs/no-nearby-labs.component';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +47,10 @@ export class PopupService {
       case PopupValidDataTypes.Invalid_Lab:
         this.open(InvalidLabQrComponent)
         break
-    
+      case PopupValidDataTypes.NoNearbyLabs:
+        this.open(NoNearbyLabsComponent)
+        break
+
     }
 
   }

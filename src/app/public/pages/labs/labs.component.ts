@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { InfiniteScrollCustomEvent } from '@ionic/angular';
+import { param } from 'jquery';
+import { ILab } from 'src/app/shared/interfaces/Lab';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-labs',
@@ -11,20 +15,26 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 export class LabsComponent implements OnInit {
 
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router ,private route: ActivatedRoute , private popupService :PopupService) { }
 
-  items = Array();
+  items : ILab[] = [] ;
+
   ngOnInit() {
-    this.generateItems();
+
+   const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
+   if (labs && labs.length > 0) {
+    console.log("List Of Labs Received:", labs);
+    this.items = labs;
+  } else {
+    console.log("No Available labs in this area!");
+    this.popupService.openPopup(PopupValidDataTypes.NoNearbyLabs);
   }
-  private generateItems() {
-    const count = this.items.length + 1;
-    for (let i = 0; i < 50; i++) {
-      this.items.push(`Laboratoire ${count + i}`);
-    }
+
   }
+
   navigateToIdentification(item: any) {
     console.log("clicked on " + item);
     this._router.navigate(["/main-app"])
   }
+
 }
