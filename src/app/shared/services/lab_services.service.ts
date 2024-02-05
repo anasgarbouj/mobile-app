@@ -15,6 +15,6 @@ export class LabServicesService {
   constructor() { }
 
   fetchServices(configId : number){
-    return this.http.get<IResponse<IService>>(`${this.baseUrl}/virtual_ticket/service-list/?configId=${configId}/`)
+    return this.http.get<IResponse<IService>>(`${this.baseUrl}/virtual_ticket/service-list/${configId}/`)
   }
 }

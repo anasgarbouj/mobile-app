@@ -6,8 +6,8 @@
         <app-search-bar placeholder="Recherche Service"></app-search-bar>
 
         <ion-list>
-            <app-service-card (click)="navigateToEmail(item)" *ngFor="let item of items; let index" name="{{item.name}}"
-                color="{{item.color}}"></app-service-card>
+            <app-service-card (click)="navigateToEmail(item)" *ngFor="let item of items; let index" name="{{item.service_name}}"
+                color="{{item.service_color}}"></app-service-card>
         </ion-list>
 
     </div>

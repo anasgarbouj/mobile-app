@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,14 +7,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-page.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
+
+  private configID : number =0;
 
   constructor(private _router: Router) { }
 
+  ngOnInit(): void {
+    const config = this._router.getCurrentNavigation()?.extras.state?.['config'];
+    console.log("configId recieved from lab :",config);
+    this.configID = config ;
+  }
+
 
   navigateToServiceList() {
-    console.log("rdv clicked");
-    this._router.navigate(["/service-list"])
+    console.log("no rdv clicked");
+    this._router.navigate(["/service-list"], {state:{config : this.configID}})
 
   }
 

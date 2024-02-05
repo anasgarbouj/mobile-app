@@ -32,9 +32,9 @@ export class LabsComponent implements OnInit {
 
   }
 
-  navigateToIdentification(item: any) {
-    console.log("clicked on " + item);
-    this._router.navigate(["/main-app"])
+  navigateToIdentification(item: ILab) {
+    console.log("clicked on " + item.kiosk_group_id);
+    this._router.navigate(["/main-app"] ,{state:{config : item.configuration}})
   }
 
 }
