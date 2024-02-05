@@ -82,7 +82,8 @@ export class IdentifyLabComponent implements OnInit {
         .subscribe((response)=>{
           console.log("Response Info : ",response.info);
           console.log("Response Data : ",response.data);
-          this.checkResponse(response.info , response.data as ILab);
+          const lab = response.data as ILab[] ;
+          this.checkResponse(response.info , lab[0].configuration);
         })
       })
 
@@ -92,7 +93,7 @@ export class IdentifyLabComponent implements OnInit {
 
   }
 
-  checkResponse(info:string , lab : ILab|null = null){
+  checkResponse(info:string , config : number|null =null){
     switch(info){
       case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
         this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
@@ -107,11 +108,11 @@ export class IdentifyLabComponent implements OnInit {
         this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
         break;
       case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
-        this._router.navigate(["/main-app"] , {state : {lab : lab}});
+        this._router.navigate(["/main-app"] , {state : {config : config,}});
         console.log("navigating to : main-app");
         break;
       default :
-        console.log("navigating to : main-app");
+        console.log("Unknown error happened ...");
         break;
 
     }
