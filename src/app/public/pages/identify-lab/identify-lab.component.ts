@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {  ScannerQRCodeResult } from 'ngx-scanner-qrcode';
-import { map, take } from 'rxjs';
+import { catchError, map, of, take } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { ILocation } from 'src/app/shared/interfaces/location';
 import { GeolocationService } from 'src/app/shared/services/geolocation.service';
@@ -70,14 +70,19 @@ export class IdentifyLabComponent implements OnInit {
         console.log(position);
         if (!position) this.geolocationService.checkAndRequestPermission();
 
-        this.labsService.fetchLabs(position as ILocation,event[0].value)
+        this.labsService.fetchLabsByQrCode(position as ILocation,event[0].value)
         .pipe(take(1),map(res=>{
           return { info: res.info, data: res.data }
+        }) ,
+          catchError((error) => {
+          console.error('Error fetching labs:', error);
+          this.checkResponse(error?.error?.info);
+          return of({ info: 'Error', data: null }); // Return an observable with an error message
         }))
         .subscribe((response)=>{
           console.log("Response Info : ",response.info);
           console.log("Response Data : ",response.data);
-          this.checkResponse(response.info);
+          this.checkResponse(response.info , response.data as ILab);
         })
       })
 
@@ -87,19 +92,27 @@ export class IdentifyLabComponent implements OnInit {
 
   }
 
-  checkResponse(info:string){
+  checkResponse(info:string , lab : ILab|null = null){
     switch(info){
       case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
         this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
-        break
+        break;
       case "UNKNOWN_KIOSK_GROUP":
         this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
-        break
+        break;
+      case "FAR_KIOSK_GROUP" :
+        this.popUpService.openPopup(PopupValidDataTypes.Lab_Proximity);
+        break;
+      case "INVALID_KIOSK_GROUP" :
+        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
+        break;
       case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
-        this._router.navigate(["/main-app"]);
+        this._router.navigate(["/main-app"] , {state : {lab : lab}});
         console.log("navigating to : main-app");
-
-        break
+        break;
+      default :
+        console.log("navigating to : main-app");
+        break;
 
     }
   }

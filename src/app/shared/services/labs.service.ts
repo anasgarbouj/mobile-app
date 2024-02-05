@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { IResponse } from '../interfaces/api-response';
 import { ILocation } from '../interfaces/location';
 import { ILab } from '../interfaces/Lab';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -11,7 +12,7 @@ import { ILab } from '../interfaces/Lab';
 })
 export class LabsService {
 
-  private baseUrl : string = "https://kioskbackend.xtend.tv/ui";
+  private baseUrl : string = environment.baseUrl;
   constructor() { }
   private readonly http = inject(HttpClient)
   public fetchLabs(location:ILocation,search:string=''){
@@ -19,6 +20,6 @@ export class LabsService {
   }
 
   public fetchLabsByQrCode(location:ILocation,qrCodeValue:string=''){
-    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search-sites/?lat=${location.lat}&long=${location.long}&search=${qrCodeValue}`)
+    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search-sites/?lat=${location.lat}&long=${location.long}&virtual_code=${qrCodeValue}`)
   }
 }
