@@ -15,6 +15,7 @@ import { IdentificationComponent } from './pages/identification/identification.c
 import { SquareRoundedIconButtonComponent } from './components/square-rounded-icon-button/square-rounded-icon-button.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     PublicRoutingModule,
     SharedModule,
+    FormsModule
   ]
 })
 export class PublicModule { }

@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
+import { catchError, map, of, take } from 'rxjs';
+import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket';
+import { TicketsService } from 'src/app/shared/services/tickets.service';
 
 @Component({
   selector: 'app-identification',
@@ -10,11 +13,15 @@ import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 })
 export class IdentificationComponent {
 
-  // private debounceTimer: any;
-  // private debounceTime = 300;
+  appointmentID : string = "" ;
+  private stopScanning : boolean = false ;
+  private readonly ticketServices = inject(TicketsService);
+  private kioskGroupId : number = 0 ;
 
   constructor(private _router: Router) {
-
+    const kioskId = this._router.getCurrentNavigation()?.extras.state?.['kioskId'];
+    console.log("Appointment page - KIOSK GROUP ID :", kioskId);
+    this.kioskGroupId = kioskId;
   }
 
   public handle(action: any, fn: string): void {
@@ -32,15 +39,7 @@ export class IdentificationComponent {
   }
 
 
-  // handleEvent(event : ScannerQRCodeResult[]){
-  //   clearTimeout(this.debounceTimer);
-  //   this.debounceTimer = setTimeout(() => {
-  //    console.log(event[0].value);
-  //   }, this.debounceTime);
 
-  // }
-
-  private stopScanning : boolean = false ;
 
   handleEvent(event : ScannerQRCodeResult[]){
     if(!this.stopScanning) {
@@ -48,6 +47,34 @@ export class IdentificationComponent {
       this.stopScanning = ! this.stopScanning ;
       this._router.navigate(["/labs"])
     }
+  }
+
+  submitData(){
+    console.log("TEST APPOINTMENT ID ---",this.appointmentID);
+
+    const appointmentTicket: IAppointmentTicket = {
+      kiosk_group_id: this.kioskGroupId,
+      schedule_activity_filler_appointment_id: this.appointmentID
+    };
+
+    this.ticketServices.createTicketWithAppointment(appointmentTicket) .pipe(
+      take(1),
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(error => {
+        console.error('Error creating ticket:', error);
+        return of(null);
+      })
+    )
+    .subscribe((ticketResponse) => {
+        console.log("Ticket Response:", ticketResponse);
+     }
+    )
+    //clear field after sending data
+    this.appointmentID=""
+
   }
 
 }

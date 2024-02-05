@@ -24,11 +24,11 @@ export class IdentifyLabComponent implements OnInit {
   private readonly geolocationService = inject (GeolocationService)
   private labs : ILab[] = [];
 
-
   constructor(private _router: Router ,private popUpService: PopupService ,private route: ActivatedRoute) {
 
-
   }
+
+
   ngOnInit(): void {
    const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
    console.log("List Of Labs Recieved From Home :",labs);
@@ -38,7 +38,6 @@ export class IdentifyLabComponent implements OnInit {
 
   navigateToLabs() {
     console.log("test", this.labs);
-
     this._router.navigate(["/labs"], {state : {labs : this.labs}})
   }
 
@@ -83,7 +82,8 @@ export class IdentifyLabComponent implements OnInit {
           console.log("Response Info : ",response.info);
           console.log("Response Data : ",response.data);
           const lab = response.data as ILab[] ;
-          this.checkResponse(response.info , lab[0].configuration);
+          console.log(lab[0].kiosk_group_id);
+          this.checkResponse(response.info , lab[0].configuration , lab[0].kiosk_group_id);
         })
       })
 
@@ -93,7 +93,7 @@ export class IdentifyLabComponent implements OnInit {
 
   }
 
-  checkResponse(info:string , config : number|null =null){
+  checkResponse(info:string , config : number|null =null , kioskID : number |null =null){
     switch(info){
       case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
         this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
@@ -108,7 +108,7 @@ export class IdentifyLabComponent implements OnInit {
         this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
         break;
       case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS" :
-        this._router.navigate(["/main-app"] , {state : {config : config,}});
+        this._router.navigate(["/main-app"] , {state : {config : config, kioskID : kioskID}});
         console.log("navigating to : main-app");
         break;
       default :

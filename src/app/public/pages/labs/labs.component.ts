@@ -14,6 +14,7 @@ import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 })
 export class LabsComponent implements OnInit {
 
+  private kioskGroupId : number= 0;
 
   constructor(private _router: Router ,private route: ActivatedRoute , private popupService :PopupService) { }
 
@@ -21,6 +22,8 @@ export class LabsComponent implements OnInit {
 
   ngOnInit() {
 
+   const kioskID = this._router.getCurrentNavigation()?.extras.state?.['kioskID'];
+   this.kioskGroupId= kioskID;
    const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
    if (labs && labs.length > 0) {
     console.log("List Of Labs Received:", labs);
@@ -34,7 +37,7 @@ export class LabsComponent implements OnInit {
 
   navigateToIdentification(item: ILab) {
     console.log("clicked on " + item.kiosk_group_id);
-    this._router.navigate(["/main-app"] ,{state:{config : item.configuration}})
+    this._router.navigate(["/main-app"] ,{state:{config : item.configuration , kioskID : item.kiosk_group_id}})
   }
 
 }
