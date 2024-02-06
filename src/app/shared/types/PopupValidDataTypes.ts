@@ -14,5 +14,6 @@ export enum PopupValidDataTypes {
     KioskGroupNotFound ="KIOSK_GROUP_NOT_FOUND",
     ServiceNotFound ="SERVICE_NOT_FOUND",
     AppointmentInWrongKiosk ="SCHEDULE_ACTIVITY_IN_WRONG_KIOSK_GROUP",
-    AppointmentAlreadyTreated = "SCHEDULE_ACTIVITY_ALREADY_TREATED"
+    AppointmentAlreadyTreated = "SCHEDULE_ACTIVITY_ALREADY_TREATED",
+    AppointmentNotFound = "SCHEDULE_ACTIVITY_NOT_FOUND"
   }

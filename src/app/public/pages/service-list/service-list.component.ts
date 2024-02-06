@@ -1,8 +1,12 @@
 import { IService } from './../../../shared/services/service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import { catchError, map, of, take } from 'rxjs';
+import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
+import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { LabServicesService } from 'src/app/shared/services/lab_services.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { TicketsService } from 'src/app/shared/services/tickets.service';
 
 @Component({
   selector: 'app-service-list',
@@ -14,16 +18,22 @@ export class ServiceListComponent implements OnInit {
 
 
   private configID : number =0;
+  private kioskGroupId : number =0;
   private readonly labServices = inject(LabServicesService)
+  private readonly ticketServices = inject(TicketsService);
+  private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
   items: IService[]  = [];
 
-  constructor(private _router: Router ,private cdr: ChangeDetectorRef) { }
+
+  constructor(private _router: Router ,private cdr: ChangeDetectorRef , private popupService : PopupService) { }
 
 
   ngOnInit() {
     const config = this._router.getCurrentNavigation()?.extras.state?.['config'];
+    const kioskId = this._router.getCurrentNavigation()?.extras.state?.['kioskId'];
     console.log("configId recieved from lab :",config);
     this.configID = config ;
+    this.kioskGroupId = kioskId;
     this.getLabRelatedServices() ;
   }
 
@@ -44,10 +54,40 @@ export class ServiceListComponent implements OnInit {
 
   }
 
-  navigateToEmail(item: any) {
-    console.log("clicked on " + item.name);
+  navigateToEmail(item: IService) {
+    console.log("clicked on " + item.service_name);
     this._router.navigate(["/email-confirmation"])
+    const serviceTicket: IServiceTicket = {
+      kiosk_group_id: this.kioskGroupId,
+      service_id : item.service_id
+    };
+
+    this.ticketServices.createTicketWithService(serviceTicket).pipe(
+      take(1),
+      map(res => {
+        console.log(res);
+        return res;
+      }),
+      catchError(error => {
+        console.error('Error creating ticket:', error);
+        console.error('Error Info:', error.error.info);
+        this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
+        return of(null);
+      })
+    )
+    .subscribe((ticketResponse) => {
+        console.log("Ticket Response:", ticketResponse);
+        if (ticketResponse && ticketResponse.info) {
+          this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
+          console.log("navigating to email confirmation");
+
+          this._router.navigate(["email-confirmation"]);
+        }
+     }
+    )
+
   }
+
 
 
 }

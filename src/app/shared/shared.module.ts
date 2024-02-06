@@ -20,6 +20,7 @@ import { ServiceNotFoundComponent } from './components/popups/service-not-found/
 import { KioskGroupNotFoundComponent } from './components/popups/kiosk-group-not-found/kiosk-group-not-found.component';
 import { AppointmentInWrongKioskComponent } from './components/popups/appointment-in-wrong-kiosk/appointment-in-wrong-kiosk.component';
 import { AppointmentAlreadyTreatedComponent } from './components/popups/appointment-already-treated/appointment-already-treated.component';
+import { AppointmentNotFoundComponent } from './components/popups/appointment-not-found/appointment-not-found.component';
 
 LOAD_WASM().subscribe();
 
@@ -42,7 +43,8 @@ LOAD_WASM().subscribe();
     ServiceNotFoundComponent,
     KioskGroupNotFoundComponent,
     AppointmentInWrongKioskComponent,
-    AppointmentAlreadyTreatedComponent
+    AppointmentAlreadyTreatedComponent,
+    AppointmentNotFoundComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { catchError, map, of, take } from 'rxjs';
+import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
@@ -18,6 +19,7 @@ export class IdentificationComponent {
   appointmentID : string = "" ;
   private stopScanning : boolean = false ;
   private readonly ticketServices = inject(TicketsService);
+  private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popUpService)
   private kioskGroupId : number = 0 ;
 
   constructor(private _router: Router , private popUpService: PopupService) {
@@ -60,7 +62,7 @@ export class IdentificationComponent {
         catchError(error => {
           console.error('Error creating ticket:', error);
           console.error('Error Info:', error.error.info);
-          this.mapErrorInfo(error.error.info)
+          this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
           return of(null);
         })
       )
@@ -90,14 +92,14 @@ export class IdentificationComponent {
       catchError(error => {
         console.error('Error creating ticket:', error);
         console.error('Error Info:', error.error.info);
-        this.mapErrorInfo(error.error.info)
+        this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
         return of(null);
       })
     )
     .subscribe((ticketResponse) => {
         console.log("Ticket Response:", ticketResponse);
         if (ticketResponse && ticketResponse.info) {
-          this.mapSuccessInfo(ticketResponse.info);
+          this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
           this._router.navigate(["private/lab/:ticket-id"]);
         }
      }
@@ -107,40 +109,6 @@ export class IdentificationComponent {
 
   }
 
-  mapErrorInfo(info :string){
-    switch(info) {
-      case "CREATE_TICKET_INVALID_ENTRIES":
-        this.popUpService.openPopup(PopupValidDataTypes.WrongID);
-        break;
-      case "SCHEDULE_ACTIVITY_IN_WRONG_KIOSK_GROUP" :
-        this.popUpService.openPopup(PopupValidDataTypes.AppointmentInWrongKiosk);
-        break;
-      case "SERVICE_NOT_FOUND" :
-          this.popUpService.openPopup(PopupValidDataTypes.ServiceNotFound);
-          break;
-      case "KIOSK_GROUP_NOT_FOUND" :
-          this.popUpService.openPopup(PopupValidDataTypes.KioskGroupNotFound);
-          break;
-      default :
-        console.log("Unknown error happened");
-        break;
 
-    }
-  }
-
-  mapSuccessInfo(info : string){
-    switch(info) {
-      case "SCHEDULE_ACTIVITY_ALREADY_TREATED":
-        this.popUpService.openPopup(PopupValidDataTypes.AppointmentAlreadyTreated);
-        break;
-      case "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS" :
-        console.log(info);
-        break;
-      default :
-        console.log("Unknown error happened");
-        break;
-
-  }
-}
 
 }

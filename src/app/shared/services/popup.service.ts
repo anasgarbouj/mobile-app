@@ -14,6 +14,7 @@ import { WrongIdComponent } from '../components/popups/wrong-id/wrong-id.compone
 import { AppointmentInWrongKioskComponent } from '../components/popups/appointment-in-wrong-kiosk/appointment-in-wrong-kiosk.component';
 import { KioskGroupNotFoundComponent } from '../components/popups/kiosk-group-not-found/kiosk-group-not-found.component';
 import { ServiceNotFoundComponent } from '../components/popups/service-not-found/service-not-found.component';
+import { AppointmentNotFoundComponent } from '../components/popups/appointment-not-found/appointment-not-found.component';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,9 @@ export class PopupService {
         break
       case PopupValidDataTypes.ServiceNotFound :
         this.open(ServiceNotFoundComponent)
+        break
+      case PopupValidDataTypes.AppointmentNotFound:
+        this.open(AppointmentNotFoundComponent)
         break
     }
 
