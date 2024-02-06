@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { IServiceTicket } from '../interfaces/service-ticket';
 import { IAppointmentTicket } from '../interfaces/appointment-ticket';
 import { IResponse } from '../interfaces/api-response';
+import { ITicket } from '../interfaces/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class TicketsService {
   private readonly http = inject(HttpClient)
 
   createTicketWithService(ticket : IServiceTicket){
-    return this.http.post<IResponse<any>>(`${this.baseUrl}/virtual_ticket/create-ticket/service/`,ticket)
+    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/create-ticket/service/`,ticket)
   }
 
   createTicketWithAppointment(ticket : IAppointmentTicket){

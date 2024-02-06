@@ -15,6 +15,7 @@ import { AppointmentInWrongKioskComponent } from '../components/popups/appointme
 import { KioskGroupNotFoundComponent } from '../components/popups/kiosk-group-not-found/kiosk-group-not-found.component';
 import { ServiceNotFoundComponent } from '../components/popups/service-not-found/service-not-found.component';
 import { AppointmentNotFoundComponent } from '../components/popups/appointment-not-found/appointment-not-found.component';
+import { EmailNotSentComponent } from '../components/popups/email-not-sent/email-not-sent.component';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,10 @@ export class PopupService {
       case PopupValidDataTypes.AppointmentNotFound:
         this.open(AppointmentNotFoundComponent)
         break
+      case PopupValidDataTypes.Email_Not_Sent:
+        this.open(EmailNotSentComponent)
+        break
+
     }
 
   }

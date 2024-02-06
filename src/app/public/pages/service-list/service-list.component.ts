@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, map, of, take } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
+import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { LabServicesService } from 'src/app/shared/services/lab_services.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
@@ -56,7 +57,7 @@ export class ServiceListComponent implements OnInit {
 
   navigateToEmail(item: IService) {
     console.log("clicked on " + item.service_name);
-    this._router.navigate(["/email-confirmation"])
+
     const serviceTicket: IServiceTicket = {
       kiosk_group_id: this.kioskGroupId,
       service_id : item.service_id
@@ -80,9 +81,9 @@ export class ServiceListComponent implements OnInit {
         if (ticketResponse && ticketResponse.info) {
           this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
           console.log("navigating to email confirmation");
-
-          this._router.navigate(["email-confirmation"]);
-        }
+          const ticket = ticketResponse.data as ITicket
+          console.log("TICKET ID TO SEND ---",ticket.ticket_id);
+          this._router.navigate(["/email-confirmation"] , {state : {ticketId : ticket.ticket_id}})        }
      }
     )
 
