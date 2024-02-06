@@ -10,6 +10,10 @@ import { EmailSentPopupComponent } from '../components/popups/email-sent-popup/e
 import { ScannedLabNotFoundComponent } from '../components/popups/scanned-lab-not-found/scanned-lab-not-found.component';
 import { InvalidLabQrComponent } from '../components/popups/invalid-lab-qr/invalid-lab-qr.component';
 import { NoNearbyLabsComponent } from '../components/popups/no-nearby-labs/no-nearby-labs.component';
+import { WrongIdComponent } from '../components/popups/wrong-id/wrong-id.component';
+import { AppointmentInWrongKioskComponent } from '../components/popups/appointment-in-wrong-kiosk/appointment-in-wrong-kiosk.component';
+import { KioskGroupNotFoundComponent } from '../components/popups/kiosk-group-not-found/kiosk-group-not-found.component';
+import { ServiceNotFoundComponent } from '../components/popups/service-not-found/service-not-found.component';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +54,18 @@ export class PopupService {
       case PopupValidDataTypes.NoNearbyLabs:
         this.open(NoNearbyLabsComponent)
         break
-
+      case PopupValidDataTypes.WrongID :
+        this.open(WrongIdComponent)
+        break
+      case PopupValidDataTypes.AppointmentInWrongKiosk:
+        this.open(AppointmentInWrongKioskComponent )
+        break
+      case PopupValidDataTypes.KioskGroupNotFound :
+        this.open(KioskGroupNotFoundComponent)
+        break
+      case PopupValidDataTypes.ServiceNotFound :
+        this.open(ServiceNotFoundComponent)
+        break
     }
 
   }
