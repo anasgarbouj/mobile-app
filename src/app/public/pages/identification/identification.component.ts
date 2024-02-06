@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { catchError, map, of, take } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket';
+import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
 import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
@@ -67,9 +69,15 @@ export class IdentificationComponent {
         })
       )
       .subscribe((ticketResponse) => {
-          console.log("Ticket Response:", ticketResponse);
-          this._router.navigate(["private/lab/:ticket-id"])
+        console.log("Ticket Response:", ticketResponse);
+        if (ticketResponse && ticketResponse.info) {
+          this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
+          const ticket = ticketResponse.data as ITicket
+          console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
+
+          this._router.navigate(["/email-confirmation"], {state : {ticketId : ticket.ticket_id}});
        }
+      }
       )
 
     }
@@ -100,7 +108,10 @@ export class IdentificationComponent {
         console.log("Ticket Response:", ticketResponse);
         if (ticketResponse && ticketResponse.info) {
           this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-          this._router.navigate(["private/lab/:ticket-id"]);
+          const ticket = ticketResponse.data as ITicket
+          console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
+
+          this._router.navigate(["/email-confirmation"], {state : {ticketId : ticket.ticket_id}});
         }
      }
     )
