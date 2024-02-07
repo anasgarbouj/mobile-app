@@ -18,7 +18,7 @@ export class EmailConfirmationComponent implements OnInit {
   private ticketId : number|null = null;
 
   constructor(
-    private popUpService: PopupService , 
+    private popUpService: PopupService ,
     private _router: Router,
     private route: ActivatedRoute,
     private readonly emailService : EmailService
@@ -27,18 +27,32 @@ export class EmailConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
+      console.log("TESSST---", params);
+
       this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
+
     });
   }
 
 
   sendEmail() {
-    if (this.userEmail && this.ticketId) {      
+
+    if(!this.ticketId){
+      this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
+      return;
+    }
+
+    if(!this.userEmail){
+      //change message
+      this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
+      return;
+    }
+    if (this.userEmail && this.ticketId) {
       const emailObject: IEmail = {
         email: this.userEmail,
         ticket_id: this.ticketId
       }
-  
+
       this.emailService.sendTicketViaEmail(emailObject).pipe(take(1))
         .subscribe({
           next: (response) => {

@@ -39,10 +39,10 @@ const routes: Routes = [
         component: IdentificationComponent,
       },
       {
-        path: 'email-confirmation',
+        path: 'email-confirmation/:ticketId',
         component: EmailConfirmationComponent
       },
-    
+
       {
         path: '',
         redirectTo: 'home',
