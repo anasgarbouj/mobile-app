@@ -36,19 +36,11 @@ export class EmailConfirmationComponent implements OnInit {
       this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
     });
 
-    // TODO: delete and get current_position in api call
-    this.geolocationService.getCurrentPosition().then((position) => {
-      console.log("Current user position is : ",position as ILocation);
-      this.currentPosition = position as ILocation
-    }).catch(error =>
-      {
-        console.log("Error getting current position", error);
-    })
 
   }
 
 
-  sendEmail() {
+  async sendEmail() {
     if(!this.ticketId){
       this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
       return;
@@ -60,12 +52,20 @@ export class EmailConfirmationComponent implements OnInit {
       return;
     }
 
-    if (this.userEmail && this.ticketId) {
-      // TODO: get current_position here not in ngOnInit
+    if (this.userEmail && this.ticketId && this.kioskGroupId) {
+
+      try {
+        const position = await this.geolocationService.getCurrentPosition();
+        console.log("Current user position is: ", position);
+        this.currentPosition = position as ILocation;
+      } catch (error) {
+        console.log("Error getting current position", error);
+      }
+
       const emailObject: IEmail = {
         email: this.userEmail,
         ticket_id: this.ticketId,
-        kioskId : this.kioskGroupId, //TODO: kioskGroupId not kioskId
+        kiosk_group_id : this.kioskGroupId,
         current_position: this.currentPosition
       }
       console.log("Email Object--",emailObject);
