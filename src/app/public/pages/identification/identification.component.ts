@@ -36,13 +36,7 @@ export class IdentificationComponent implements OnInit {
       this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
     });
   }
-  ngOnInit(): void {
-    this.geolocationService.getCurrentPosition().then((position) => {
-      console.log("Current user position is : ",position as ILocation);
-      this.currentPosition = position as ILocation
-    }).catch(error => {console.log("Error getting current position", error);
-    })
-  }
+  ngOnInit(): void {}
 
   public handle(action: any, fn: string): void {
     const playDeviceFacingBack = (devices: any[]) => {
@@ -58,20 +52,32 @@ export class IdentificationComponent implements OnInit {
     }
   }
 
-  handleEvent(event: ScannerQRCodeResult[]) {
+  async handleEvent(event: ScannerQRCodeResult[]) {
     if (!this.stopScanning) {
       if (!this.kioskGroupId) {
         console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
         return
       }
-
       console.log((event[0].value));
       this.stopScanning = !this.stopScanning;
+
+      try {
+        const position = await this.geolocationService.getCurrentPosition();
+        console.log("Current user position is: ", position);
+        this.currentPosition = position as ILocation;
+      } catch (error) {
+        console.log("Error getting current position", error);
+      }
+
+
       const appointmentTicket: IAppointmentTicket = {
         kiosk_group_id: this.kioskGroupId,
         schedule_activity_filler_appointment_id: event[0].value,
         current_position : this.currentPosition
       };
+
+      console.log("Appointment Ticket Object ---" , appointmentTicket);
+
       this.ticketServices.createTicketWithAppointment(appointmentTicket).pipe(
         take(1),
         map(res => {
@@ -92,18 +98,25 @@ export class IdentificationComponent implements OnInit {
             const ticket = ticketResponse.data as ITicket
             console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
 
-            this._router.navigate(["/email-confirmation"], { state: { ticketId: ticket.ticket_id } });
+            this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`]);
           }
         }
         )
     }
   }
 
-  submitData() {
+  async submitData() {
     console.log("TEST APPOINTMENT ID ---", this.appointmentId);
     if (!this.kioskGroupId) {
       console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
       return
+    }
+    try {
+      const position = await this.geolocationService.getCurrentPosition();
+      console.log("Current user position is: ", position);
+      this.currentPosition = position as ILocation;
+    } catch (error) {
+      console.log("Error getting current position", error);
     }
 
     const appointmentTicket: IAppointmentTicket = {
@@ -111,6 +124,9 @@ export class IdentificationComponent implements OnInit {
       schedule_activity_filler_appointment_id: this.appointmentId,
       current_position : this.currentPosition
     };
+
+    console.log("Appointment Ticket Object ---" , appointmentTicket);
+
 
     this.ticketServices.createTicketWithAppointment(appointmentTicket).pipe(
       take(1),
@@ -132,7 +148,7 @@ export class IdentificationComponent implements OnInit {
           const ticket = ticketResponse.data as ITicket
           console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
 
-          this._router.navigate(["/email-confirmation"], { state: { ticketId: ticket.ticket_id } });
+          this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`]);
         }
       }
       )
