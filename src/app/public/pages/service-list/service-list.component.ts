@@ -3,8 +3,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, take } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
+import { ILocation } from 'src/app/shared/interfaces/location';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
+import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { LabServicesService } from 'src/app/shared/services/lab_services.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
@@ -23,14 +25,15 @@ export class ServiceListComponent implements OnInit {
   private kioskGroupId: number | null = null;
 
   private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
-
+  private currentPosition :ILocation | null = null;
   constructor(
     private _router: Router,
     private cdr: ChangeDetectorRef,
     private popupService: PopupService,
     private route: ActivatedRoute,
     private readonly labServices : LabServicesService,
-    private readonly ticketServices: TicketsService
+    private readonly ticketServices: TicketsService,
+    private readonly geolocationService : GeolocationService
   ) { }
 
   ngOnInit() {
@@ -41,6 +44,12 @@ export class ServiceListComponent implements OnInit {
         this.getLabRelatedServices(this.configId);
       }
     });
+
+    this.geolocationService.getCurrentPosition().then((position) => {
+      console.log("Current user position is : ",position as ILocation);
+      this.currentPosition = position as ILocation
+    }).catch(error => {console.log("Error getting current position", error);
+    })
   }
 
   getLabRelatedServices(configId: number) {
@@ -60,12 +69,13 @@ export class ServiceListComponent implements OnInit {
 
   navigateToEmail(item: IService) {
     console.log("clicked on " + item.service_name);
-    if (this.kioskGroupId) {      
+    if (this.kioskGroupId) {
       const serviceTicket: IServiceTicket = {
         kiosk_group_id: this.kioskGroupId,
-        service_id: item.service_id
+        service_id: item.service_id,
+        current_position : this.currentPosition
       };
-  
+
       this.ticketServices.createTicketWithService(serviceTicket).pipe(
         take(1),
         map(res => {
