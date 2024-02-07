@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { PublicRoutingModule } from './public-routing.module';
 import { HomeComponent } from './pages/home/home.component';
 import { LabsComponent } from './pages/labs/labs.component';
-import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
 import { LabCardComponent } from './components/lab-card/lab-card.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
@@ -16,6 +15,7 @@ import { IdentificationComponent } from './pages/identification/identification.c
 import { SquareRoundedIconButtonComponent } from './components/square-rounded-icon-button/square-rounded-icon-button.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +23,6 @@ import { SharedModule } from '../shared/shared.module';
     PublicComponent,
     HomeComponent,
     LabsComponent,
-    TicketDetailsComponent,
     LoaderSpinnerComponent,
     LabCardComponent,
     IdentifyLabComponent,
@@ -38,6 +37,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     PublicRoutingModule,
     SharedModule,
+    FormsModule
   ]
 })
 export class PublicModule { }

@@ -19,6 +19,12 @@ export class TicketComponent  implements OnInit {
   ticketTitle : String = "This is the default ticket title"
 
   @Input()
+  ownerName : String ="nom proprietaire"
+
+  @Input()
+  ownerDetails : String ="Information du propriétaire"
+
+  @Input()
   ticketNumber : String ="056"
 
   @Input()

@@ -10,8 +10,20 @@ import { TicketCalledPopupComponent } from './components/popups/ticket-called-po
 import { TicketSuccessPopupComponent } from './components/popups/ticket-success-popup/ticket-success-popup.component';
 import { WarningDeleteTicketPopupComponent } from './components/popups/warning-delete-ticket-popup/warning-delete-ticket-popup.component';
 import { LabProximityPopupComponent } from './components/popups/lab-proximity-popup/lab-proximity-popup.component';
+import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
+import {HttpClientModule} from '@angular/common/http';
+import { InvalidLabQrComponent } from './components/popups/invalid-lab-qr/invalid-lab-qr.component';
+import { ScannedLabNotFoundComponent } from './components/popups/scanned-lab-not-found/scanned-lab-not-found.component';
+import { NoNearbyLabsComponent } from './components/popups/no-nearby-labs/no-nearby-labs.component';
+import { WrongIdComponent } from './components/popups/wrong-id/wrong-id.component';
+import { ServiceNotFoundComponent } from './components/popups/service-not-found/service-not-found.component';
+import { KioskGroupNotFoundComponent } from './components/popups/kiosk-group-not-found/kiosk-group-not-found.component';
+import { AppointmentInWrongKioskComponent } from './components/popups/appointment-in-wrong-kiosk/appointment-in-wrong-kiosk.component';
+import { AppointmentAlreadyTreatedComponent } from './components/popups/appointment-already-treated/appointment-already-treated.component';
+import { AppointmentNotFoundComponent } from './components/popups/appointment-not-found/appointment-not-found.component';
+import { EmailNotSentComponent } from './components/popups/email-not-sent/email-not-sent.component';
 
-
+LOAD_WASM().subscribe();
 
 @NgModule({
   declarations: [
@@ -24,10 +36,21 @@ import { LabProximityPopupComponent } from './components/popups/lab-proximity-po
     ProximityPopupComponent,
     TicketCalledPopupComponent,
     TicketSuccessPopupComponent,
-    WarningDeleteTicketPopupComponent
+    WarningDeleteTicketPopupComponent,
+    InvalidLabQrComponent,
+    ScannedLabNotFoundComponent,
+    NoNearbyLabsComponent,
+    WrongIdComponent,
+    ServiceNotFoundComponent,
+    KioskGroupNotFoundComponent,
+    AppointmentInWrongKioskComponent,
+    AppointmentAlreadyTreatedComponent,
+    AppointmentNotFoundComponent,
+    EmailNotSentComponent
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     IonicModule.forRoot({
       innerHTMLTemplatesEnabled: true
     })
@@ -36,7 +59,8 @@ import { LabProximityPopupComponent } from './components/popups/lab-proximity-po
     HeaderComponent,
     SearchBarComponent,
     DividerComponent,
-    IonicModule
+    IonicModule,
+    NgxScannerQrcodeModule
   ]
 })
 export class SharedModule { }

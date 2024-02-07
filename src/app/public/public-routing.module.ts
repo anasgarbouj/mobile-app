@@ -7,8 +7,6 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
 import { IdentificationComponent } from './pages/identification/identification.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
-import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
-import { CalledTicketComponent } from './pages/called-ticket/called-ticket.component';
 import { PublicComponent } from './public.component';
 
 const routes: Routes = [
@@ -29,29 +27,22 @@ const routes: Routes = [
         component: LabsComponent
       },
       {
-        path: 'main-app',
+        path: 'main-app/:kioskGroupId/:configId',
         component: MainPageComponent
       },
       {
-        path: 'service-list',
+        path: 'service-list/:kioskGroupId/:configId',
         component: ServiceListComponent
       },
       {
-        path: 'identify',
+        path: 'identify/:kioskGroupId',
         component: IdentificationComponent,
       },
       {
-        path: 'email-confirmation',
+        path: 'email-confirmation/:ticketId/:kioskGroupId',
         component: EmailConfirmationComponent
       },
-      {
-        path: 'lab/:ticket-id',
-        component: TicketDetailsComponent
-      },
-      {
-        path: 'lab/:ticket-id/:status',
-        component: CalledTicketComponent
-      },
+
       {
         path: '',
         redirectTo: 'home',

@@ -7,7 +7,9 @@
 
     <ion-list>
       <app-lab-card (click)="navigateToIdentification(item)" *ngFor="let item of items; let index"
-        img="https://picsum.photos/80/80?random={{index}}" name="{{item}}" address="Adresse {{index}}"></app-lab-card>
+        img="https://picsum.photos/80/80?random={{index}}"
+        name="{{item.kiosk_group_name}}"
+        address="Adresse {{item.kiosk_group_geo_address}}"></app-lab-card>
     </ion-list>
 
   </div>
