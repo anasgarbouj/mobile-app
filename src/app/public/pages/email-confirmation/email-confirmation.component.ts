@@ -18,13 +18,12 @@ export class EmailConfirmationComponent implements OnInit {
 
   userEmail : string = ""
   private ticketId : number|null = null;
-  private kioskId : number |null = null;
+  private kioskGroupId : number |null = null;
   private currentPosition :ILocation | null = null;
 
 
   constructor(
     private popUpService: PopupService ,
-    private _router: Router,
     private route: ActivatedRoute,
     private readonly emailService : EmailService,
     private readonly geolocationService : GeolocationService
@@ -33,13 +32,11 @@ export class EmailConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      console.log("TESSST---", params);
-
       this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
-      this.kioskId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
-
+      this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
     });
 
+    // TODO: delete and get current_position in api call
     this.geolocationService.getCurrentPosition().then((position) => {
       console.log("Current user position is : ",position as ILocation);
       this.currentPosition = position as ILocation
@@ -52,22 +49,23 @@ export class EmailConfirmationComponent implements OnInit {
 
 
   sendEmail() {
-
     if(!this.ticketId){
       this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
       return;
     }
 
     if(!this.userEmail){
-      //change message
+      //TODO: change message
       this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
       return;
     }
+
     if (this.userEmail && this.ticketId) {
+      // TODO: get current_position here not in ngOnInit
       const emailObject: IEmail = {
         email: this.userEmail,
         ticket_id: this.ticketId,
-        kioskId : this.kioskId,
+        kioskId : this.kioskGroupId, //TODO: kioskGroupId not kioskId
         current_position: this.currentPosition
       }
       console.log("Email Object--",emailObject);
