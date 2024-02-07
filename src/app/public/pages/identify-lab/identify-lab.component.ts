@@ -20,12 +20,12 @@ export class IdentifyLabComponent implements OnInit {
   private stopScanning: boolean = false;
   private labs: ILab[] = [];
 
-  private readonly labsService = inject(LabsService)
-  private readonly geolocationService = inject(GeolocationService)
 
   constructor(
-    private _router: Router, 
-    private popUpService: PopupService
+    private _router: Router,
+    private popUpService: PopupService,
+    private readonly labsService :LabsService,
+    private geolocationService : GeolocationService
   ) {}
 
   ngOnInit(): void {

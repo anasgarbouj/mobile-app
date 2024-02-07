@@ -20,13 +20,13 @@ export class IdentificationComponent {
   private stopScanning: boolean = false;
   private kioskGroupId: number|null = null;
 
-  private readonly ticketServices = inject(TicketsService);
   private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popUpService)
 
   constructor(
-    private _router: Router, 
+    private _router: Router,
     private popUpService: PopupService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute ,
+    private readonly ticketServices : TicketsService
   ) {
     this.route.paramMap.subscribe(params => {
       this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;

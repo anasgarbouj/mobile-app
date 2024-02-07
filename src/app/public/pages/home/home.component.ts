@@ -16,10 +16,12 @@ import { ILab } from 'src/app/shared/interfaces/Lab';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _router: Router , private popUpService: PopupService) { }
-
-  private readonly labsService = inject(LabsService)
-  private readonly geolocationService = inject (GeolocationService)
+  constructor(
+     private _router: Router ,
+     private popUpService: PopupService,
+     private readonly geolocationService :GeolocationService,
+     private readonly labsService : LabsService
+     ) { }
 
   ngOnInit() {
     console.log("Checking GPS permission...");
