@@ -1,6 +1,6 @@
 import { IService } from './../../../shared/services/service';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, take } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
@@ -18,77 +18,79 @@ import { TicketsService } from 'src/app/shared/services/tickets.service';
 export class ServiceListComponent implements OnInit {
 
 
-  private configID : number =0;
-  private kioskGroupId : number =0;
-  private readonly labServices = inject(LabServicesService)
-  private readonly ticketServices = inject(TicketsService);
+  services: IService[] = [];
+  private configId: number | null = null;
+  private kioskGroupId: number | null = null;
+
   private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
-  items: IService[]  = [];
 
-
-  constructor(private _router: Router ,private cdr: ChangeDetectorRef , private popupService : PopupService) { }
-
+  constructor(
+    private _router: Router,
+    private cdr: ChangeDetectorRef,
+    private popupService: PopupService,
+    private route: ActivatedRoute,
+    private readonly labServices : LabServicesService,
+    private readonly ticketServices: TicketsService
+  ) { }
 
   ngOnInit() {
-    const config = this._router.getCurrentNavigation()?.extras.state?.['config'];
-    const kioskId = this._router.getCurrentNavigation()?.extras.state?.['kioskId'];
-    console.log("configId recieved from lab :",config);
-    this.configID = config ;
-    this.kioskGroupId = kioskId;
-    this.getLabRelatedServices() ;
+    this.route.paramMap.subscribe(params => {
+      this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
+      this.configId = params.get('configId') ? Number(params.get('configId')) : null;
+      if (this.configId) {
+        this.getLabRelatedServices(this.configId);
+      }
+    });
   }
 
-
-  getLabRelatedServices(){
-    this.labServices.fetchServices(this.configID).pipe(take(1))    .subscribe(
-      (res : any) => {
+  getLabRelatedServices(configId: number) {
+    this.labServices.fetchServices(configId).pipe(take(1)).subscribe({
+      next: (res: any) => {
         console.log("FETCH SERVICES :", res);
-        this.items = res.data;
+        this.services = res.data;
         this.cdr.detectChanges();
-        return  { info: res.info, data: res.data }
+        return { info: res.info, data: res.data }
       },
-      (error) => {
-        console.error("Error fetching services:", error);
-        console.error('Error Info:', error.error.info);
+      error: (err) => {
+        console.error("Error fetching services:", err);
+        console.error('Error Info:', err.error.info);
       }
-    );
-
+    });
   }
 
   navigateToEmail(item: IService) {
     console.log("clicked on " + item.service_name);
-
-    const serviceTicket: IServiceTicket = {
-      kiosk_group_id: this.kioskGroupId,
-      service_id : item.service_id
-    };
-
-    this.ticketServices.createTicketWithService(serviceTicket).pipe(
-      take(1),
-      map(res => {
-        console.log(res);
-        return res;
-      }),
-      catchError(error => {
-        console.error('Error creating ticket:', error);
-        console.error('Error Info:', error.error.info);
-        this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
-        return of(null);
-      })
-    )
-    .subscribe((ticketResponse) => {
+    if (this.kioskGroupId) {      
+      const serviceTicket: IServiceTicket = {
+        kiosk_group_id: this.kioskGroupId,
+        service_id: item.service_id
+      };
+  
+      this.ticketServices.createTicketWithService(serviceTicket).pipe(
+        take(1),
+        map(res => {
+          return res;
+        }),
+        catchError(error => {
+          console.error('Error creating ticket:', error);
+          console.error('Error Info:', error.error.info);
+          this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
+          return of(null);
+        })
+      ).subscribe((ticketResponse) => {
         console.log("Ticket Response:", ticketResponse);
         if (ticketResponse && ticketResponse.info) {
           this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
           console.log("navigating to email confirmation");
           const ticket = ticketResponse.data as ITicket
-          console.log("TICKET ID TO SEND ---",ticket.ticket_id);
-          this._router.navigate(["/email-confirmation"] , {state : {ticketId : ticket.ticket_id}})        }
-     }
-    )
-
+          console.log("TICKET ID TO SEND ---", ticket.ticket_id);
+          this._router.navigate([`/email-confirmation/${ticket.ticket_id}`])
+        }
+      })
+    }
+    else {
+      console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
+    }
   }
-
-
 
 }

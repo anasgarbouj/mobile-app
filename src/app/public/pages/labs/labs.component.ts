@@ -14,30 +14,27 @@ import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 })
 export class LabsComponent implements OnInit {
 
-  private kioskGroupId : number= 0;
+  constructor(
+    private _router: Router,
+    private route: ActivatedRoute,
+    private popupService: PopupService
+  ) { }
 
-  constructor(private _router: Router ,private route: ActivatedRoute , private popupService :PopupService) { }
-
-  items : ILab[] = [] ;
+  items: ILab[] = [];
 
   ngOnInit() {
-
-   const kioskID = this._router.getCurrentNavigation()?.extras.state?.['kioskID'];
-   this.kioskGroupId= kioskID;
-   const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
-   if (labs && labs.length > 0) {
-    console.log("List Of Labs Received:", labs);
-    this.items = labs;
-  } else {
-    console.log("No Available labs in this area!");
-    this.popupService.openPopup(PopupValidDataTypes.NoNearbyLabs);
-  }
-
+    const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
+    if (labs && labs.length > 0) {
+      console.log("List Of Labs Received:", labs);
+      this.items = labs;
+    } else {
+      console.log("No Available labs in this area!");
+      this.popupService.openPopup(PopupValidDataTypes.NoNearbyLabs);
+    }
   }
 
   navigateToIdentification(item: ILab) {
-    console.log("clicked on " + item.kiosk_group_id);
-    this._router.navigate(["/main-app"] ,{state:{config : item.configuration , kioskID : item.kiosk_group_id}})
+    console.log("clicked on: " + item);
+    this._router.navigate([`/main-app/${item.kiosk_group_id}/${item.configuration}`]);
   }
-
 }

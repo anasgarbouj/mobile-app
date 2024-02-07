@@ -114,6 +114,7 @@ export class CoreComponent {
       });
     }
 
+    // TODO: chta3ml hethi?
     fetchPublicKeyAndStore(): void {
       fetch(`${this.serverUrl}/subscription/`, {
           method: 'GET'

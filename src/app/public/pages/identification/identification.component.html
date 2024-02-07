@@ -3,7 +3,7 @@
     <div class="container">
         <h2 class="title">Identifier votre <br> Rendez-vous</h2>
         <ion-label class="id_label">ID du Rendez-vous:</ion-label>
-        <ion-input class="id_input" fill="outline" placeholder="543198" type="text" [(ngModel)]="appointmentID"></ion-input>
+        <ion-input class="id_input" fill="outline" placeholder="543198" type="text" [(ngModel)]="appointmentId"></ion-input>
         <app-divider text="Ou"></app-divider>
         <div class="img_container">
           <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" (click)="action.isStart ? action.stop() : action.start()"></ngx-scanner-qrcode>

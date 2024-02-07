@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  baseUrl: "https://kioskbackend.xtend.tv/ui",
+  // baseUrl: "https://kioskbackend.xtend.tv/ui",
+  baseUrl: "http://127.0.0.1:8000/ui",
   production: false
 };
 

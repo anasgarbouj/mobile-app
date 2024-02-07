@@ -27,15 +27,15 @@ const routes: Routes = [
         component: LabsComponent
       },
       {
-        path: 'main-app',
+        path: 'main-app/:kioskGroupId/:configId',
         component: MainPageComponent
       },
       {
-        path: 'service-list',
+        path: 'service-list/:kioskGroupId/:configId',
         component: ServiceListComponent
       },
       {
-        path: 'identify',
+        path: 'identify/:kioskGroupId',
         component: IdentificationComponent,
       },
       {

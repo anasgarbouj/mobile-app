@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -9,31 +9,37 @@ import { Router } from '@angular/router';
 })
 export class MainPageComponent implements OnInit {
 
-  private configID : number =0;
-  private kioskId : number =0;
+  private configId: number | null = null;
+  private kioskGroupId: number | null = null;
 
-  constructor(private _router: Router) { }
+  constructor(
+    private _router: Router,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    const config = this._router.getCurrentNavigation()?.extras.state?.['config'];
-    const kioskId = this._router.getCurrentNavigation()?.extras.state?.['kioskID'];
-    console.log("configId recieved from lab :",config);
-    console.log("Kiosk Group Id recieved from lab :", kioskId);
-
-    this.configID = config ;
-    this.kioskId= kioskId;
+    this.route.paramMap.subscribe(params => {
+      this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
+      this.configId = params.get('configId') ? Number(params.get('configId')) : null;
+    });
   }
 
 
   navigateToServiceList() {
     console.log("no rdv clicked");
-    this._router.navigate(["/service-list"], {state:{config : this.configID , kioskId : this.kioskId }})
-
+    if (this.kioskGroupId && this.configId) {
+      this._router.navigate([`/service-list/${this.kioskGroupId}/${this.configId}`])
+    } else {
+      console.log("kioskGroupId or configId value ERROR: ", this.kioskGroupId, this.configId);
+    }
   }
 
   navigateToIdentification() {
     console.log("identification clicked");
-    this._router.navigate(["/identify"] , {state: {kioskId : this.kioskId}})
-
+    if (this.kioskGroupId) {
+      this._router.navigate([`/identify/${this.kioskGroupId}`])
+    } else {
+      console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
+    }
   }
 }
