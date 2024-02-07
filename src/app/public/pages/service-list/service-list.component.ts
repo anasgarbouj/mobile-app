@@ -1,7 +1,7 @@
 import { IService } from '../../../shared/interfaces/service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, map, of, take } from 'rxjs';
+import { EMPTY, catchError, map, of, take, throwError } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { ILocation } from 'src/app/shared/interfaces/location';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
@@ -71,7 +71,7 @@ export class ServiceListComponent implements OnInit {
     });
   }
 
-  navigateToEmail(item: IService) {
+  createTicket(item: IService) {
     console.log("clicked on " + item.service_name);
     if (this.kioskGroupId) {
       const serviceTicket: IServiceTicket = {
@@ -84,13 +84,14 @@ export class ServiceListComponent implements OnInit {
       this.ticketServices.createTicketWithService(serviceTicket).pipe(
         take(1),
         map(res => {
+          console.log('qsdqssdsdq', res);
           return res;
         }),
         catchError(error => {
           console.error('Error creating ticket:', error);
           console.error('Error Info:', error.error.info);
           this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
-          return of(null);
+          return EMPTY;
         })
       ).subscribe((ticketResponse) => {
         console.log("Ticket Response:", ticketResponse);

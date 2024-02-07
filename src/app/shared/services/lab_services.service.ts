@@ -11,11 +11,12 @@ import { ILocation } from '../interfaces/location';
 export class LabServicesService {
 
   private baseUrl : string = environment.baseUrl;
-  private readonly http = inject(HttpClient)
 
-  constructor() { }
+  constructor(
+    private readonly http: HttpClient
+  ) { }
 
-  fetchServices(configId : number , position : ILocation|null , kioskId : number){
-    return this.http.get<IResponse<IService>>(`${this.baseUrl}/virtual_ticket/service-list/${configId}/?position=${position}?kioskId=${kioskId}`)
+  fetchServices(configId : number , position : ILocation|null , kioskGroupId : number){
+    return this.http.get<IResponse<IService>>(`${this.baseUrl}/virtual_ticket/service-list/${configId}/?lat=${position?.lat}&long=${position?.long}&kioskGroupId=${kioskGroupId}`)
   }
 }

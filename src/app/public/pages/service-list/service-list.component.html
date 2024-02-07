@@ -6,7 +6,7 @@
 
         <ion-spinner name="dots" class="loader-container" *ngIf="services && services.length === 0"></ion-spinner>
         <ion-list>
-            <app-service-card (click)="navigateToEmail(item)" *ngFor="let item of services; let index" name="{{item.service_name}}"
+            <app-service-card (click)="createTicket(item)" *ngFor="let item of services; let index" name="{{item.service_name}}"
                 color="{{item.service_color}}"></app-service-card>
         </ion-list>
     </div>
