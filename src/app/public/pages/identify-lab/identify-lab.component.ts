@@ -29,9 +29,7 @@ export class IdentifyLabComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // TODO: ???
-    // remove get labs in this component (by 1 or list) and do it in the next components
-    // by adding api validate labs?
+
     const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
     console.log("List Of Labs Recieved From Home :", labs);
     this.labs = labs && labs.length ? labs : [];
@@ -64,22 +62,22 @@ export class IdentifyLabComponent implements OnInit {
         console.log(position);
         if (!position) this.geolocationService.checkAndRequestPermission();
 
-        this.labsService.fetchLabsByQrCode(position as ILocation, event[0].value)
-          .pipe(take(1), map(res => {
-            return { info: res.info, data: res.data }
-          }),
-            catchError((error) => {
-              console.error('Error fetching labs:', error);
-              this.checkResponse(error?.error?.info);
-              return of({ info: 'Error', data: null }); // Return an observable with an error message
-            }))
-          .subscribe((response) => {
-            console.log("Response Info : ", response.info);
-            console.log("Response Data : ", response.data);
-            const lab = response.data as ILab[];
-            console.log(lab[0].kiosk_group_id);
-            this.checkResponse(response.info, lab[0].configuration, lab[0].kiosk_group_id);
-          })
+      this.labsService.fetchLabsByQrCode(position as ILocation, event[0].value)
+      .pipe(take(1), map(res => {
+        return { info: res.info, data: res.data }
+      }),
+        catchError((error) => {
+          console.error('Error fetching labs:', error);
+          this.checkResponse(error?.error?.info);
+          return of({ info: 'Error', data: null }); // Return an observable with an error message
+        }))
+      .subscribe((response) => {
+        console.log("Response Info : ", response.info);
+        console.log("Response Data : ", response.data);
+        const lab = response.data as ILab[];
+        console.log(lab[0].kiosk_group_id);
+        this.checkResponse(response.info, lab[0].configuration, lab[0].kiosk_group_id);
+})
       })
     }
   }
@@ -108,4 +106,4 @@ export class IdentifyLabComponent implements OnInit {
     }
   }
 
-}
+  }
