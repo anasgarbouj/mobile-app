@@ -40,20 +40,24 @@ export class ServiceListComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
       this.configId = params.get('configId') ? Number(params.get('configId')) : null;
-      if (this.configId) {
-        this.getLabRelatedServices(this.configId);
-      }
+
+      this.geolocationService.getCurrentPosition().then((position) => {
+        console.log("Current user position is : ",position as ILocation);
+        this.currentPosition = position as ILocation
+        if (this.configId && this.currentPosition && this.kioskGroupId) {
+          console.log(this.configId,"----",this.kioskGroupId,"----",this.currentPosition);
+          this.getLabRelatedServices(this.configId , this.currentPosition , this.kioskGroupId);
+        }
+      }).catch(error => {console.log("Error getting current position", error);
+      })
+
     });
 
-    this.geolocationService.getCurrentPosition().then((position) => {
-      console.log("Current user position is : ",position as ILocation);
-      this.currentPosition = position as ILocation
-    }).catch(error => {console.log("Error getting current position", error);
-    })
+
   }
 
-  getLabRelatedServices(configId: number) {
-    this.labServices.fetchServices(configId).pipe(take(1)).subscribe({
+  getLabRelatedServices(configId: number , position : ILocation , kioskId : number) {
+    this.labServices.fetchServices(configId , position, kioskId).pipe(take(1)).subscribe({
       next: (res: any) => {
         console.log("FETCH SERVICES :", res);
         this.services = res.data;
