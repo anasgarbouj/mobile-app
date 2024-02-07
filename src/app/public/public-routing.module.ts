@@ -39,7 +39,7 @@ const routes: Routes = [
         component: IdentificationComponent,
       },
       {
-        path: 'email-confirmation/:ticketId',
+        path: 'email-confirmation/:ticketId/:kioskGroupId',
         component: EmailConfirmationComponent
       },
 

@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
 import { IEmail } from 'src/app/shared/interfaces/email';
+import { ILocation } from 'src/app/shared/interfaces/location';
 import { EmailService } from 'src/app/shared/services/email.service';
+import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
@@ -16,12 +18,16 @@ export class EmailConfirmationComponent implements OnInit {
 
   userEmail : string = ""
   private ticketId : number|null = null;
+  private kioskId : number |null = null;
+  private currentPosition :ILocation | null = null;
+
 
   constructor(
     private popUpService: PopupService ,
     private _router: Router,
     private route: ActivatedRoute,
-    private readonly emailService : EmailService
+    private readonly emailService : EmailService,
+    private readonly geolocationService : GeolocationService
   ) { }
 
 
@@ -30,8 +36,18 @@ export class EmailConfirmationComponent implements OnInit {
       console.log("TESSST---", params);
 
       this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
+      this.kioskId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
 
     });
+
+    this.geolocationService.getCurrentPosition().then((position) => {
+      console.log("Current user position is : ",position as ILocation);
+      this.currentPosition = position as ILocation
+    }).catch(error =>
+      {
+        console.log("Error getting current position", error);
+    })
+
   }
 
 
@@ -50,8 +66,12 @@ export class EmailConfirmationComponent implements OnInit {
     if (this.userEmail && this.ticketId) {
       const emailObject: IEmail = {
         email: this.userEmail,
-        ticket_id: this.ticketId
+        ticket_id: this.ticketId,
+        kioskId : this.kioskId,
+        current_position: this.currentPosition
       }
+      console.log("Email Object--",emailObject);
+
 
       this.emailService.sendTicketViaEmail(emailObject).pipe(take(1))
         .subscribe({

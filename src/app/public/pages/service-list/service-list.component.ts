@@ -1,4 +1,4 @@
-import { IService } from './../../../shared/services/service';
+import { IService } from '../../../shared/interfaces/service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, map, of, take } from 'rxjs';
@@ -75,6 +75,7 @@ export class ServiceListComponent implements OnInit {
         service_id: item.service_id,
         current_position : this.currentPosition
       };
+      console.log("Ticket Object---",serviceTicket);
 
       this.ticketServices.createTicketWithService(serviceTicket).pipe(
         take(1),
@@ -94,7 +95,7 @@ export class ServiceListComponent implements OnInit {
           console.log("navigating to email confirmation");
           const ticket = ticketResponse.data as ITicket
           console.log("TICKET ID TO SEND ---", ticket.ticket_id);
-          this._router.navigate([`/email-confirmation/${ticket.ticket_id}`])
+          this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`])
         }
       })
     }
