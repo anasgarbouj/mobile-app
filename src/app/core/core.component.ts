@@ -19,7 +19,7 @@ export class CoreComponent {
 
     ngOnInit(): void {
 
-      if (!this.platform.is('mobile')) {
+      if (!this.platform.is('mobileweb')) {
       this.router.navigate(['/access-denied']);
       console.log("Cannot open app in this device...");
       }
