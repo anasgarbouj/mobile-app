@@ -17,6 +17,7 @@ import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 })
 export class IdentifyLabComponent implements OnInit {
 
+  cameraActive: boolean = false;
   private stopScanning: boolean = false;
   private labs: ILab[] = [];
 
@@ -48,8 +49,10 @@ export class IdentifyLabComponent implements OnInit {
 
     if (fn === 'start') {
       action[fn](playDeviceFacingBack).subscribe((r: any) => console.log(fn, r), alert);
+      this.cameraActive = true;
     } else {
       action[fn]().subscribe((r: any) => console.log(fn, r), alert);
+      this.cameraActive = false;
     }
   }
 

@@ -19,6 +19,8 @@ import { TicketsService } from 'src/app/shared/services/tickets.service';
 export class IdentificationComponent implements OnInit {
 
   appointmentId: string = "";
+  cameraActive: boolean = false;
+
   private stopScanning: boolean = false;
   private kioskGroupId: number|null = null;
   private currentPosition :ILocation | null = null;
@@ -47,8 +49,10 @@ export class IdentificationComponent implements OnInit {
 
     if (fn === 'start') {
       action[fn](playDeviceFacingBack).subscribe((r: any) => console.log(fn, r), alert);
+      this.cameraActive = true;
     } else {
       action[fn]().subscribe((r: any) => console.log(fn, r), alert);
+      this.cameraActive = false;
     }
   }
 
