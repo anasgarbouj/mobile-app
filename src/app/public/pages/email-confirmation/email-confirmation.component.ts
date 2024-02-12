@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs';
 import { IEmail } from 'src/app/shared/interfaces/email';
-import { ILocation } from 'src/app/shared/interfaces/location';
 import { EmailService } from 'src/app/shared/services/email.service';
-import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
@@ -19,14 +17,11 @@ export class EmailConfirmationComponent implements OnInit {
   userEmail: string = ""
   private ticketId: number | null = null;
   private kioskGroupId: number | null = null;
-  private currentPosition: ILocation | null = null;
-
 
   constructor(
     private popUpService: PopupService,
     private route: ActivatedRoute,
     private readonly emailService: EmailService,
-    private readonly geolocationService: GeolocationService
   ) { }
 
 
@@ -52,18 +47,10 @@ export class EmailConfirmationComponent implements OnInit {
 
     if (this.userEmail && this.ticketId && this.kioskGroupId) {
 
-      this.setCurrentPostion()
-      if (!this.currentPosition) {
-        //TODO: change message
-        this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
-        return;
-      }
-
       const emailObject: IEmail = {
         email: this.userEmail,
         ticket_id: this.ticketId,
         kiosk_group_id: this.kioskGroupId,
-        current_position: this.currentPosition
       }
       console.log("Email Object--", emailObject);
 
@@ -83,17 +70,6 @@ export class EmailConfirmationComponent implements OnInit {
     } else {
       // TODO: add popup of error if email empty or no ticekt id error
       console.log("UNVALID VALUES: ", this.userEmail, this.ticketId);
-    }
-  }
-
-  async setCurrentPostion() {
-    try {
-      const position = await this.geolocationService.getCurrentPosition();
-      console.log("Current user position is: ", position);
-      this.currentPosition = position as ILocation;
-    } catch (error) {
-      console.log("Error getting current position", error);
-      this.currentPosition = null;
     }
   }
 }

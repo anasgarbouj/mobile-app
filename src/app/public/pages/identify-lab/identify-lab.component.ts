@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { catchError, map, of, take } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
-import { ILocation } from 'src/app/shared/interfaces/location';
-import { GeolocationService } from 'src/app/shared/services/geolocation.service';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
@@ -19,25 +17,18 @@ export class IdentifyLabComponent implements OnInit {
 
   cameraActive: boolean = false;
   private stopScanning: boolean = false;
-  private labs: ILab[] = [];
-
 
   constructor(
     private _router: Router,
     private popUpService: PopupService,
-    private readonly labsService :LabsService,
-    private geolocationService : GeolocationService
-  ) {}
+    private readonly labsService: LabsService
+  ) { }
 
   ngOnInit(): void {
-
-    const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
-    console.log("List Of Labs Recieved From Home :", labs);
-    this.labs = labs && labs.length ? labs : [];
   }
 
   navigateToLabs() {
-    this._router.navigate(["/labs"], { state: { labs: this.labs } })
+    this._router.navigate(["/labs"])
   }
 
   public handle(action: any, fn: string): void {
@@ -59,35 +50,31 @@ export class IdentifyLabComponent implements OnInit {
   handleEvent(event: ScannerQRCodeResult[]) {
     if (!this.stopScanning) {
       console.log((event[0].value));
-      this.stopScanning = !this.stopScanning;
+      this.stopScanning = true;
 
-      this.geolocationService.getCurrentPosition().then((position) => {
-        console.log(position);
-        if (!position) this.geolocationService.checkAndRequestPermission();
-
-      this.labsService.fetchLabsByQrCode(position as ILocation, event[0].value)
-      .pipe(take(1), map(res => {
-        return { info: res.info, data: res.data }
-      }),
-        catchError((error) => {
-          console.error('Error fetching labs:', error);
-          this.checkResponse(error?.error?.info);
-          return of({ info: 'Error', data: null }); // Return an observable with an error message
-        }))
-      .subscribe((response) => {
-        console.log("Response Info : ", response.info);
-        console.log("Response Data : ", response.data);
-        const lab = response.data as ILab[];
-        console.log(lab[0].kiosk_group_id);
-        this.checkResponse(response.info, lab[0].configuration, lab[0].kiosk_group_id);
-})
-      })
+      this.labsService.fetchLabsByQrCode(event[0].value)
+        .pipe(take(1), map(res => {
+          return { info: res.info, data: res.data }
+        }),
+          catchError((error) => {
+            console.error('Error fetching labs:', error);
+            this.stopScanning = false;
+            this.checkResponse(error?.error?.info);
+            return of({ info: 'Error', data: null }); // Return an observable with an error message
+          }))
+        .subscribe((response) => {
+          console.log("Response Info : ", response.info);
+          console.log("Response Data : ", response.data);
+          const lab = response.data as ILab[];
+          console.log(lab[0].kiosk_group_id);
+          this._router.navigate([`/main-app/${lab[0].kiosk_group_id}/${lab[0].configuration}`]);
+        })
     }
   }
 
   checkResponse(info: string, configId: number | null = null, kioskGroupId: number | null = null) {
     switch (info) {
-      case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
+      case "INVALID_ENTRY":
         this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
         break;
       case "UNKNOWN_KIOSK_GROUP":
@@ -99,9 +86,8 @@ export class IdentifyLabComponent implements OnInit {
       case "INVALID_KIOSK_GROUP":
         this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
         break;
-      case "LIST_NEAREST_KIOSK_GROUPS_SUCCESS":
-        console.log("navigating to : main-app");
-        this._router.navigate([`/main-app/${kioskGroupId}/${configId}`]);
+      case "KIOSK_GROUP_NOT_LINKED":
+        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
         break;
       default:
         console.log("Unknown error happened ...");
@@ -109,4 +95,4 @@ export class IdentifyLabComponent implements OnInit {
     }
   }
 
-  }
+}

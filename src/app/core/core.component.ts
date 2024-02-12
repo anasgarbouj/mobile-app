@@ -10,22 +10,14 @@ import { Router } from '@angular/router';
 })
 export class CoreComponent {
 
-
-    constructor(private platform: Platform, private router: Router) {
-      console.log("Checking browser compatibility..");
-
-
-     }
-
-    ngOnInit(): void {
-
-      if (!this.platform.is('mobileweb')) {
+  constructor(
+    private platform: Platform, 
+    private router: Router
+  ) {
+    console.log("Checking browser compatibility..");
+    if (!this.platform.is('mobileweb')) {
       this.router.navigate(['/access-denied']);
       console.log("Cannot open app in this device...");
-      }
-
-
-
     }
-
-    }
+  }
+}
