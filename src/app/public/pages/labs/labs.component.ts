@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
-import { param } from 'jquery';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { take } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
+import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
@@ -16,25 +16,50 @@ export class LabsComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private route: ActivatedRoute,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private readonly labsService: LabsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
-  items: ILab[] = [];
+  labs: ILab[] = [];
 
-  ngOnInit() {
-    const labs = this._router.getCurrentNavigation()?.extras.state?.['labs'];
-    if (labs && labs.length > 0) {
-      console.log("List Of Labs Received:", labs);
-      this.items = labs;
-    } else {
-      console.log("No Available labs in this area!");
-      this.popupService.openPopup(PopupValidDataTypes.NoNearbyLabs);
-    }
+  ngOnInit() { 
+    this.getLabs();
+  }
+
+  getLabs() {
+    // TODO: ADD SEARCH
+    this.labsService.fetchLabs()
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          console.log("fetchLabs Response Info : ", response.info);
+          console.log("fetchLabs Response Data : ", response.data);
+          this.labs = response.data as ILab[];
+          console.log(this.labs);
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          this.labs = [];
+          this.cdr.detectChanges();
+          this.checkResponse(err.error.info ? err.error.info : "");
+        },
+      });
   }
 
   navigateToIdentification(item: ILab) {
     console.log("clicked on: " + item);
     this._router.navigate([`/main-app/${item.kiosk_group_id}/${item.configuration}`]);
+  }
+
+  checkResponse(info: string) {
+    switch (info) {
+      case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
+        this.popupService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
+        break
+      case "UNKNOWN_KIOSK_GROUP":
+        this.popupService.openPopup(PopupValidDataTypes.Invalid_Lab);
+        break
+    }
   }
 }

@@ -5,7 +5,7 @@ import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.componen
 import { LabsComponent } from './pages/labs/labs.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
-import { IdentificationComponent } from './pages/identification/identification.component';
+import { AppointmentIdentificationComponent } from './pages/identification/appointment-identification.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { PublicComponent } from './public.component';
 
@@ -35,8 +35,8 @@ const routes: Routes = [
         component: ServiceListComponent
       },
       {
-        path: 'identify/:kioskGroupId',
-        component: IdentificationComponent,
+        path: 'identify-appointment/:kioskGroupId',
+        component: AppointmentIdentificationComponent,
       },
       {
         path: 'email-confirmation/:ticketId/:kioskGroupId',

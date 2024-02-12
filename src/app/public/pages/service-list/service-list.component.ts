@@ -3,11 +3,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, catchError, map, of, take, throwError } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
-import { ILocation } from 'src/app/shared/interfaces/location';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
-import { GeolocationService } from 'src/app/shared/services/geolocation.service';
-import { LabServicesService } from 'src/app/shared/services/lab_services.service';
+import { LabServicesService } from 'src/app/shared/services/lab-services.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
 
@@ -25,15 +23,14 @@ export class ServiceListComponent implements OnInit {
   private kioskGroupId: number | null = null;
 
   private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
-  private currentPosition :ILocation | null = null;
+
   constructor(
     private _router: Router,
     private cdr: ChangeDetectorRef,
     private popupService: PopupService,
     private route: ActivatedRoute,
-    private readonly labServices : LabServicesService,
+    private readonly labServicesService : LabServicesService,
     private readonly ticketServices: TicketsService,
-    private readonly geolocationService : GeolocationService
   ) { }
 
   ngOnInit() {
@@ -48,16 +45,9 @@ export class ServiceListComponent implements OnInit {
 
   }
 
-  async getLabRelatedServices(configId: number ,  kioskId : number) {
-    try {
-      const position = await this.geolocationService.getCurrentPosition();
-      console.log("Current user position is: ", position);
-      this.currentPosition = position as ILocation;
-    } catch (error) {
-      console.log("Error getting current position", error);
-    }
-    console.log(this.configId,"----",this.kioskGroupId,"----",this.currentPosition);
-    this.labServices.fetchServices(configId , this.currentPosition, kioskId).pipe(take(1)).subscribe({
+  getLabRelatedServices(configId: number ,  kioskId : number) {
+    console.log(this.configId,"----",this.kioskGroupId);
+    this.labServicesService.fetchServices(configId , kioskId).pipe(take(1)).subscribe({
       next: (res: any) => {
         console.log("FETCH SERVICES :", res);
         this.services = res.data;
@@ -77,7 +67,6 @@ export class ServiceListComponent implements OnInit {
       const serviceTicket: IServiceTicket = {
         kiosk_group_id: this.kioskGroupId,
         service_id: item.service_id,
-        current_position : this.currentPosition
       };
       console.log("Ticket Object---",serviceTicket);
 

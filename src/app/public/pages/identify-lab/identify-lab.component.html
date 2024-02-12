@@ -2,15 +2,13 @@
 
     <div class="container">
         <h2 class="title">Identifier votre <br> Laboratoire</h2>
-        <div class="img_container">
-          <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" (click)="action.isStart ? action.stop() : action.start()"></ngx-scanner-qrcode>
+        <div class="img_container" >
+          <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner"></ngx-scanner-qrcode>
         </div>
-
-        <!-- <div *ngIf=" (action.data| async) as data ">
-          <div *ngIf="data[0]">{{data[0].value}} </div>
-        </div> -->
-
-        <!-- <ion-button class="send_btn" expand="block" (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</ion-button> -->
+        <ion-button  class="send_btn" expand="block"(click)="handle(action, action.isStart ? 'stop' : 'start')">
+          <ion-icon slot="start" src="{{cameraActive ? '../../../../assets/images/camera_inactive.svg' : '../../../../assets/images/camera_active.svg'}}" ></ion-icon>
+          {{cameraActive ? 'Désactiver Camera' : 'Activer Camera'}}
+        </ion-button>
 
         <app-divider text="Ou"></app-divider>
 

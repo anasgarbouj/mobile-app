@@ -30,6 +30,7 @@ export class MainPageComponent implements OnInit {
     if (this.kioskGroupId && this.configId) {
       this._router.navigate([`/service-list/${this.kioskGroupId}/${this.configId}`])
     } else {
+      // TODO: ADD ERROR POPUP
       console.log("kioskGroupId or configId value ERROR: ", this.kioskGroupId, this.configId);
     }
   }
@@ -37,8 +38,9 @@ export class MainPageComponent implements OnInit {
   navigateToIdentification() {
     console.log("identification clicked");
     if (this.kioskGroupId) {
-      this._router.navigate([`/identify/${this.kioskGroupId}`])
+      this._router.navigate([`/identify-appointment/${this.kioskGroupId}`])
     } else {
+      // TODO: ADD ERROR POPUP
       console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
     }
   }

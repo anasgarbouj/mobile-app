@@ -11,7 +11,7 @@ import { PublicComponent } from './public.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
-import { IdentificationComponent } from './pages/identification/identification.component';
+import { AppointmentIdentificationComponent } from './pages/identification/appointment-identification.component';
 import { SquareRoundedIconButtonComponent } from './components/square-rounded-icon-button/square-rounded-icon-button.component';
 import { ServiceCardComponent } from './components/service-card/service-card.component';
 import { SharedModule } from '../shared/shared.module';
@@ -29,7 +29,7 @@ import { FormsModule } from '@angular/forms';
     EmailConfirmationComponent,
     MainPageComponent,
     ServiceListComponent,
-    IdentificationComponent,
+    AppointmentIdentificationComponent,
     SquareRoundedIconButtonComponent,
     ServiceCardComponent,
   ],

@@ -6,8 +6,12 @@
         <ion-input class="id_input" fill="outline" placeholder="543198" type="text" [(ngModel)]="appointmentId"></ion-input>
         <app-divider text="Ou"></app-divider>
         <div class="img_container">
-          <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" (click)="action.isStart ? action.stop() : action.start()"></ngx-scanner-qrcode>
+          <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" ></ngx-scanner-qrcode>
         </div>
+        <ion-button  class="send_btn" expand="block"(click)="handle(action, action.isStart ? 'stop' : 'start')">
+          <ion-icon slot="start" src="{{cameraActive ? '../../../../assets/images/camera_inactive.svg' : '../../../../assets/images/camera_active.svg'}}" ></ion-icon>
+          {{cameraActive ? 'Désactiver Camera' : 'Activer Camera'}}
+        </ion-button>
         <app-divider text="Ou"></app-divider>
 
         <ion-button class="send_btn" expand="block" (click)="submitData()">Envoyer QR Code</ion-button>
