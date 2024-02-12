@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  constructor(
+    private router: Router
+  ) { }
+
+  naviagteToHome() {
+    this.router.navigateByUrl("");
+  }
 }

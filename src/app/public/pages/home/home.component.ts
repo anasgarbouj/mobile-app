@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
     private readonly geolocationService: GeolocationService,
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.checkGpsPermission()
   }
 
