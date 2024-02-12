@@ -23,7 +23,7 @@ export class LabsComponent implements OnInit {
 
   labs: ILab[] = [];
 
-  ngOnInit() { 
+  ngOnInit() {
     this.getLabs();
   }
 
