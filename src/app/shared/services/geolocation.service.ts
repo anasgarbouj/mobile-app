@@ -15,7 +15,7 @@ export class GeolocationService {
       console.log('GPS permission already granted');
       return this.getCurrentPosition()
     } else {
-      console.log('GPS permission denied');      
+      console.log('GPS permission denied');
       // Request permission
       const permissionRequestResult = await Geolocation.requestPermissions();
       console.log(permissionRequestResult);
@@ -29,26 +29,7 @@ export class GeolocationService {
     }
   }
 
-  public async checkPermission() {
-    const hasPermission = await Geolocation.checkPermissions();
-    console.log(hasPermission);
-    if (hasPermission.location === 'granted') {
-      console.log('GPS permission already granted');
-      return true
-    } 
-    else {
-      console.log('GPS permission denied');
-      // Request permission
-      const permissionRequestResult = await Geolocation.requestPermissions();
-      console.log(permissionRequestResult);
-      if (permissionRequestResult.location === 'granted') {
-        console.log('GPS permission granted after request');
-        return true
-      } else {
-        return false
-      }
-    }
-  }
+
 
   public async getCurrentPosition() : Promise<ILocation | null> {
     const options: PositionOptions = {
