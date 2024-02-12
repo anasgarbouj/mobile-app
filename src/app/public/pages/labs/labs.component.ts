@@ -22,6 +22,8 @@ export class LabsComponent implements OnInit {
   ) { }
 
   labs: ILab[] = [];
+  searchTerm: string = '';
+
 
   ngOnInit() {
     this.getLabs();
@@ -61,5 +63,11 @@ export class LabsComponent implements OnInit {
         this.popupService.openPopup(PopupValidDataTypes.Invalid_Lab);
         break
     }
+  }
+
+  onSearch(searchTerm: string) {
+    // Handle the search term
+    console.log('Search term:', searchTerm);
+    this.searchTerm = searchTerm;
   }
 }

@@ -19,6 +19,7 @@ export class ServiceListComponent implements OnInit {
 
 
   services: IService[] = [];
+  searchTerm: string = '';
   private configId: number | null = null;
   private kioskGroupId: number | null = null;
 
@@ -72,16 +73,6 @@ export class ServiceListComponent implements OnInit {
 
       this.ticketServices.createTicketWithService(serviceTicket).pipe(
         take(1),
-        map(res => {
-          console.log('qsdqssdsdq', res);
-          return res;
-        }),
-        catchError(error => {
-          console.error('Error creating ticket:', error);
-          console.error('Error Info:', error.error.info);
-          this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
-          return EMPTY;
-        })
       ).subscribe((ticketResponse) => {
         console.log("Ticket Response:", ticketResponse);
         if (ticketResponse && ticketResponse.info) {
@@ -96,6 +87,12 @@ export class ServiceListComponent implements OnInit {
     else {
       console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
     }
+  }
+
+  onSearch(searchTerm: string) {
+    // Handle the search term
+    console.log('Search term:', searchTerm);
+    this.searchTerm = searchTerm;
   }
 
 }

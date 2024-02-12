@@ -3,10 +3,10 @@
   <div class="container">
     <h2 class="title">Laboratoires</h2>
     <p class="text">Veuillez choisir le laboratoire qui vous convient.</p>
-    <app-search-bar placeholder="Recherche Laboratoire"></app-search-bar>
+    <app-search-bar placeholder="Recherche Laboratoire" (search)="onSearch($event)"></app-search-bar>
 
     <ion-list>
-      <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs"
+      <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs | appSearch : searchTerm"
         name="{{lab.kiosk_group_name}}"
         address="Adresse {{lab.kiosk_group_geo_address}}"></app-lab-card>
     </ion-list>
