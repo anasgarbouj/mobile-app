@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class CoreComponent {
 
   constructor(
-    private platform: Platform, 
+    private platform: Platform,
     private router: Router
   ) {
     console.log("Checking browser compatibility..");
