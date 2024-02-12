@@ -5,7 +5,7 @@
         <ion-label class="id_label">ID du Rendez-vous:</ion-label>
         <ion-input class="id_input" fill="outline" placeholder="543198" type="text" [(ngModel)]="appointmentId"></ion-input>
         <app-divider text="Ou"></app-divider>
-        <div class="img_container">
+        <div class="img_container" [ngClass]="{'hide-camera-container': !cameraActive}">
           <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" ></ngx-scanner-qrcode>
         </div>
         <ion-button  class="send_btn" expand="block"(click)="handle(action, action.isStart ? 'stop' : 'start')">

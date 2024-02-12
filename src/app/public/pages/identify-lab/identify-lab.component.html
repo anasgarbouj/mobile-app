@@ -2,7 +2,7 @@
 
     <div class="container">
         <h2 class="title">Identifier votre <br> Laboratoire</h2>
-        <div class="img_container" >
+        <div class="img_container" [ngClass]="{'hide-camera-container': !cameraActive}">
           <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner"></ngx-scanner-qrcode>
         </div>
         <ion-button  class="send_btn" expand="block"(click)="handle(action, action.isStart ? 'stop' : 'start')">
@@ -13,6 +13,5 @@
         <app-divider text="Ou"></app-divider>
 
         <ion-button (click)="navigateToLabs()" class="send_btn" expand="block">Laboratoires autour de moi</ion-button>
-
     </div>
 </ion-content>

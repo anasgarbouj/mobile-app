@@ -19,21 +19,17 @@ export class HomeComponent implements OnInit {
     this.checkGpsPermission()
   }
 
-  async checkGpsPermission(){
+  async checkGpsPermission() {
     console.log("Checking GPS permission...");
-    this.geolocationService.getCurrentPosition().then((position)=>{
-
-      if(position){
+    this.geolocationService.getCurrentPosition().then((position) => {
+      if (position) {
         console.log("User currently at position :", position);
         this._router.navigate(["/identify-lab"]);
       }
-      else{
+      else {
         this.geolocationService.checkAndRequestPermission();
       }
-
-    }
-
-    )
+    })
   }
 
   reload() {
