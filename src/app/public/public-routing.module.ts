@@ -43,11 +43,12 @@ const routes: Routes = [
         component: EmailConfirmationComponent
       },
 
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      }
+      //Default routing
+      // {
+      //   path: '',
+      //   redirectTo: 'home',
+      //   pathMatch: 'full'
+      // }
     ]
   }
 ];

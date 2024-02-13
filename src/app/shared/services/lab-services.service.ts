@@ -15,7 +15,7 @@ export class LabServicesService {
     private readonly http: HttpClient
   ) { }
 
-  fetchServices(configId : number , kioskGroupId : number){
-    return this.http.get<IResponse<IService>>(`${this.baseUrl}/virtual_ticket/service-list/${configId}/?kioskGroupId=${kioskGroupId}`)
+  fetchServices(configId : number , kioskGroupId : number,search:string=""){
+    return this.http.get<IResponse<IService>>(`${this.baseUrl}/virtual_ticket/service-list/${configId}/?kioskGroupId=${kioskGroupId}/?search=${search}`)
   }
 }

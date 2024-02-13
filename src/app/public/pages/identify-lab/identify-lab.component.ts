@@ -58,9 +58,9 @@ export class IdentifyLabComponent implements OnInit {
         }),
           catchError((error) => {
             console.error('Error fetching labs:', error);
-            this.stopScanning = false;
+            // this.stopScanning = false;
             this.checkResponse(error?.error?.info);
-            return of({ info: 'Error', data: null }); // Return an observable with an error message
+            return of({ info: 'Error', data: null });
           }))
         .subscribe((response) => {
           console.log("Response Info : ", response.info);

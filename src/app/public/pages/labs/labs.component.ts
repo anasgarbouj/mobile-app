@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import { Subject, debounce, take, timer } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
@@ -14,24 +14,39 @@ import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 })
 export class LabsComponent implements OnInit {
 
+  labs: ILab[] = [];
+  searchTerm: string = '';
+  searchTermSubject = new Subject<string>();
+
+
   constructor(
     private _router: Router,
     private popupService: PopupService,
     private readonly labsService: LabsService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {
+    this.searchTermSubject
+    .pipe(
+      debounce(() => timer(3000))
+    )
+    .subscribe((searchTerm) => {
+      console.log('Search term:', searchTerm);
+      this.searchTerm = searchTerm;
+      this.getLabs(this.searchTerm)
+    });
 
-  labs: ILab[] = [];
-  searchTerm: string = '';
+   }
+
+
 
 
   ngOnInit() {
     this.getLabs();
   }
 
-  getLabs() {
+  getLabs(search:string="") {
     // TODO: ADD SEARCH
-    this.labsService.fetchLabs()
+    this.labsService.fetchLabs(search)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
@@ -66,8 +81,6 @@ export class LabsComponent implements OnInit {
   }
 
   onSearch(searchTerm: string) {
-    // Handle the search term
-    console.log('Search term:', searchTerm);
-    this.searchTerm = searchTerm;
+    this.searchTermSubject.next(searchTerm);
   }
 }
