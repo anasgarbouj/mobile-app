@@ -14,11 +14,11 @@ export const geolocationGuard: CanActivateFn = async (route, state) => {
     } else {
       console.log('Geolocation Guard Failed');
       router.navigate(['/home']);
-      console.log('redirecting to access denied');
+      console.log('redirecting to home');
       return false;
     }
   } catch (error) {
-    console.error('Error checking geolocation permission:', error);
+    console.error('redirecting to home, Error checking geolocation permission:', error);
     router.navigate(['/home']);
     return false;
   }

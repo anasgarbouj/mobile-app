@@ -15,7 +15,6 @@ const routes: Routes = [
   {
     path: '',
     component: PublicComponent,
-   // canActivate : [geolocationGuard],
     children: [
       //Default routing
       {
@@ -55,19 +54,8 @@ const routes: Routes = [
       },
       {
         path: 'email-confirmation/:ticketId/:kioskGroupId',
-        component: EmailConfirmationComponent
-      },
-      {
-        path: 'access-denied',
-        component: AccessDeniedComponent
-      },
-
-
-      //Default routing
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        component: EmailConfirmationComponent,
+        canActivate : [geolocationGuard]
       }
     ]
   }
