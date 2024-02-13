@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -8,6 +8,13 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class SearchBarComponent {
 
-  @Input() placeholder: string = "Recherche"
+  @Input() placeholder: string = "Recherche";
+  @Output() search: EventEmitter<string> = new EventEmitter<string>();
+
+  searchTerm: string = ""
+
+  onSearch() {
+    this.search.emit(this.searchTerm);
+  }
 
 }

@@ -1,7 +1,7 @@
 import { IService } from '../../../shared/interfaces/service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, catchError, map, of, take, throwError } from 'rxjs';
+import { EMPTY, Subject, catchError, debounce, map, of, take, throwError, timer } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
@@ -19,6 +19,8 @@ export class ServiceListComponent implements OnInit {
 
 
   services: IService[] = [];
+  searchTerm: string = '';
+  searchTermSubject = new Subject<string>();
   private configId: number | null = null;
   private kioskGroupId: number | null = null;
 
@@ -31,7 +33,21 @@ export class ServiceListComponent implements OnInit {
     private route: ActivatedRoute,
     private readonly labServicesService : LabServicesService,
     private readonly ticketServices: TicketsService,
-  ) { }
+  ) {
+    this.searchTermSubject
+    .pipe(
+      debounce(() => timer(3000))
+    )
+    .subscribe((searchTerm) => {
+      console.log('Search term:', searchTerm);
+      this.searchTerm = searchTerm;
+      if(this.configId && this.kioskGroupId){
+        this.getLabRelatedServices(this.configId , this.kioskGroupId ,this.searchTerm);
+      }
+
+    });
+
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -45,9 +61,9 @@ export class ServiceListComponent implements OnInit {
 
   }
 
-  getLabRelatedServices(configId: number ,  kioskId : number) {
+  getLabRelatedServices(configId: number ,  kioskId : number , search:string="") {
     console.log(this.configId,"----",this.kioskGroupId);
-    this.labServicesService.fetchServices(configId , kioskId).pipe(take(1)).subscribe({
+    this.labServicesService.fetchServices(configId , kioskId,search).pipe(take(1)).subscribe({
       next: (res: any) => {
         console.log("FETCH SERVICES :", res);
         this.services = res.data;
@@ -72,16 +88,6 @@ export class ServiceListComponent implements OnInit {
 
       this.ticketServices.createTicketWithService(serviceTicket).pipe(
         take(1),
-        map(res => {
-          console.log('qsdqssdsdq', res);
-          return res;
-        }),
-        catchError(error => {
-          console.error('Error creating ticket:', error);
-          console.error('Error Info:', error.error.info);
-          this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
-          return EMPTY;
-        })
       ).subscribe((ticketResponse) => {
         console.log("Ticket Response:", ticketResponse);
         if (ticketResponse && ticketResponse.info) {
@@ -96,6 +102,10 @@ export class ServiceListComponent implements OnInit {
     else {
       console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
     }
+  }
+
+  onSearch(searchTerm: string) {
+    this.searchTermSubject.next(searchTerm);
   }
 
 }

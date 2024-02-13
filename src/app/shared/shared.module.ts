@@ -22,6 +22,7 @@ import { AppointmentInWrongKioskComponent } from './components/popups/appointmen
 import { AppointmentAlreadyTreatedComponent } from './components/popups/appointment-already-treated/appointment-already-treated.component';
 import { AppointmentNotFoundComponent } from './components/popups/appointment-not-found/appointment-not-found.component';
 import { EmailNotSentComponent } from './components/popups/email-not-sent/email-not-sent.component';
+import { FormsModule } from '@angular/forms';
 
 LOAD_WASM().subscribe();
 
@@ -51,6 +52,7 @@ LOAD_WASM().subscribe();
   imports: [
     CommonModule,
     HttpClientModule,
+    FormsModule,
     IonicModule.forRoot({
       innerHTMLTemplatesEnabled: true
     })

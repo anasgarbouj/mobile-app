@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { IResponse } from '../interfaces/api-response';
 import { ILocation } from '../interfaces/location';
@@ -12,15 +12,16 @@ import { environment } from 'src/environments/environment';
 export class LabsService {
   private baseUrl: string = environment.baseUrl;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  private readonly http = inject(HttpClient)
 
   public fetchLabs(search: string = '') {
-    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/filter-labs/?search=${search}`)
+    let params = new HttpParams().set('search', search);
+    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/filter-labs/`, { params: params });
   }
 
   public fetchLabsByQrCode(qrCodeValue: string = '') {
-    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/scan-qr/?virtual_code=${qrCodeValue}`)
+    let params = new HttpParams().set('search', qrCodeValue);
+    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/scan-qr/`, { params: params })
   }
 }
