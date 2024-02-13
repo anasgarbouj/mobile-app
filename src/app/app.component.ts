@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +7,8 @@ import { Platform } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppComponent implements OnInit {
-  constructor(private platform: Platform, private router: Router) { }
-
-  ngOnInit(): void {
-    }
+export class AppComponent {
+  constructor(translate: TranslateService) {
+    translate.use('fr');
+  }
 }

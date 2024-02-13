@@ -4,7 +4,6 @@ import { Subject, debounce, take, timer } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-labs',
@@ -26,25 +25,21 @@ export class LabsComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     this.searchTermSubject
-    .pipe(
-      debounce(() => timer(3000))
-    )
-    .subscribe((searchTerm) => {
-      console.log('Search term:', searchTerm);
-      this.searchTerm = searchTerm;
-      this.getLabs(this.searchTerm)
-    });
-
-   }
-
-
-
+      .pipe(
+        debounce(() => timer(3000))
+      )
+      .subscribe((searchTerm) => {
+        console.log('Search term:', searchTerm);
+        this.searchTerm = searchTerm;
+        this.getLabs(this.searchTerm)
+      });
+  }
 
   ngOnInit() {
     this.getLabs();
   }
 
-  getLabs(search:string="") {
+  getLabs(search: string = "") {
     // TODO: ADD SEARCH
     this.labsService.fetchLabs(search)
       .pipe(take(1))
@@ -55,12 +50,7 @@ export class LabsComponent implements OnInit {
           this.labs = response.data as ILab[];
           console.log(this.labs);
           this.cdr.detectChanges();
-        },
-        error: (err) => {
-          this.labs = [];
-          this.cdr.detectChanges();
-          this.checkResponse(err.error.info ? err.error.info : "");
-        },
+        }
       });
   }
 
@@ -69,18 +59,11 @@ export class LabsComponent implements OnInit {
     this._router.navigate([`/main-app/${item.kiosk_group_id}/${item.configuration}`]);
   }
 
-  checkResponse(info: string) {
-    switch (info) {
-      case "LIST_NEAREST_KIOSK_GROUPS_INVALID_ENTRY":
-        this.popupService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
-        break
-      case "UNKNOWN_KIOSK_GROUP":
-        this.popupService.openPopup(PopupValidDataTypes.Invalid_Lab);
-        break
-    }
-  }
-
   onSearch(searchTerm: string) {
     this.searchTermSubject.next(searchTerm);
+  }
+
+  ngOnDestroy(): void {
+    this.searchTermSubject.unsubscribe();    
   }
 }

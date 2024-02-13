@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
-import { catchError, map, of, take } from 'rxjs';
+import { map, take } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-identify-lab',
@@ -55,13 +54,7 @@ export class IdentifyLabComponent implements OnInit {
       this.labsService.fetchLabsByQrCode(event[0].value)
         .pipe(take(1), map(res => {
           return { info: res.info, data: res.data }
-        }),
-          catchError((error) => {
-            console.error('Error fetching labs:', error);
-            // this.stopScanning = false;
-            this.checkResponse(error?.error?.info);
-            return of({ info: 'Error', data: null });
-          }))
+        }))
         .subscribe((response) => {
           console.log("Response Info : ", response.info);
           console.log("Response Data : ", response.data);
@@ -71,28 +64,4 @@ export class IdentifyLabComponent implements OnInit {
         })
     }
   }
-
-  checkResponse(info: string, configId: number | null = null, kioskGroupId: number | null = null) {
-    switch (info) {
-      case "INVALID_ENTRY":
-        this.popUpService.openPopup(PopupValidDataTypes.Scanned_Qr_Not_Found);
-        break;
-      case "UNKNOWN_KIOSK_GROUP":
-        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
-        break;
-      case "FAR_KIOSK_GROUP":
-        this.popUpService.openPopup(PopupValidDataTypes.Lab_Proximity);
-        break;
-      case "INVALID_KIOSK_GROUP":
-        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
-        break;
-      case "KIOSK_GROUP_NOT_LINKED":
-        this.popUpService.openPopup(PopupValidDataTypes.Invalid_Lab);
-        break;
-      default:
-        console.log("Unknown error happened ...");
-        break;
-    }
-  }
-
 }

@@ -1,7 +1,7 @@
 import { IService } from '../../../shared/interfaces/service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EMPTY, Subject, catchError, debounce, map, of, take, throwError, timer } from 'rxjs';
+import { Subject, debounce, take, timer } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
@@ -31,39 +31,35 @@ export class ServiceListComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private popupService: PopupService,
     private route: ActivatedRoute,
-    private readonly labServicesService : LabServicesService,
+    private readonly labServicesService: LabServicesService,
     private readonly ticketServices: TicketsService,
   ) {
     this.searchTermSubject
-    .pipe(
-      debounce(() => timer(3000))
-    )
-    .subscribe((searchTerm) => {
-      console.log('Search term:', searchTerm);
-      this.searchTerm = searchTerm;
-      if(this.configId && this.kioskGroupId){
-        this.getLabRelatedServices(this.configId , this.kioskGroupId ,this.searchTerm);
-      }
-
-    });
-
+      .pipe(
+        debounce(() => timer(3000))
+      )
+      .subscribe((searchTerm) => {
+        console.log('Search term:', searchTerm);
+        this.searchTerm = searchTerm;
+        if (this.configId && this.kioskGroupId) {
+          this.getLabRelatedServices(this.configId, this.kioskGroupId, this.searchTerm);
+        }
+      });
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
       this.configId = params.get('configId') ? Number(params.get('configId')) : null;
-      if(this.configId && this.kioskGroupId){
-        this.getLabRelatedServices(this.configId , this.kioskGroupId);
+      if (this.configId && this.kioskGroupId) {
+        this.getLabRelatedServices(this.configId, this.kioskGroupId);
       }
     });
-
-
   }
 
-  getLabRelatedServices(configId: number ,  kioskId : number , search:string="") {
-    console.log(this.configId,"----",this.kioskGroupId);
-    this.labServicesService.fetchServices(configId , kioskId,search).pipe(take(1)).subscribe({
+  getLabRelatedServices(configId: number, kioskId: number, search: string = "") {
+    console.log(this.configId, "----", this.kioskGroupId);
+    this.labServicesService.fetchServices(configId, kioskId, search).pipe(take(1)).subscribe({
       next: (res: any) => {
         console.log("FETCH SERVICES :", res);
         this.services = res.data;
@@ -84,10 +80,10 @@ export class ServiceListComponent implements OnInit {
         kiosk_group_id: this.kioskGroupId,
         service_id: item.service_id,
       };
-      console.log("Ticket Object---",serviceTicket);
+      console.log("Ticket Object---", serviceTicket);
 
       this.ticketServices.createTicketWithService(serviceTicket).pipe(
-        take(1),
+        take(1)
       ).subscribe((ticketResponse) => {
         console.log("Ticket Response:", ticketResponse);
         if (ticketResponse && ticketResponse.info) {
@@ -108,4 +104,7 @@ export class ServiceListComponent implements OnInit {
     this.searchTermSubject.next(searchTerm);
   }
 
+  ngOnDestroy(): void {
+    this.searchTermSubject.unsubscribe();
+  }
 }

@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
+  
+  constructor(
+    private router: Router
+  ) { }
 
-  constructor(private _router:Router){}
-
-  navigateToHomePage(){
-    console.log("Logo Clicked , Navigating to home page... ");
-    this._router.navigate(["/identify-lab"]);
+  naviagteToHome() {
+    this.router.navigateByUrl("");
   }
-
 }

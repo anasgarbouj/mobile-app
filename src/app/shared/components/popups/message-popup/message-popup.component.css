@@ -1,7 +1,7 @@
 ::ng-deep .modal-content {
     margin: 40px;
     border-radius: 8px;
-
+    max-width: 20rem;
 }
 
 .custom-container {
@@ -17,7 +17,7 @@
 }
 
 .custom-img {
-    width: 120px;
+    width: 132px;
     height: auto;
     margin: auto;
 }

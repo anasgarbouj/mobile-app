@@ -1,0 +1,32 @@
+{
+    "POPUP": {
+        "SUCCESS_MESSAGES": {
+            "DEFAULT": "operation executed successfully",
+            "TICKET_EMAIL_SENT": "The requested ticket was sent to the e-mail address provided."
+        },
+        "ERROR_MESSAGES": {
+            "DEFAULT": "an error has occurred, try again",
+
+            "INVALID_ENTRY": "Invalid entry(s)",
+            "UNKNOWN_KIOSK_GROUP": "Sorry, the laboratory you scanned does not exist. Please scan the QR code again.",
+            "INVALID_KIOSK_GROUP": "Sorry, the scanned lab is invalid, please try again later.",
+            "KIOSK_GROUP_NOT_LINKED": "Sorry, the scanned lab is not configured, please try again later.",
+            "FAR_KIOSK_GROUP": "Sorry, the scanned lab is not in your approximate area, please approach your laboratory and try again.",
+            "LIST_NEAREST_KIOSK_GROUPS_ERROR": "An error occurred during the retrieval of the laboratories.",
+            "SCAN_KIOSK_GROUP_ERROR": "An error occurred during the retrieval of the laboratory.",
+            "SERVICE_LIST_SERVER_ERROR": "An error occurred during the retrieval of the services.",
+            "SCHEDULE_ACTIVITY_NOT_FOUND": "Appointment not found, please verify!",
+
+            "QUEUE_NOT_FOUND_OR_NOT_IN_TIME_RANGE": "Selected service not found or out of time",
+            "SCHEDULE_ACTIVITY_IN_WRONG_KIOSK_GROUP": "Your appointment corresponds to another laboratory.",
+            "TICKET_EMAIL_NOT_SENT": "Unable to send ticket e-mail, try again",
+            "TICKET_EMAIL_ERROR": "An error occurred while sending the ticket email",
+            "SERVICE_NOT_FOUND": "Service not found, please try again later",
+            "KIOSK_GROUP_NOT_FOUND": "Laboratory not found, please try again later",
+            "CREATE_TICKET_ERROR": "An error occurred during ticket creation.",
+
+            "msg1": "You are too far from the laboratory. Please stay nearby until your scheduled appointment time. \n\n Your ticket will be automatically deleted if you are not near the laboratory 15 minutes before the scheduled time"
+            
+        }
+    }
+}

@@ -59,3 +59,7 @@ ion-button.send_btn {
     line-height: 140%;
     text-transform: capitalize;
 }
+
+.hide-camera-container{
+    display: none;
+}

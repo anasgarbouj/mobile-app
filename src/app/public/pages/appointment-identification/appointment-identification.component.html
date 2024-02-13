@@ -7,7 +7,7 @@
         <br>
         <ion-button class="send_btn" expand="block" (click)="submitData()">Envoyer</ion-button>
         <app-divider text="Ou"></app-divider>
-        <div class="img_container">
+        <div class="img_container" [ngClass]="{'hide-camera-container': !cameraActive}">
           <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" ></ngx-scanner-qrcode>
         </div>
         <ion-button  class="send_btn" expand="block"(click)="handle(action, action.isStart ? 'stop' : 'start')">

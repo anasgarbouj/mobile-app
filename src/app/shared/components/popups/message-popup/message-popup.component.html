@@ -1,0 +1,10 @@
+<div class="custom_wrapper">
+        <div class="custom-container">
+                <ion-img *ngIf="imageSrc !== ''" class="custom-img" src="{{imageSrc}}"></ion-img>
+                <p class="custom-text text-justify">
+                        {{message}}
+                </p>
+        </div>
+        <div class="divider-line"></div>
+        <ion-button (click)="closePopup()" fill="clear" class="custom-btn">Fermer</ion-button>
+</div>
