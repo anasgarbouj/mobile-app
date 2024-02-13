@@ -8,47 +8,60 @@ import { ServiceListComponent } from './pages/service-list/service-list.componen
 import { AppointmentIdentificationComponent } from './pages/identification/appointment-identification.component';
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { PublicComponent } from './public.component';
+import { geolocationGuard } from '../shared/guards/geolocation.guard';
+import { AccessDeniedComponent } from '../core/pages/access-denied/access-denied.component';
 
 const routes: Routes = [
   {
     path: '',
     component: PublicComponent,
+   // canActivate : [geolocationGuard],
     children: [
       {
         path: 'home',
-        component: HomeComponent
+        component: HomeComponent,
       },
       {
         path: 'identify-lab',
-        component: IdentifyLabComponent
+        component: IdentifyLabComponent,
+        canActivate : [geolocationGuard]
       },
       {
         path: 'labs',
-        component: LabsComponent
+        component: LabsComponent,
+        canActivate : [geolocationGuard]
       },
       {
         path: 'main-app/:kioskGroupId/:configId',
-        component: MainPageComponent
+        component: MainPageComponent,
+        canActivate : [geolocationGuard]
       },
       {
         path: 'service-list/:kioskGroupId/:configId',
-        component: ServiceListComponent
+        component: ServiceListComponent,
+        canActivate : [geolocationGuard]
       },
       {
         path: 'identify-appointment/:kioskGroupId',
         component: AppointmentIdentificationComponent,
+        canActivate : [geolocationGuard]
       },
       {
         path: 'email-confirmation/:ticketId/:kioskGroupId',
         component: EmailConfirmationComponent
       },
+      {
+        path: 'access-denied',
+        component: AccessDeniedComponent
+      },
+
 
       //Default routing
-      // {
-      //   path: '',
-      //   redirectTo: 'home',
-      //   pathMatch: 'full'
-      // }
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      }
     ]
   }
 ];
