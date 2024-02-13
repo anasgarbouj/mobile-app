@@ -50,7 +50,9 @@ export class RequestInterceptor implements HttpInterceptor {
                         },
                         error: (error) => {
                             this.info = error.error?.info ? error.error.info : "";
+                            
                             const translatedErrorMessage = this.info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
+                            console.log(translatedErrorMessage);
                             const errorImageSrc = imageSelect(this.info)
                             this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
                         }

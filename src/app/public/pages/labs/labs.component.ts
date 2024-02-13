@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import { Subject, debounce, take, timer } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
@@ -13,22 +13,35 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 })
 export class LabsComponent implements OnInit {
 
+  labs: ILab[] = [];
+  searchTerm: string = '';
+  searchTermSubject = new Subject<string>();
+
+
   constructor(
     private _router: Router,
     private popupService: PopupService,
     private readonly labsService: LabsService,
     private cdr: ChangeDetectorRef
-  ) { }
-
-  labs: ILab[] = [];
+  ) {
+    this.searchTermSubject
+      .pipe(
+        debounce(() => timer(3000))
+      )
+      .subscribe((searchTerm) => {
+        console.log('Search term:', searchTerm);
+        this.searchTerm = searchTerm;
+        this.getLabs(this.searchTerm)
+      });
+  }
 
   ngOnInit() {
     this.getLabs();
   }
 
-  getLabs() {
+  getLabs(search: string = "") {
     // TODO: ADD SEARCH
-    this.labsService.fetchLabs()
+    this.labsService.fetchLabs(search)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
@@ -44,5 +57,13 @@ export class LabsComponent implements OnInit {
   navigateToIdentification(item: ILab) {
     console.log("clicked on: " + item);
     this._router.navigate([`/main-app/${item.kiosk_group_id}/${item.configuration}`]);
+  }
+
+  onSearch(searchTerm: string) {
+    this.searchTermSubject.next(searchTerm);
+  }
+
+  ngOnDestroy(): void {
+    this.searchTermSubject.unsubscribe();    
   }
 }

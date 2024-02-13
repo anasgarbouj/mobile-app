@@ -14,6 +14,13 @@ const routes: Routes = [
     path: '',
     component: PublicComponent,
     children: [
+      //Default routing
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+
       {
         path: 'home',
         component: HomeComponent
@@ -41,12 +48,6 @@ const routes: Routes = [
       {
         path: 'email-confirmation/:ticketId/:kioskGroupId',
         component: EmailConfirmationComponent
-      },
-
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
       }
     ]
   }

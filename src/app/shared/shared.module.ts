@@ -6,8 +6,9 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { MessagePopupComponent } from './components/popups/message-popup/message-popup.component';
 import { DividerComponent } from './components/divider/divider.component';
 import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 LOAD_WASM().subscribe();
 
@@ -23,6 +24,7 @@ LOAD_WASM().subscribe();
     CommonModule,
     HttpClientModule,
     TranslateModule,
+    FormsModule,
     IonicModule.forRoot({
       innerHTMLTemplatesEnabled: true
     })
@@ -33,7 +35,8 @@ LOAD_WASM().subscribe();
     DividerComponent,
     IonicModule,
     NgxScannerQrcodeModule,
-    TranslateModule
+    TranslateModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

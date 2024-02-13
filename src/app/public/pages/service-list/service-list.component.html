@@ -2,11 +2,11 @@
     <div class="container">
         <h2 class="title">Services</h2>
         <p class="text">Veuillez choisir le service qui vous convient.</p>
-        <app-search-bar placeholder="Recherche Service"></app-search-bar>
+        <app-search-bar placeholder="Recherche Service" (search)="onSearch($event)"></app-search-bar>
 
         <ion-spinner name="dots" class="loader-container" *ngIf="services && services.length === 0"></ion-spinner>
         <ion-list>
-            <app-service-card (click)="createTicket(item)" *ngFor="let item of services; let index" name="{{item.service_name}}"
+            <app-service-card (click)="createTicket(item)" *ngFor="let item of services | appSearch : searchTerm; let index" name="{{item.service_name}}"
                 color="{{item.service_color}}"></app-service-card>
         </ion-list>
     </div>

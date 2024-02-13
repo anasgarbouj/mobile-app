@@ -3,12 +3,17 @@
   <div class="container">
     <h2 class="title">Laboratoires</h2>
     <p class="text">Veuillez choisir le laboratoire qui vous convient.</p>
-    <app-search-bar placeholder="Recherche Laboratoire"></app-search-bar>
+    <div class="search-refresh-block">
+      <app-search-bar placeholder="Recherche Laboratoire" (search)="onSearch($event)"
+        style="flex-grow: 1"></app-search-bar>
+      <ion-button class="refresh-btn" (click)="getLabs()">
+        <ion-img src="/assets/images/refresh.svg"></ion-img>
+      </ion-button>
+    </div>
 
     <ion-list>
-      <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs"
-        name="{{lab.kiosk_group_name}}"
-        address="Adresse {{lab.kiosk_group_geo_address}}"></app-lab-card>
+      <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs | appSearch : searchTerm"
+        name="{{lab.kiosk_group_name}}" address="Adresse {{lab.kiosk_group_geo_address}}"></app-lab-card>
     </ion-list>
 
   </div>

@@ -3,7 +3,9 @@
     <div class="container">
         <h2 class="title">Identifier votre <br> Rendez-vous</h2>
         <ion-label class="id_label">ID du Rendez-vous:</ion-label>
-        <ion-input class="id_input" fill="outline" placeholder="543198" type="text" [(ngModel)]="appointmentId"></ion-input>
+        <ion-input class="id_input" fill="outline" placeholder="Saisir votre ID ici..." type="text" [(ngModel)]="appointmentId"></ion-input>
+        <br>
+        <ion-button class="send_btn" expand="block" (click)="submitData()">Envoyer</ion-button>
         <app-divider text="Ou"></app-divider>
         <div class="img_container" [ngClass]="{'hide-camera-container': !cameraActive}">
           <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" ></ngx-scanner-qrcode>
@@ -12,9 +14,8 @@
           <ion-icon slot="start" src="{{cameraActive ? '../../../../assets/images/camera_inactive.svg' : '../../../../assets/images/camera_active.svg'}}" ></ion-icon>
           {{cameraActive ? 'Désactiver Camera' : 'Activer Camera'}}
         </ion-button>
-        <app-divider text="Ou"></app-divider>
 
-        <ion-button class="send_btn" expand="block" (click)="submitData()">Envoyer QR Code</ion-button>
+
 
     </div>
 </ion-content>

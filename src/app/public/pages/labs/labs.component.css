@@ -21,3 +21,15 @@
 ion-list {
     background-color: var(--background-color);
 }
+
+.search-refresh-block {
+  display: flex;
+  align-items: center;
+}
+
+.refresh-btn{
+  --background: var(--main-background-color);
+  padding: 16px;
+  --border-radius: 8px;
+
+}

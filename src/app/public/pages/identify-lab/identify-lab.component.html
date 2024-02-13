@@ -3,7 +3,7 @@
     <div class="container">
         <h2 class="title">Identifier votre <br> Laboratoire</h2>
         <div class="img_container" [ngClass]="{'hide-camera-container': !cameraActive}">
-          <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner"></ngx-scanner-qrcode>
+          <ngx-scanner-qrcode #qrCode (event)="handleEvent($event)" #action="scanner" [isBeep]="false"></ngx-scanner-qrcode>
         </div>
         <ion-button  class="send_btn" expand="block"(click)="handle(action, action.isStart ? 'stop' : 'start')">
           <ion-icon slot="start" src="{{cameraActive ? '../../../../assets/images/camera_inactive.svg' : '../../../../assets/images/camera_active.svg'}}" ></ion-icon>

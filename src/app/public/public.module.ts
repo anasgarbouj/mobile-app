@@ -16,28 +16,30 @@ import { SquareRoundedIconButtonComponent } from './components/square-rounded-ic
 import { ServiceCardComponent } from './components/service-card/service-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { SearchPipe } from "../shared/filters/search.pipe";
 
 
 @NgModule({
-  declarations: [
-    PublicComponent,
-    HomeComponent,
-    LabsComponent,
-    LoaderSpinnerComponent,
-    LabCardComponent,
-    IdentifyLabComponent,
-    EmailConfirmationComponent,
-    MainPageComponent,
-    ServiceListComponent,
-    AppointmentIdentificationComponent,
-    SquareRoundedIconButtonComponent,
-    ServiceCardComponent,
-  ],
-  imports: [
-    CommonModule,
-    PublicRoutingModule,
-    SharedModule,
-    FormsModule
-  ]
+    declarations: [
+        PublicComponent,
+        HomeComponent,
+        LabsComponent,
+        LoaderSpinnerComponent,
+        LabCardComponent,
+        IdentifyLabComponent,
+        EmailConfirmationComponent,
+        MainPageComponent,
+        ServiceListComponent,
+        AppointmentIdentificationComponent,
+        SquareRoundedIconButtonComponent,
+        ServiceCardComponent,
+    ],
+    imports: [
+        CommonModule,
+        PublicRoutingModule,
+        SharedModule,
+        FormsModule,
+        SearchPipe
+    ]
 })
 export class PublicModule { }

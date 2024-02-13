@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('home ng on int')
     this.checkGpsPermission()
   }
 
