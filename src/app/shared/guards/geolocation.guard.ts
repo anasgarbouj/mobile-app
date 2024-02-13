@@ -1,7 +1,7 @@
 import { Router, type CanActivateFn } from '@angular/router';
 import { GeolocationService } from '../services/geolocation.service';
 
-export const geolocationGuard: CanActivateFn = async  (route, state) => {
+export const geolocationGuard: CanActivateFn = async (route, state) => {
   const router = new Router();
   const geolocationService = new GeolocationService();
   console.log('Current navigation state:', state.url);
@@ -23,4 +23,3 @@ export const geolocationGuard: CanActivateFn = async  (route, state) => {
     return false;
   }
 };
-
