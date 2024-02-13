@@ -73,12 +73,6 @@ export class AppointmentIdentificationComponent implements OnInit {
         map(res => {
           console.log(res);
           return res;
-        }),
-        catchError(error => {
-          console.error('Error creating ticket:', error);
-          console.error('Error Info:', error.error.info);
-          this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
-          return of(null);
         })
       )
         .subscribe((ticketResponse) => {
@@ -117,12 +111,6 @@ export class AppointmentIdentificationComponent implements OnInit {
       map(res => {
         console.log(res);
         return res;
-      }),
-      catchError(error => {
-        console.error('Error creating ticket:', error);
-        console.error('Error Info:', error.error.info);
-        this.ticketServiceInfoMapper.mapErrorInfo(error.error.info)
-        return of(null);
       })
     )
       .subscribe((ticketResponse) => {

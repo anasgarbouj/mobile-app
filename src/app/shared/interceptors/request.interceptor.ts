@@ -8,6 +8,9 @@ import {
 import { Observable, from } from "rxjs";
 import { finalize, mergeMap, tap } from "rxjs/operators";
 import { GeolocationService } from "../services/geolocation.service";
+import { PopupService } from "../services/popup.service";
+import { TranslateService } from "@ngx-translate/core";
+import { imageSelect } from "../types/image-switch";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -16,7 +19,9 @@ export class RequestInterceptor implements HttpInterceptor {
     timezone: string;
 
     constructor(
-        private readonly geolocationService: GeolocationService
+        private readonly geolocationService: GeolocationService,
+        private popupService: PopupService,
+        private translate: TranslateService
     ) {
         this.timezoneOffset = new Date().getTimezoneOffset();
         this.timezone = `${this.timezoneOffset > 0 ? '-' : '+'}${(Math.floor(Math.abs(this.timezoneOffset) / 60)).toString().padStart(2, '0')}:${(Math.abs(this.timezoneOffset) % 60).toString().padStart(2, '0')}`;
@@ -45,9 +50,10 @@ export class RequestInterceptor implements HttpInterceptor {
                         },
                         error: (error) => {
                             this.info = error.error?.info ? error.error.info : "";
-                            console.log("interceptor error: ", this.info);
-                            // TODO: show error popups here
-                        },
+                            const translatedErrorMessage = this.info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
+                            const errorImageSrc = imageSelect(this.info)
+                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+                        }
                     }),
                     finalize(() => {
                         console.log('interceptor finalize');

@@ -4,7 +4,6 @@ import { take } from 'rxjs';
 import { IEmail } from 'src/app/shared/interfaces/email';
 import { EmailService } from 'src/app/shared/services/email.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { PopupValidDataTypes } from 'src/app/shared/types/PopupValidDataTypes';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -35,13 +34,13 @@ export class EmailConfirmationComponent implements OnInit {
 
   sendEmail() {
     if (!this.ticketId) {
-      this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
+      this.popUpService.openPopup("no ticketId");
       return;
     }
 
     if (!this.userEmail) {
       //TODO: change message
-      this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent);
+      this.popUpService.openPopup("no userEmail");
       return;
     }
 
@@ -59,12 +58,7 @@ export class EmailConfirmationComponent implements OnInit {
           next: (response) => {
             console.log("Email Sent Response ==>:", response.info);
             //map success info
-            this.popUpService.openPopup(PopupValidDataTypes.Email_Sent)
-          },
-          error: (err) => {
-            console.error('Error sending email:', err);
-            console.error('Error Info:', err.error.info);
-            this.popUpService.openPopup(PopupValidDataTypes.Email_Not_Sent)
+            this.popUpService.openPopup('Email_Sent')
           }
         })
     } else {
