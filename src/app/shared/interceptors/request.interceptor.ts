@@ -5,8 +5,8 @@ import {
     HttpHandler,
     HttpRequest,
 } from "@angular/common/http";
-import { Observable, from } from "rxjs";
-import { finalize, mergeMap, tap } from "rxjs/operators";
+import { Observable, forkJoin, from } from "rxjs";
+import { finalize, mergeMap, switchMap, tap } from "rxjs/operators";
 import { GeolocationService } from "../services/geolocation.service";
 import { PopupService } from "../services/popup.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -14,6 +14,7 @@ import { imageSelect } from "../types/image-switch";
 import { manualErrorsUrls } from "../constants/manual-errors-urls";
 import { LabsService } from "../services/labs.service";
 import { Router } from "@angular/router";
+import { LoadingController } from "@ionic/angular";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -24,7 +25,8 @@ export class RequestInterceptor implements HttpInterceptor {
         private popupService: PopupService,
         private translate: TranslateService,
         private labService: LabsService,
-        private router: Router
+        private router: Router,
+        public loadingController: LoadingController
     ) { }
 
     intercept(
@@ -32,8 +34,9 @@ export class RequestInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         // Check geolocation and modify the request
-        return from(this.geolocationService.checkAndRequestPermission()).pipe(
-            mergeMap((position) => {
+        return forkJoin([from(this.geolocationService.checkAndRequestPermission()),from(this.loadingController.create())]).pipe(
+            switchMap(([position,loader]) => {
+                loader.present()
                 if (position && (position.lat && position.long)) {
                     request = request.clone({
                         params: request.params
@@ -43,7 +46,7 @@ export class RequestInterceptor implements HttpInterceptor {
                 }
 
                 return this.labService.getKioskGroupId().pipe(
-                    mergeMap((kioskGroupId) => {
+                    switchMap((kioskGroupId) => {
                         if (kioskGroupId) {
                             // Modify the request to include the kioskGroupId if available
                             request = request.clone({
@@ -79,7 +82,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                 }
                             }),
                             finalize(() => {
-                                console.log('interceptor finalize');
+                                loader.dismiss()
                             })
                         );
                     })
@@ -87,4 +90,6 @@ export class RequestInterceptor implements HttpInterceptor {
             })
         );
     }
+
+
 }
