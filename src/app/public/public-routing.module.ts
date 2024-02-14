@@ -9,7 +9,6 @@ import { AppointmentIdentificationComponent } from './pages/appointment-identifi
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { PublicComponent } from './public.component';
 import { geolocationGuard } from '../shared/guards/geolocation.guard';
-import { AccessDeniedComponent } from '../core/pages/access-denied/access-denied.component';
 
 const routes: Routes = [
   {
@@ -38,22 +37,22 @@ const routes: Routes = [
         canActivate : [geolocationGuard]
       },
       {
-        path: 'main-app/:kioskGroupId/:configId',
+        path: 'main-app/:configId',
         component: MainPageComponent,
         canActivate : [geolocationGuard]
       },
       {
-        path: 'service-list/:kioskGroupId/:configId',
+        path: 'service-list/:configId',
         component: ServiceListComponent,
         canActivate : [geolocationGuard]
       },
       {
-        path: 'identify-appointment/:kioskGroupId',
+        path: 'identify-appointment',
         component: AppointmentIdentificationComponent,
         canActivate : [geolocationGuard]
       },
       {
-        path: 'email-confirmation/:ticketId/:kioskGroupId',
+        path: 'email-confirmation/:ticketId',
         component: EmailConfirmationComponent,
         canActivate : [geolocationGuard]
       }

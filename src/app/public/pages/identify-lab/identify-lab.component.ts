@@ -62,7 +62,8 @@ export class IdentifyLabComponent implements OnInit {
           {
             next: (response) => {
               const lab = response.data as ILab[];
-              this._router.navigate([`/main-app/${lab[0].kiosk_group_id}/${lab[0].configuration}`]);
+              this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString())
+              this._router.navigate([`/main-app/${lab[0].configuration}`]);
             }, error: async (err) => {
               const info = err.error?.info ? err.error.info : "";
               const translatedErrorMessage = info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")

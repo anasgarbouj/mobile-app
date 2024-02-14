@@ -22,7 +22,6 @@ export class ServiceListComponent implements OnInit {
   searchTerm: string = '';
   searchTermSubject = new Subject<string>();
   private configId: number | null = null;
-  private kioskGroupId: number | null = null;
 
   private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
 
@@ -41,25 +40,24 @@ export class ServiceListComponent implements OnInit {
       .subscribe((searchTerm) => {
         console.log('Search term:', searchTerm);
         this.searchTerm = searchTerm;
-        if (this.configId && this.kioskGroupId) {
-          this.getLabRelatedServices(this.configId, this.kioskGroupId, this.searchTerm);
+        if (this.configId) {
+          this.getLabRelatedServices(this.configId, this.searchTerm);
         }
       });
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
       this.configId = params.get('configId') ? Number(params.get('configId')) : null;
-      if (this.configId && this.kioskGroupId) {
-        this.getLabRelatedServices(this.configId, this.kioskGroupId);
+      if (this.configId) {
+        this.getLabRelatedServices(this.configId);
       }
     });
   }
 
-  getLabRelatedServices(configId: number, kioskId: number, search: string = "") {
-    console.log(this.configId, "----", this.kioskGroupId);
-    this.labServicesService.fetchServices(configId, kioskId, search).pipe(take(1)).subscribe({
+  getLabRelatedServices(configId: number, search: string = "") {
+    console.log(this.configId, "----");
+    this.labServicesService.fetchServices(configId, search).pipe(take(1)).subscribe({
       next: (res: any) => {
         console.log("FETCH SERVICES :", res);
         this.services = res.data;
@@ -75,29 +73,23 @@ export class ServiceListComponent implements OnInit {
 
   createTicket(item: IService) {
     console.log("clicked on " + item.service_name);
-    if (this.kioskGroupId) {
-      const serviceTicket: IServiceTicket = {
-        kiosk_group_id: this.kioskGroupId,
-        service_id: item.service_id,
-      };
-      console.log("Ticket Object---", serviceTicket);
+    const serviceTicket: IServiceTicket = {
+      service_id: item.service_id,
+    };
+    console.log("Ticket Object---", serviceTicket);
 
-      this.ticketServices.createTicketWithService(serviceTicket).pipe(
-        take(1)
-      ).subscribe((ticketResponse) => {
-        console.log("Ticket Response:", ticketResponse);
-        if (ticketResponse && ticketResponse.info) {
-          this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-          console.log("navigating to email confirmation");
-          const ticket = ticketResponse.data as ITicket
-          console.log("TICKET ID TO SEND ---", ticket.ticket_id);
-          this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`])
-        }
-      })
-    }
-    else {
-      console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
-    }
+    this.ticketServices.createTicketWithService(serviceTicket).pipe(
+      take(1)
+    ).subscribe((ticketResponse) => {
+      console.log("Ticket Response:", ticketResponse);
+      if (ticketResponse && ticketResponse.info) {
+        this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
+        console.log("navigating to email confirmation");
+        const ticket = ticketResponse.data as ITicket
+        console.log("TICKET ID TO SEND ---", ticket.ticket_id);
+        this._router.navigate([`/email-confirmation/${ticket.ticket_id}`])
+      }
+    })
   }
 
   onSearch(searchTerm: string) {

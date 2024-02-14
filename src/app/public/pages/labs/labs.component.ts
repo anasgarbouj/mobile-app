@@ -40,7 +40,6 @@ export class LabsComponent implements OnInit {
   }
 
   getLabs(search: string = "") {
-    // TODO: ADD SEARCH
     this.labsService.fetchLabs(search)
       .pipe(take(1))
       .subscribe({
@@ -56,7 +55,8 @@ export class LabsComponent implements OnInit {
 
   navigateToIdentification(item: ILab) {
     console.log("clicked on: " + item);
-    this._router.navigate([`/main-app/${item.kiosk_group_id}/${item.configuration}`]);
+    this.labsService.setKioskGroupId(item.kiosk_group_id.toString())
+    this._router.navigate([`/main-app/${item.configuration}`]);
   }
 
   onSearch(searchTerm: string) {

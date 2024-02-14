@@ -15,7 +15,6 @@ export class EmailConfirmationComponent implements OnInit {
 
   userEmail: string = ""
   private ticketId: number | null = null;
-  private kioskGroupId: number | null = null;
 
   constructor(
     private popUpService: PopupService,
@@ -27,7 +26,6 @@ export class EmailConfirmationComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
-      this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
     });
   }
 
@@ -44,12 +42,11 @@ export class EmailConfirmationComponent implements OnInit {
       return;
     }
 
-    if (this.userEmail && this.ticketId && this.kioskGroupId) {
+    if (this.userEmail && this.ticketId) {
 
       const emailObject: IEmail = {
         email: this.userEmail,
         ticket_id: this.ticketId,
-        kiosk_group_id: this.kioskGroupId,
       }
       console.log("Email Object--", emailObject);
 
