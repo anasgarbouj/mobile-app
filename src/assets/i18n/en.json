@@ -6,7 +6,8 @@
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "an error has occurred, try again",
-
+            "FORBIDDEN": "You don't have authorization to view this page",
+            
             "INVALID_ENTRY": "Invalid entry(s)",
             "UNKNOWN_KIOSK_GROUP": "Sorry, the laboratory you scanned does not exist. Please scan the QR code again.",
             "INVALID_KIOSK_GROUP": "Sorry, the scanned lab is invalid, please try again later.",
@@ -24,6 +25,8 @@
             "SERVICE_NOT_FOUND": "Service not found, please try again later",
             "KIOSK_GROUP_NOT_FOUND": "Laboratory not found, please try again later",
             "CREATE_TICKET_ERROR": "An error occurred during ticket creation.",
+
+            "UNKOWN_ERROR": "an error occurred, please try again later. if the error persists, contact the administrator",
 
             "msg1": "You are too far from the laboratory. Please stay nearby until your scheduled appointment time. \n\n Your ticket will be automatically deleted if you are not near the laboratory 15 minutes before the scheduled time"
             

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
-import { catchError, map, of, take } from 'rxjs';
+import { take } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
@@ -21,25 +21,18 @@ export class AppointmentIdentificationComponent implements OnInit {
   cameraActive: boolean = false;
 
   private stopScanning: boolean = false;
-  private kioskGroupId: number | null = null;
   private ticketServiceInfoMapper = new TicketServiceInfoMapper(
     this.popupService
   );
 
   constructor(
     private _router: Router,
-    private route: ActivatedRoute,
     private readonly ticketServices: TicketsService,
     private popupService: PopupService,
     private translate: TranslateService
-  ) {
-    this.route.paramMap.subscribe((params) => {
-      this.kioskGroupId = params.get('kioskGroupId')
-        ? Number(params.get('kioskGroupId'))
-        : null;
-    });
-  }
-  ngOnInit(): void {}
+  ) { }
+  
+  ngOnInit(): void { }
 
   public handle(action: any, fn: string): void {
     const playDeviceFacingBack = (devices: any[]) => {
@@ -67,64 +60,52 @@ export class AppointmentIdentificationComponent implements OnInit {
 
   handleEvent(event: ScannerQRCodeResult[]) {
     if (!this.stopScanning) {
-      if (!this.kioskGroupId) {
-        console.log('kioskGroupId value ERROR: ', this.kioskGroupId);
-        return;
-      }
       this.stopScanning = true;
 
       // TODO: REPETTIVE CODE 1
       const appointmentTicket: IAppointmentTicket = {
-        kiosk_group_id: this.kioskGroupId,
-        schedule_activity_filler_appointment_id: event[0].value,
+        schedule_activity_filler_appointment_id: event[0].value
       };
 
       console.log('Appointment Ticket Object ---', appointmentTicket);
 
       this.ticketServices
         .createTicketWithAppointment(appointmentTicket)
-        .pipe(take(1))
-        .subscribe({
-          next: (ticketResponse) => {
-            if (ticketResponse && ticketResponse.info) {
-              this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-              const ticket = ticketResponse.data as ITicket;
-              console.log(
+          .pipe(take(1))
+          .subscribe({
+            next: (ticketResponse) => {
+              if (ticketResponse && ticketResponse.info) {
+                this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
+                const ticket = ticketResponse.data as ITicket;
+                console.log(
                 'Appointment Ticket ID to Send to email page : ',
                 ticket.ticket_id
               );
-              this._router.navigate([
-                `/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`,
+                this._router.navigate([
+                `/email-confirmation/${ticket.ticket_id}`,
               ]);
-            }
-          },
+              }
+            },
           error: async (err) => {
-            const info = err.error?.info ? err.error.info : '';
-            const translatedErrorMessage = info
+              const info = err.error?.info ? err.error.info : '';
+              const translatedErrorMessage = info
               ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
               : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
-            const errorImageSrc = imageSelect(info);
-            await this.popupService.openPopup(
+              const errorImageSrc = imageSelect(info);
+              await this.popupService.openPopup(
               translatedErrorMessage,
               errorImageSrc
             );
-            this.stopScanning = false;
-          },
-        });
+              this.stopScanning = false;
+            },
+          });
     }
   }
 
   submitData() {
-    console.log('TEST APPOINTMENT ID ---', this.appointmentId);
-    if (!this.kioskGroupId) {
-      // TODO: add popup
-      console.log('kioskGroupId value ERROR: ', this.kioskGroupId);
-      return;
-    }
-
+    console.log("TEST APPOINTMENT ID ---", this.appointmentId);
     // TODO: REPETTIVE CODE 2
     const appointmentTicket: IAppointmentTicket = {
-      kiosk_group_id: this.kioskGroupId,
       schedule_activity_filler_appointment_id: this.appointmentId,
     };
 
@@ -143,7 +124,7 @@ export class AppointmentIdentificationComponent implements OnInit {
               ticket.ticket_id
             );
             this._router.navigate([
-              `/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`,
+              `/email-confirmation/${ticket.ticket_id}`,
             ]);
             //clear field after sending data
             this.appointmentId = '';

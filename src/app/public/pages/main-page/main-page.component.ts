@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class MainPageComponent implements OnInit {
 
   private configId: number | null = null;
-  private kioskGroupId: number | null = null;
 
   constructor(
     private _router: Router,
@@ -19,29 +18,22 @@ export class MainPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
       this.configId = params.get('configId') ? Number(params.get('configId')) : null;
     });
   }
 
-
   navigateToServiceList() {
     console.log("no rdv clicked");
-    if (this.kioskGroupId && this.configId) {
-      this._router.navigate([`/service-list/${this.kioskGroupId}/${this.configId}`])
+    if (this.configId) {
+      this._router.navigate([`/service-list/${this.configId}`])
     } else {
       // TODO: ADD ERROR POPUP
-      console.log("kioskGroupId or configId value ERROR: ", this.kioskGroupId, this.configId);
+      console.log("configId value ERROR: ", this.configId);
     }
   }
 
   navigateToIdentification() {
     console.log("identification clicked");
-    if (this.kioskGroupId) {
-      this._router.navigate([`/identify-appointment/${this.kioskGroupId}`])
-    } else {
-      // TODO: ADD ERROR POPUP
-      console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
-    }
+    this._router.navigate([`/identify-appointment`])
   }
 }

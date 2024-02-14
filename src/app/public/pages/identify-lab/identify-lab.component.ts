@@ -80,8 +80,9 @@ export class IdentifyLabComponent implements OnInit {
         .subscribe({
           next: (response) => {
             const lab = response.data as ILab[];
+              this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString())
             this._router.navigate([
-              `/main-app/${lab[0].kiosk_group_id}/${lab[0].configuration}`,
+              `/main-app/${lab[0].configuration}`,
             ]);
           },
           error: async (err) => {

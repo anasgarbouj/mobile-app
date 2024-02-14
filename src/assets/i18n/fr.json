@@ -2,11 +2,12 @@
     "POPUP": {
         "SUCCESS_MESSAGES": {
             "DEFAULT": "Opération exécutée avec succès",
-
             "TICKET_EMAIL_SENT": "Votre ticket demandé a été envoyé à l’e-mail fourni."
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "Une erreur s'est produite, essayez à nouveau",
+            "FORBIDDEN": "Vous n'êtes pas autorisé à consulter cette page",
+
             "INVALID_ENTRY": "Entrée(s) invalide(s)",
             "UNKNOWN_KIOSK_GROUP": "Désolé, le laboratoire scanné n'existe pas, merci de scanner à nouveau le QR code.",
             "INVALID_KIOSK_GROUP": "Désolé, le laboratoire scannée n'est pas valide, veuillez réessayez plus tard.",
@@ -25,6 +26,7 @@
             "KIOSK_GROUP_NOT_FOUND": "Laboratoire introuvable, veuillez réessayer plus tard",
             "CREATE_TICKET_ERROR": "Une erreur s'est produite lors de la création du ticket.",
             
+            "UNKOWN_ERROR": "Une erreur s'est produite, veuillez réessayer plus tard. si l'erreur persiste, contactez l'administrateur",
             "msg1": "Vous êtes trop loin du laboratoire. Veuillez rester à proximité jusqu'à l'heure prévue de votre rendez-vous. \n\n Votre ticket sera automatiquement supprimé si vous n'êtes pas près du laboratoire 15 min avant l'heure prévue."
             
         }
