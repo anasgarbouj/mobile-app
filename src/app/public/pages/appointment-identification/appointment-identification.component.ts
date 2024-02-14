@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { catchError, map, of, take } from 'rxjs';
 import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
@@ -7,6 +8,7 @@ import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
+import { imageSelect } from 'src/app/shared/types/image-switch';
 
 @Component({
   selector: 'app-appointment-identification',
@@ -21,13 +23,14 @@ export class AppointmentIdentificationComponent implements OnInit {
 
   private stopScanning: boolean = false;
   private kioskGroupId: number | null = null;
-  private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popUpService)
+  private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
 
   constructor(
     private _router: Router,
-    private popUpService: PopupService,
     private route: ActivatedRoute,
     private readonly ticketServices: TicketsService,
+    private popupService: PopupService,
+    private translate: TranslateService
   ) {
     this.route.paramMap.subscribe(params => {
       this.kioskGroupId = params.get('kioskGroupId') ? Number(params.get('kioskGroupId')) : null;
@@ -57,8 +60,7 @@ export class AppointmentIdentificationComponent implements OnInit {
         console.log("kioskGroupId value ERROR: ", this.kioskGroupId);
         return
       }
-      console.log((event[0].value));
-      this.stopScanning = !this.stopScanning;
+      this.stopScanning = true;
 
       // TODO: REPETTIVE CODE 1
       const appointmentTicket: IAppointmentTicket = {
@@ -68,24 +70,24 @@ export class AppointmentIdentificationComponent implements OnInit {
 
       console.log("Appointment Ticket Object ---", appointmentTicket);
 
-      this.ticketServices.createTicketWithAppointment(appointmentTicket).pipe(
-        take(1),
-        map(res => {
-          console.log(res);
-          return res;
-        })
-      )
-        .subscribe((ticketResponse) => {
-          console.log("Ticket Response:", ticketResponse);
+      this.ticketServices.createTicketWithAppointment(appointmentTicket)
+      .pipe(take(1))
+      .subscribe({
+        next: (ticketResponse) => {
           if (ticketResponse && ticketResponse.info) {
             this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
             const ticket = ticketResponse.data as ITicket
             console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
-
             this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`]);
           }
+        }, error: async (err) => {
+          const info = err.error?.info ? err.error.info : "";
+          const translatedErrorMessage = info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
+          const errorImageSrc = imageSelect(info)
+          await this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+          this.stopScanning = false;
         }
-        )
+      })
     }
   }
 
@@ -106,27 +108,26 @@ export class AppointmentIdentificationComponent implements OnInit {
     console.log("Appointment Ticket Object ---", appointmentTicket);
 
 
-    this.ticketServices.createTicketWithAppointment(appointmentTicket).pipe(
-      take(1),
-      map(res => {
-        console.log(res);
-        return res;
-      })
-    )
-      .subscribe((ticketResponse) => {
-        console.log("Ticket Response:", ticketResponse);
-        if (ticketResponse && ticketResponse.info) {
-          this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-          const ticket = ticketResponse.data as ITicket
-          console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
-
-          this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`]);
+    this.ticketServices.createTicketWithAppointment(appointmentTicket)
+      .pipe(take(1))
+      .subscribe({
+        next: (ticketResponse) => {
+          if (ticketResponse && ticketResponse.info) {
+            this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
+            const ticket = ticketResponse.data as ITicket
+            console.log("Appointment Ticket ID to Send to email page : ", ticket.ticket_id);
+            this._router.navigate([`/email-confirmation/${ticket.ticket_id}/${this.kioskGroupId}`]);
+            //clear field after sending data
+            this.appointmentId = ""
+          }
+        }, error: async (err) => {
+          const info = err.error?.info ? err.error.info : "";
+          const translatedErrorMessage = info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
+          const errorImageSrc = imageSelect(info)
+          await this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+          this.stopScanning = false;
         }
-      }
-      )
-    //clear field after sending data
-    this.appointmentId = ""
-
+      })
   }
 
 }
