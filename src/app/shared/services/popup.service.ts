@@ -15,33 +15,30 @@ export class PopupService {
   ) { }
 
   async openPopup(message: string, imageSrc: string = "") {
-    if (this.isModalOpen) {
-      // If a modal is already open, queue up the request
-      this.modalQueue.push(() => this.openPopup(message, imageSrc));
-    } else {
-      // Open modal
-      const modalRef = this.modalService.open(MessagePopupComponent, {
-        centered: true,
-        modalDialogClass: 'custom-diag'
-      })
-      this.isModalOpen = true;
-      modalRef.componentInstance.message = message;
-      modalRef.componentInstance.imageSrc = imageSrc;
+    return new Promise((resolve, reject) => {
 
-      modalRef.result.finally(() => {
-        this.isModalOpen = false;
-        // Check if there are queued modal requests
-        const nextModalRequest = this.modalQueue.shift();
-        if (nextModalRequest) {            
-          nextModalRequest();
-        }
-      }).then( (res) => {
-        console.log('Modal closed: ', res);
-        return res
-      }).catch((msg) => {
-        console.log('Modal dismissed: ', msg);
-        return msg
-      });
-    }
+      if (this.isModalOpen) {
+        // If a modal is already open, queue up the request
+        this.modalQueue.push(() => this.openPopup(message, imageSrc));
+      } else {
+        // Open modal
+        const modalRef = this.modalService.open(MessagePopupComponent, {
+          centered: true,
+          modalDialogClass: 'custom-diag'
+        })
+        this.isModalOpen = true;
+        modalRef.componentInstance.message = message;
+        modalRef.componentInstance.imageSrc = imageSrc;
+
+        modalRef.result.finally(() => {
+          this.isModalOpen = false;
+          // Check if there are queued modal requests
+          const nextModalRequest = this.modalQueue.shift();
+          if (nextModalRequest) {            
+            nextModalRequest();
+          }
+        }).then(resolve).catch(reject);
+      }
+    })
   }
 }

@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { map, take } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { imageSelect } from 'src/app/shared/types/image-switch';
 
 @Component({
   selector: 'app-identify-lab',
@@ -19,8 +21,9 @@ export class IdentifyLabComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private popUpService: PopupService,
-    private readonly labsService: LabsService
+    private readonly labsService: LabsService,
+    private popupService: PopupService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -47,21 +50,28 @@ export class IdentifyLabComponent implements OnInit {
   }
 
   handleEvent(event: ScannerQRCodeResult[]) {
+    console.log("sssdqsd", !this.stopScanning);
+    
     if (!this.stopScanning) {
-      console.log((event[0].value));
       this.stopScanning = true;
-
       this.labsService.fetchLabsByQrCode(event[0].value)
         .pipe(take(1), map(res => {
           return { info: res.info, data: res.data }
         }))
-        .subscribe((response) => {
-          console.log("Response Info : ", response.info);
-          console.log("Response Data : ", response.data);
-          const lab = response.data as ILab[];
-          console.log(lab[0].kiosk_group_id);
-          this._router.navigate([`/main-app/${lab[0].kiosk_group_id}/${lab[0].configuration}`]);
-        })
+        .subscribe(
+          {
+            next: (response) => {
+              const lab = response.data as ILab[];
+              this._router.navigate([`/main-app/${lab[0].kiosk_group_id}/${lab[0].configuration}`]);
+            }, error: async (err) => {
+              const info = err.error?.info ? err.error.info : "";
+              const translatedErrorMessage = info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
+              const errorImageSrc = imageSelect(info)
+              await this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+              this.stopScanning = false;
+            }
+          }
+        )
     }
   }
 }

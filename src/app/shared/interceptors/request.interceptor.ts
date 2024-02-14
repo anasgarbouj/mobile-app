@@ -5,12 +5,13 @@ import {
     HttpHandler,
     HttpRequest,
 } from "@angular/common/http";
-import { Observable, from } from "rxjs";
+import { Observable, from, throwError } from "rxjs";
 import { finalize, mergeMap, tap } from "rxjs/operators";
 import { GeolocationService } from "../services/geolocation.service";
 import { PopupService } from "../services/popup.service";
 import { TranslateService } from "@ngx-translate/core";
 import { imageSelect } from "../types/image-switch";
+import { manualErrorsUrls } from "../constants/manual-errors-urls";
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -49,12 +50,15 @@ export class RequestInterceptor implements HttpInterceptor {
                             return event;
                         },
                         error: (error) => {
-                            this.info = error.error?.info ? error.error.info : "";
-                            
-                            const translatedErrorMessage = this.info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
-                            console.log(translatedErrorMessage);
-                            const errorImageSrc = imageSelect(this.info)
-                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+                            // some urls errors have to be handled mannally
+                            if (!manualErrorsUrls.some((subUrl:string) => request.url.includes(subUrl))) {                            
+                                this.info = error.error?.info ? error.error.info : "";
+                                
+                                const translatedErrorMessage = this.info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
+                                const errorImageSrc = imageSelect(this.info)
+    
+                                this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+                            }
                         }
                     }),
                     finalize(() => {
