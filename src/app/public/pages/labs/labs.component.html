@@ -11,10 +11,22 @@
       </ion-button>
     </div>
 
-    <ion-list>
-      <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs | appSearch : searchTerm"
-        name="{{lab.kiosk_group_name}}" address="Adresse {{lab.kiosk_group_geo_address}}"></app-lab-card>
-    </ion-list>
+    <ng-container *ngIf="labs && labs.length > 0; else elseTemplate">
+      <ion-list>
+        <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs | appSearch : searchTerm"
+          name="{{lab.kiosk_group_name}}" address="Adresse {{lab.kiosk_group_geo_address}}"></app-lab-card>
+      </ion-list>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <div class="custom_wrapper">
+        <div class="custom-container">
+          <ion-img class="custom-img" src="assets/images/empty-list.svg"></ion-img>
+          <p class="custom-text text-justify">
+            Désolé, pas de laboratoire disponible à proximité.
+          </p>
+        </div>
+      </div>
+    </ng-template>
 
   </div>
 </ion-content>

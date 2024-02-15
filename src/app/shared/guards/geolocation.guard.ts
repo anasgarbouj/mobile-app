@@ -1,5 +1,6 @@
-import { Router, type CanActivateFn } from '@angular/router';
+import { Router, CanActivateFn } from '@angular/router';
 import { GeolocationService } from '../services/geolocation.service';
+
 
 export const geolocationGuard: CanActivateFn = async (route, state) => {
   const router = new Router();

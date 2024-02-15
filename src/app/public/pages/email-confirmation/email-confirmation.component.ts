@@ -4,6 +4,8 @@ import { take } from 'rxjs';
 import { IEmail } from 'src/app/shared/interfaces/email';
 import { EmailService } from 'src/app/shared/services/email.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { errorImageSelect, successImageSelect } from 'src/app/shared/types/image-switch';
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-email-confirmation',
@@ -17,9 +19,10 @@ export class EmailConfirmationComponent implements OnInit {
   private ticketId: number | null = null;
 
   constructor(
-    private popUpService: PopupService,
     private route: ActivatedRoute,
     private readonly emailService: EmailService,
+    private popupService: PopupService,
+    private translate: TranslateService
   ) { }
 
 
@@ -32,35 +35,32 @@ export class EmailConfirmationComponent implements OnInit {
 
   sendEmail() {
     if (!this.ticketId) {
-      this.popUpService.openPopup("no ticketId");
+      const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.INVALID_ENTRY")
+      const errorImageSrc = errorImageSelect()
+      this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
       return;
     }
 
     if (!this.userEmail) {
-      //TODO: change message
-      this.popUpService.openPopup("no userEmail");
+      const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.INVALID_EMAIL")
+      const errorImageSrc = errorImageSelect()
+      this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
       return;
     }
 
-    if (this.userEmail && this.ticketId) {
-
-      const emailObject: IEmail = {
-        email: this.userEmail,
-        ticket_id: this.ticketId,
-      }
-      console.log("Email Object--", emailObject);
-
-      this.emailService.sendTicketViaEmail(emailObject).pipe(take(1))
-        .subscribe({
-          next: (response) => {
-            console.log("Email Sent Response ==>:", response.info);
-            //map success info
-            this.popUpService.openPopup('Email_Sent')
-          }
-        })
-    } else {
-      // TODO: add popup of error if email empty or no ticekt id error
-      console.log("UNVALID VALUES: ", this.userEmail, this.ticketId);
+    const emailObject: IEmail = {
+      email: this.userEmail,
+      ticket_id: this.ticketId,
     }
+    console.log("Email Object--", emailObject);
+    this.emailService.sendTicketViaEmail(emailObject).pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          console.log("Email Sent Response ==>:", response.info);
+          const translatedErrorMessage = this.translate.instant("POPUP.SUCCESS_MESSAGES.TICKET_EMAIL_SENT")
+          const errorImageSrc = successImageSelect("TICKET_EMAIL_SENT")
+          this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+        }
+      })
   }
 }

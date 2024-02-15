@@ -9,6 +9,8 @@
             "FORBIDDEN": "Vous n'êtes pas autorisé à consulter cette page",
 
             "INVALID_ENTRY": "Entrée(s) invalide(s)",
+            "INVALID_EMAIL": "Merci de vérifier votre Email.",
+
             "UNKNOWN_KIOSK_GROUP": "Désolé, le laboratoire scanné n'existe pas, merci de scanner à nouveau le QR code.",
             "INVALID_KIOSK_GROUP": "Désolé, le laboratoire scannée n'est pas valide, veuillez réessayez plus tard.",
             "KIOSK_GROUP_NOT_LINKED": "Désolé, le laboratoire scannée n'est pas configuré, veuillez réessayer plus tard.",

@@ -33,3 +33,22 @@ ion-list {
   --border-radius: 8px;
 
 }
+
+.custom-container {
+  padding: 15px;
+  padding-bottom: 0px;
+}
+
+.custom-text {
+  text-align: center;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 32px 0px;
+}
+
+.custom-img {
+  width: 132px;
+  height: auto;
+  margin: auto;
+}

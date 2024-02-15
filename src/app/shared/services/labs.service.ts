@@ -13,8 +13,9 @@ export class LabsService {
   private kioskGroupIdSubject = new BehaviorSubject<string | null>(null);
   private baseUrl: string = environment.baseUrl;
 
-  constructor(private http: HttpClient) { }
-
+  constructor(
+    private http: HttpClient
+  ) { }
 
   setKioskGroupId(id: string) {
     this.kioskGroupIdSubject.next(id);
@@ -24,13 +25,17 @@ export class LabsService {
     return this.kioskGroupIdSubject.asObservable();
   }
 
+  checkKioskGroupId(): boolean {
+    return this.kioskGroupIdSubject.value ? true : false;
+  }
+
   public fetchLabs(search: string = '') {
     let params = new HttpParams().set('search', search);
     return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/filter-labs/`, { params: params });
   }
 
   public fetchLabsByQrCode(qrCodeValue: string = '') {
-    let params = new HttpParams().set('search', qrCodeValue);
+    let params = new HttpParams().set('virtual_code', qrCodeValue);
     return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/scan-qr/`, { params: params })
   }
 }

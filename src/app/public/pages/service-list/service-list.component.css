@@ -28,3 +28,22 @@ ion-list {
     left: 50%;
     transform: translate(-50%, -50%) scale(3);
 }
+
+.custom-container {
+    padding: 15px;
+    padding-bottom: 0px;
+}
+
+.custom-text {
+    text-align: center;
+    color: #212121;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 32px 0px;
+}
+
+.custom-img {
+    width: 132px;
+    height: auto;
+    margin: auto;
+}

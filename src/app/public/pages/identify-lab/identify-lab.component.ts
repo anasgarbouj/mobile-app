@@ -3,15 +3,18 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { map, take } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { imageSelect } from 'src/app/shared/types/image-switch';
+import { errorImageSelect } from 'src/app/shared/types/image-switch';
+import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-identify-lab',
@@ -20,6 +23,7 @@ import { imageSelect } from 'src/app/shared/types/image-switch';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IdentifyLabComponent implements OnInit {
+  @ViewChild('action') action!: NgxScannerQrcodeComponent;
   cameraActive: boolean = false;
   private stopScanning: boolean = false;
 
@@ -28,16 +32,13 @@ export class IdentifyLabComponent implements OnInit {
     private readonly labsService: LabsService,
     private popupService: PopupService,
     private translate: TranslateService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   navigateToLabs() {
-    console.log('Closing camera ...');
-    this.cameraActive = false;
-    this.stopScanning = true;
     console.log('Navigating to labs page ...');
-    this._router.navigate(['/labs']);
+    this._router.navigate(['/labs'], { replaceUrl: true });
   }
 
   public handle(action: any, fn: string): void {
@@ -65,8 +66,6 @@ export class IdentifyLabComponent implements OnInit {
   }
 
   handleEvent(event: ScannerQRCodeResult[]) {
-    console.log('sssdqsd', !this.stopScanning);
-
     if (!this.stopScanning) {
       this.stopScanning = true;
       this.labsService
@@ -80,17 +79,17 @@ export class IdentifyLabComponent implements OnInit {
         .subscribe({
           next: (response) => {
             const lab = response.data as ILab[];
-              this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString())
+            this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString())
             this._router.navigate([
               `/main-app/${lab[0].configuration}`,
-            ]);
+            ], { replaceUrl: true });
           },
           error: async (err) => {
             const info = err.error?.info ? err.error.info : '';
             const translatedErrorMessage = info
               ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
               : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
-            const errorImageSrc = imageSelect(info);
+            const errorImageSrc = errorImageSelect(info);
             await this.popupService.openPopup(
               translatedErrorMessage,
               errorImageSrc
@@ -98,6 +97,18 @@ export class IdentifyLabComponent implements OnInit {
             this.stopScanning = false;
           },
         });
+    }
+  }
+
+  ngOnDestroy() {
+    console.log('Closing camera ...');
+    if(this.cameraActive){
+      this.action["stop"]().subscribe({
+        next: (res) => {
+          this.cameraActive = false;
+          this.stopScanning = true;
+        }
+      });
     }
   }
 }

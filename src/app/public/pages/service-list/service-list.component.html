@@ -4,10 +4,21 @@
         <p class="text">Veuillez choisir le service qui vous convient.</p>
         <app-search-bar placeholder="Recherche Service" (search)="onSearch($event)"></app-search-bar>
 
-        <ion-spinner name="dots" class="loader-container" *ngIf="services && services.length === 0"></ion-spinner>
-        <ion-list>
-            <app-service-card (click)="createTicket(item)" *ngFor="let item of services | appSearch : searchTerm; let index" name="{{item.service_name}}"
-                color="{{item.service_color}}"></app-service-card>
-        </ion-list>
+        <ng-container *ngIf="services && services.length > 0; else elseTemplate">
+            <ion-list>
+                <app-service-card (click)="createTicket(item)" *ngFor="let item of services | appSearch : searchTerm; let index" name="{{item.service_name}}"
+                    color="{{item.service_color}}"></app-service-card>
+            </ion-list>            
+        </ng-container>
+        <ng-template #elseTemplate>
+            <div class="custom_wrapper">
+                <div class="custom-container">
+                  <ion-img class="custom-img" src="assets/images/empty-list.svg"></ion-img>
+                  <p class="custom-text text-justify">
+                    Désolé, pas de service disponible.
+                  </p>
+                </div>
+              </div>        
+        </ng-template>
     </div>
 </ion-content>

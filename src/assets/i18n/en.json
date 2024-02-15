@@ -7,8 +7,10 @@
         "ERROR_MESSAGES": {
             "DEFAULT": "an error has occurred, try again",
             "FORBIDDEN": "You don't have authorization to view this page",
-            
+
             "INVALID_ENTRY": "Invalid entry(s)",
+            "INVALID_EMAIL": "Please check your Email.",
+            
             "UNKNOWN_KIOSK_GROUP": "Sorry, the laboratory you scanned does not exist. Please scan the QR code again.",
             "INVALID_KIOSK_GROUP": "Sorry, the scanned lab is invalid, please try again later.",
             "KIOSK_GROUP_NOT_LINKED": "Sorry, the scanned lab is not configured, please try again later.",

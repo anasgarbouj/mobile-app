@@ -9,6 +9,7 @@ import { AppointmentIdentificationComponent } from './pages/appointment-identifi
 import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { PublicComponent } from './public.component';
 import { geolocationGuard } from '../shared/guards/geolocation.guard';
+import { LabGuard } from '../shared/guards/lab.guard';
 
 const routes: Routes = [
   {
@@ -39,22 +40,22 @@ const routes: Routes = [
       {
         path: 'main-app/:configId',
         component: MainPageComponent,
-        canActivate : [geolocationGuard]
+        canActivate : [LabGuard, geolocationGuard]
       },
       {
         path: 'service-list/:configId',
         component: ServiceListComponent,
-        canActivate : [geolocationGuard]
+        canActivate : [LabGuard, geolocationGuard]
       },
       {
         path: 'identify-appointment',
         component: AppointmentIdentificationComponent,
-        canActivate : [geolocationGuard]
+        canActivate : [LabGuard, geolocationGuard]
       },
       {
         path: 'email-confirmation/:ticketId',
         component: EmailConfirmationComponent,
-        canActivate : [geolocationGuard]
+        canActivate : [LabGuard, geolocationGuard]
       }
     ]
   }

@@ -6,11 +6,11 @@ import {
     HttpRequest,
 } from "@angular/common/http";
 import { Observable, forkJoin, from } from "rxjs";
-import { finalize, mergeMap, switchMap, tap } from "rxjs/operators";
+import { finalize, switchMap, tap } from "rxjs/operators";
 import { GeolocationService } from "../services/geolocation.service";
 import { PopupService } from "../services/popup.service";
 import { TranslateService } from "@ngx-translate/core";
-import { imageSelect } from "../types/image-switch";
+import { errorImageSelect } from "../types/image-switch";
 import { manualErrorsUrls } from "../constants/manual-errors-urls";
 import { LabsService } from "../services/labs.service";
 import { Router } from "@angular/router";
@@ -66,7 +66,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                     // if status is 403
                                     if (error.status === 403) {
                                         const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
-                                        const errorImageSrc = imageSelect()
+                                        const errorImageSrc = errorImageSelect()
                                         this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
                                         this.router.navigateByUrl('/home');
                                     }
@@ -75,7 +75,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                         this.info = error.error?.info ? error.error.info : "";
 
                                         const translatedErrorMessage = this.info ? this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`) : this.translate.instant("POPUP.ERROR_MESSAGES.DEFAULT")
-                                        const errorImageSrc = imageSelect(this.info)
+                                        const errorImageSrc = errorImageSelect(this.info)
 
                                         this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
                                     }

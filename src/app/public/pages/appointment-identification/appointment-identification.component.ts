@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { take } from 'rxjs';
@@ -8,7 +8,8 @@ import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
-import { imageSelect } from 'src/app/shared/types/image-switch';
+import { errorImageSelect } from 'src/app/shared/types/image-switch';
+import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 
 @Component({
   selector: 'app-appointment-identification',
@@ -17,6 +18,7 @@ import { imageSelect } from 'src/app/shared/types/image-switch';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppointmentIdentificationComponent implements OnInit {
+  @ViewChild('action') action!: NgxScannerQrcodeComponent;
   appointmentId: string = '';
   cameraActive: boolean = false;
 
@@ -83,7 +85,7 @@ export class AppointmentIdentificationComponent implements OnInit {
               );
                 this._router.navigate([
                 `/email-confirmation/${ticket.ticket_id}`,
-              ]);
+              ], { replaceUrl: true });
               }
             },
           error: async (err) => {
@@ -91,7 +93,7 @@ export class AppointmentIdentificationComponent implements OnInit {
               const translatedErrorMessage = info
               ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
               : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
-              const errorImageSrc = imageSelect(info);
+              const errorImageSrc = errorImageSelect(info);
               await this.popupService.openPopup(
               translatedErrorMessage,
               errorImageSrc
@@ -125,7 +127,7 @@ export class AppointmentIdentificationComponent implements OnInit {
             );
             this._router.navigate([
               `/email-confirmation/${ticket.ticket_id}`,
-            ]);
+            ], { replaceUrl: true });
             //clear field after sending data
             this.appointmentId = '';
           }
@@ -135,7 +137,7 @@ export class AppointmentIdentificationComponent implements OnInit {
           const translatedErrorMessage = info
             ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
             : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
-          const errorImageSrc = imageSelect(info);
+          const errorImageSrc = errorImageSelect(info);
           await this.popupService.openPopup(
             translatedErrorMessage,
             errorImageSrc
@@ -143,5 +145,17 @@ export class AppointmentIdentificationComponent implements OnInit {
           this.stopScanning = false;
         },
       });
+  }
+
+  ngOnDestroy() {
+    console.log('Closing camera ...');
+    if (this.cameraActive) {      
+      this.action["stop"]().subscribe({
+        next: (res) => {
+          this.cameraActive = false;
+          this.stopScanning = true;
+        }
+      });
+    }
   }
 }
