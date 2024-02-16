@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Geolocation, Position } from '@capacitor/geolocation';
+// import { Geolocation, Position } from '@capacitor/geolocation';
 import { ILocation } from '../interfaces/location';
 
 @Injectable({
@@ -70,40 +70,40 @@ export class GeolocationService {
   //   }
   // }
 
-  public async getCurrentPosition(): Promise<ILocation | null> {
-    const options: PositionOptions = {
-      enableHighAccuracy: true,
-    };
-    try {
-      const result: Position = await Geolocation.getCurrentPosition(options);
-      console.log('GPS permission granted', result);
-      console.log(result.coords.latitude, result.coords.longitude);
-      return {
-        lat: result.coords.latitude,
-        long: result.coords.longitude,
-      };
-    } catch (error) {
-      console.error('Error requesting GPS permission', error);
-      return null;
-    }
-  }
   // public async getCurrentPosition(): Promise<ILocation | null> {
-  //   if (navigator.geolocation) {
-  //     try {
-  //       const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-  //         navigator.geolocation.getCurrentPosition(resolve, reject);
-  //       });
-  //       return {
-  //         lat: position.coords.latitude,
-  //         long: position.coords.longitude,
-  //       };
-  //     } catch (error) {
-  //       console.error("Error requesting User Location:", error);
-  //       return null;
-  //     }
-  //   } else {
-  //     console.error('Geolocation is not supported by this browser');
+  //   const options: PositionOptions = {
+  //     enableHighAccuracy: true,
+  //   };
+  //   try {
+  //     const result: Position = await Geolocation.getCurrentPosition(options);
+  //     console.log('GPS permission granted', result);
+  //     console.log(result.coords.latitude, result.coords.longitude);
+  //     return {
+  //       lat: result.coords.latitude,
+  //       long: result.coords.longitude,
+  //     };
+  //   } catch (error) {
+  //     console.error('Error requesting GPS permission', error);
   //     return null;
   //   }
   // }
+  public async getCurrentPosition(): Promise<ILocation | null> {
+    if (navigator.geolocation) {
+      try {
+        const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        return {
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+        };
+      } catch (error) {
+        console.error("Error requesting User Location:", error);
+        return null;
+      }
+    } else {
+      console.error('Geolocation is not supported by this browser');
+      return null;
+    }
+  }
 }
