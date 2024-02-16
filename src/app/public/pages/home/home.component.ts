@@ -24,8 +24,6 @@ export class HomeComponent implements OnInit {
       if (position) {
         console.log('User currently at position :', position);
         this._router.navigate(['/identify-lab']);
-      } else {
-        this.geolocationService.checkAndRequestPermission();
       }
     });
   }

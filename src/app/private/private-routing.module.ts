@@ -16,7 +16,7 @@ const routes: Routes = [
       {
         path: 'lab/:ticket-id/:status',
         component: CalledTicketComponent
-      },
+      }
     ]
   }
 ];

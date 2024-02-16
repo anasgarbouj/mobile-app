@@ -7,20 +7,18 @@ export const geolocationGuard: CanActivateFn = async (route, state) => {
   const geolocationService = new GeolocationService();
   console.log('Current navigation state:', state.url);
   try {
-    const hasPermission = await geolocationService.checkPermission();
+    const hasPermission = await geolocationService.getCurrentPosition();
     if (hasPermission) {
       console.log('Geolocation Guard Success');
       console.log('Geolocation =>', hasPermission);
       return true;
     } else {
       console.log('Geolocation Guard Failed');
-      router.navigate(['/home']);
       console.log('redirecting to home');
-      return false;
+      return router.navigate(['/home']);
     }
   } catch (error) {
     console.error('redirecting to home, Error checking geolocation permission:', error);
-    router.navigate(['/home']);
-    return false;
+    return router.navigate(['/home']);
   }
 };

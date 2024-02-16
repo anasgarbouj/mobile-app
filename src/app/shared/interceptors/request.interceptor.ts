@@ -34,7 +34,7 @@ export class RequestInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         // Check geolocation and modify the request
-        return forkJoin([from(this.geolocationService.checkAndRequestPermission()),from(this.loadingController.create())]).pipe(
+        return forkJoin([from(this.geolocationService.getCurrentPosition()),from(this.loadingController.create())]).pipe(
             switchMap(([position,loader]) => {
                 loader.present()
                 if (position && (position.lat && position.long)) {
