@@ -10,52 +10,46 @@ import { EmailConfirmationComponent } from './pages/email-confirmation/email-con
 import { PublicComponent } from './public.component';
 import { geolocationGuard } from '../shared/guards/geolocation.guard';
 import { LabGuard } from '../shared/guards/lab.guard';
+import { AuthGuard } from '../shared/guards/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: PublicComponent,
     children: [
-      //Default routing
       {
         path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
+        component: EmailConfirmationComponent
       },
-
       {
         path: 'home',
         component: HomeComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'identify-lab',
         component: IdentifyLabComponent,
-        canActivate : [geolocationGuard]
+        canActivate: [AuthGuard, geolocationGuard]
       },
       {
         path: 'labs',
         component: LabsComponent,
-        canActivate : [geolocationGuard]
+        canActivate: [AuthGuard, geolocationGuard]
       },
       {
         path: 'main-app/:configId',
         component: MainPageComponent,
-        canActivate : [LabGuard, geolocationGuard]
+        canActivate: [AuthGuard, LabGuard, geolocationGuard]
       },
       {
         path: 'service-list/:configId',
         component: ServiceListComponent,
-        canActivate : [LabGuard, geolocationGuard]
+        canActivate: [AuthGuard, LabGuard, geolocationGuard]
       },
       {
         path: 'identify-appointment',
         component: AppointmentIdentificationComponent,
-        canActivate : [LabGuard, geolocationGuard]
-      },
-      {
-        path: 'email-confirmation/:ticketId',
-        component: EmailConfirmationComponent,
-        canActivate : [LabGuard, geolocationGuard]
+        canActivate: [AuthGuard, LabGuard, geolocationGuard]
       }
     ]
   }

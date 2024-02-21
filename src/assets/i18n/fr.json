@@ -2,15 +2,14 @@
     "POPUP": {
         "SUCCESS_MESSAGES": {
             "DEFAULT": "Opération exécutée avec succès",
+            "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT": "Le lien de connexion a été envoyé avec succès à votre email.",
             "TICKET_EMAIL_SENT": "Votre ticket demandé a été envoyé à l’e-mail fourni."
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "Une erreur s'est produite, essayez à nouveau",
             "FORBIDDEN": "Vous n'êtes pas autorisé à consulter cette page",
-
             "INVALID_ENTRY": "Entrée(s) invalide(s)",
             "INVALID_EMAIL": "Merci de vérifier votre Email.",
-
             "UNKNOWN_KIOSK_GROUP": "Désolé, le laboratoire scanné n'existe pas, merci de scanner à nouveau le QR code.",
             "INVALID_KIOSK_GROUP": "Désolé, le laboratoire scannée n'est pas valide, veuillez réessayez plus tard.",
             "KIOSK_GROUP_NOT_LINKED": "Désolé, le laboratoire scannée n'est pas configuré, veuillez réessayer plus tard.",
@@ -19,18 +18,18 @@
             "SCAN_KIOSK_GROUP_ERROR": "Une erreur s'est produite lors de la récupération de laboratoire.",
             "SERVICE_LIST_SERVER_ERROR": "Une erreur s'est produite lors de la récupération des services.",
             "SCHEDULE_ACTIVITY_NOT_FOUND": "Rendez-vous introuvable merci de vérifier!",
-            
             "QUEUE_NOT_FOUND_OR_NOT_IN_TIME_RANGE": "Service sélectionné introuvable ou hors délai",
             "SCHEDULE_ACTIVITY_IN_WRONG_KIOSK_GROUP": "Votre Rendez-vous correspond a un autre laboratoire.",
             "TICKET_EMAIL_NOT_SENT": "Impossible d'envoyer l'e-mail de ticket, réessayez",
             "TICKET_EMAIL_ERROR": "Une erreur s'est produite lors de l'envoi de l'email de ticket.",
             "SERVICE_NOT_FOUND": "Service introuvable, veuillez réessayer plus tard",
             "KIOSK_GROUP_NOT_FOUND": "Laboratoire introuvable, veuillez réessayer plus tard",
+            "DAILY_VIRTUAL_TICKETS_COUNT_REACHED": "Nombre de tickets virtuels quotidiens atteint.",
             "CREATE_TICKET_ERROR": "Une erreur s'est produite lors de la création du ticket.",
-            
+            "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_NOT_SENT": "Impossible d'envoyer l'e-mail de connexion, réessayez",
+            "VIRTUAL_TICKET_PATIENT_EMAIL_ERROR": "Une erreur s'est produite lors de l'envoi de l'email de connexion",
             "UNKOWN_ERROR": "Une erreur s'est produite, veuillez réessayer plus tard. si l'erreur persiste, contactez l'administrateur",
             "msg1": "Vous êtes trop loin du laboratoire. Veuillez rester à proximité jusqu'à l'heure prévue de votre rendez-vous. \n\n Votre ticket sera automatiquement supprimé si vous n'êtes pas près du laboratoire 15 min avant l'heure prévue."
-            
         }
     }
 }

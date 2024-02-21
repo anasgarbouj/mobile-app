@@ -1,8 +1,9 @@
 <ion-content>
     <div class="container">
-        <p class="text">Veuillez entrer votre e-mail pour recevoir votre ticket.</p>
+        <p class="text">Veuillez entrer votre e-mail pour recevoir votre lien de connexion.</p>
         <ion-label class="email_label">E-mail:</ion-label>
-        <ion-input class="email_input" fill="outline" placeholder="lorum.ipsum@gmail.cpm" [(ngModel)]="userEmail"></ion-input>
+        <ion-input class="email_input" fill="outline" placeholder="lorum.ipsum@gmail.cpm"
+            [(ngModel)]="userEmail"></ion-input>
         <ion-button class="send_btn" (click)="sendEmail()" expand="block">Envoyer</ion-button>
     </div>
 </ion-content>

@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs';
-import { IEmail } from 'src/app/shared/interfaces/email';
-import { EmailService } from 'src/app/shared/services/email.service';
+import { PEmail } from 'src/app/shared/interfaces/email';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { errorImageSelect, successImageSelect } from 'src/app/shared/types/image-switch';
 import { TranslateService } from "@ngx-translate/core";
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -16,31 +16,29 @@ import { TranslateService } from "@ngx-translate/core";
 export class EmailConfirmationComponent implements OnInit {
 
   userEmail: string = ""
-  private ticketId: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private readonly emailService: EmailService,
+    private readonly authService: AuthService,
     private popupService: PopupService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) { }
 
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
+    this.route.queryParams.subscribe(queryParams => {
+      if ("token" in queryParams && queryParams['token']) {
+        localStorage.setItem('token', queryParams['token'])
+        this.router.navigate(['home'])
+      } else if (localStorage.hasOwnProperty("token")) {
+        this.router.navigate(['home'])
+      }
     });
   }
 
 
   sendEmail() {
-    if (!this.ticketId) {
-      const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.INVALID_ENTRY")
-      const errorImageSrc = errorImageSelect()
-      this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
-      return;
-    }
-
     if (!this.userEmail) {
       const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.INVALID_EMAIL")
       const errorImageSrc = errorImageSelect()
@@ -48,16 +46,15 @@ export class EmailConfirmationComponent implements OnInit {
       return;
     }
 
-    const emailObject: IEmail = {
+    const emailObject: PEmail = {
       email: this.userEmail,
-      ticket_id: this.ticketId,
     }
     console.log("Email Object--", emailObject);
-    this.emailService.sendTicketViaEmail(emailObject).pipe(take(1))
+    this.authService.sendPatientLoginEmail(emailObject).pipe(take(1))
       .subscribe({
         next: (response) => {
           console.log("Email Sent Response ==>:", response.info);
-          const translatedErrorMessage = this.translate.instant("POPUP.SUCCESS_MESSAGES.TICKET_EMAIL_SENT")
+          const translatedErrorMessage = this.translate.instant("POPUP.SUCCESS_MESSAGES.VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT")
           const errorImageSrc = successImageSelect("TICKET_EMAIL_SENT")
           this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
         }

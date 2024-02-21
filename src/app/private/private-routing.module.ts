@@ -10,11 +10,11 @@ const routes: Routes = [
     component: PrivateComponent,
     children: [
       {
-        path: 'lab/:ticket-id',
+        path: 'ticket/:ticket-id',
         component: TicketDetailsComponent
       },
       {
-        path: 'lab/:ticket-id/:status',
+        path: 'ticket/:ticket-id/:status',
         component: CalledTicketComponent
       }
     ]

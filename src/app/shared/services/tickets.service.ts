@@ -16,13 +16,11 @@ export class TicketsService {
   private baseUrl = environment.baseUrl;
   private readonly http = inject(HttpClient)
 
-  createTicketWithService(ticket : IServiceTicket){
-    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/create-ticket/service/`,ticket)
+  createTicketWithService(ticket: IServiceTicket) {
+    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/create/ticket/service/`, ticket)
   }
 
-  createTicketWithAppointment(ticket : IAppointmentTicket){
-    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/create-ticket/schedule-activity/`,ticket)
+  createTicketWithAppointment(ticket: IAppointmentTicket) {
+    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/create/schedule-activity/`, ticket)
   }
-
-
 }

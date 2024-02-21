@@ -33,7 +33,7 @@ export class AppointmentIdentificationComponent implements OnInit {
     private popupService: PopupService,
     private translate: TranslateService
   ) { }
-  
+
   ngOnInit(): void { }
 
   public handle(action: any, fn: string): void {
@@ -73,34 +73,33 @@ export class AppointmentIdentificationComponent implements OnInit {
 
       this.ticketServices
         .createTicketWithAppointment(appointmentTicket)
-          .pipe(take(1))
-          .subscribe({
-            next: (ticketResponse) => {
-              if (ticketResponse && ticketResponse.info) {
-                this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-                const ticket = ticketResponse.data as ITicket;
-                console.log(
+        .pipe(take(1))
+        .subscribe({
+          next: (ticketResponse) => {
+            if (ticketResponse && ticketResponse.info) {
+              this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
+              const ticket = ticketResponse.data as ITicket;
+              console.log(
                 'Appointment Ticket ID to Send to email page : ',
                 ticket.ticket_id
               );
-                this._router.navigate([
-                `/email-confirmation/${ticket.ticket_id}`,
-              ], { replaceUrl: true });
-              }
-            },
+              // TODO: navigate to ticket redirection link
+              console.log('todoooooo');
+            }
+          },
           error: async (err) => {
-              const info = err.error?.info ? err.error.info : '';
-              const translatedErrorMessage = info
+            const info = err.error?.info ? err.error.info : '';
+            const translatedErrorMessage = info
               ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
               : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
-              const errorImageSrc = errorImageSelect(info);
-              await this.popupService.openPopup(
+            const errorImageSrc = errorImageSelect(info);
+            await this.popupService.openPopup(
               translatedErrorMessage,
               errorImageSrc
             );
-              this.stopScanning = false;
-            },
-          });
+            this.stopScanning = false;
+          },
+        });
     }
   }
 
@@ -125,11 +124,8 @@ export class AppointmentIdentificationComponent implements OnInit {
               'Appointment Ticket ID to Send to email page : ',
               ticket.ticket_id
             );
-            this._router.navigate([
-              `/email-confirmation/${ticket.ticket_id}`,
-            ], { replaceUrl: true });
-            //clear field after sending data
-            this.appointmentId = '';
+            // TODO: navigate to ticket redirection link
+            console.log('todoooooo');
           }
         },
         error: async (err) => {
@@ -149,7 +145,7 @@ export class AppointmentIdentificationComponent implements OnInit {
 
   ngOnDestroy() {
     console.log('Closing camera ...');
-    if (this.cameraActive) {      
+    if (this.cameraActive) {
       this.action["stop"]().subscribe({
         next: (res) => {
           this.cameraActive = false;

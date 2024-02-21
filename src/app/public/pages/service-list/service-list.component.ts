@@ -86,8 +86,8 @@ export class ServiceListComponent implements OnInit {
         this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
         console.log("navigating to email confirmation");
         const ticket = ticketResponse.data as ITicket
-        console.log("TICKET ID TO SEND ---", ticket.ticket_id);
-        this._router.navigate([`/email-confirmation/${ticket.ticket_id}`])
+        // TODO: navigate to ticket redirection link
+        console.log('todoooooo');
       }
     })
   }

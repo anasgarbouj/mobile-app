@@ -9,13 +9,12 @@ import { IResponse } from '../interfaces/api-response';
 })
 export class EmailService {
 
-  private baseUrl : string = environment.baseUrl;
+  private baseUrl: string = environment.baseUrl;
   private readonly http = inject(HttpClient)
 
   constructor() { }
 
-  sendTicketViaEmail(email : IEmail){
-    return this.http.post<IResponse<any>>(`${this.baseUrl}/virtual_ticket/ticket-email/`,email)
+  sendTicketViaEmail(email: IEmail) {
+    return this.http.post<IResponse<any>>(`${this.baseUrl}/virtual_ticket/ticket/email/`, email)
   }
-
 }

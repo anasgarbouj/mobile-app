@@ -19,6 +19,7 @@ import { LoadingController } from "@ionic/angular";
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
     info: string = "";
+    token: string | null;
 
     constructor(
         private readonly geolocationService: GeolocationService,
@@ -27,15 +28,26 @@ export class RequestInterceptor implements HttpInterceptor {
         private labService: LabsService,
         private router: Router,
         public loadingController: LoadingController
-    ) { }
+    ) {
+        this.token = localStorage.getItem("token")
+    }
 
     intercept(
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
+        // add Authorization token if exists
+        if (this.token) {
+            request = request.clone({
+                setHeaders: {
+                    Authorization: this.token,
+                },
+            });
+        }
+
         // Check geolocation and modify the request
-        return forkJoin([from(this.geolocationService.getCurrentPosition()),from(this.loadingController.create())]).pipe(
-            switchMap(([position,loader]) => {
+        return forkJoin([from(this.geolocationService.getCurrentPosition()), from(this.loadingController.create())]).pipe(
+            switchMap(([position, loader]) => {
                 loader.present()
                 if (position && (position.lat && position.long)) {
                     request = request.clone({
