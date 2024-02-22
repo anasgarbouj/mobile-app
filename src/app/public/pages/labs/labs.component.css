@@ -1,25 +1,25 @@
 .container {
-    padding: 16px;
+  padding: 16px;
 }
 
 .title {
-    color: var(--main-background-color);
-    text-align: center;
-    font-weight: 700;
-    line-height: 140%;
-    /* 33.6px */
+  color: var(--main-background-color);
+  text-align: center;
+  font-weight: 700;
+  line-height: 140%;
+  /* 33.6px */
 }
 
 .text {
-    font-size: 12px;
-    font-weight: 400;
-    margin-top: 16px;
-    margin-bottom: 16px;
-    padding: 0px 8px;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  padding: 0px 8px;
 }
 
 ion-list {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 .search-refresh-block {
@@ -27,7 +27,7 @@ ion-list {
   align-items: center;
 }
 
-.refresh-btn{
+.refresh-btn {
   --background: var(--main-background-color);
   padding: 16px;
   --border-radius: 8px;
@@ -51,4 +51,10 @@ ion-list {
   width: 132px;
   height: auto;
   margin: auto;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -19,9 +19,9 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    BrowserModule, 
-    AppRoutingModule, 
-    NgbModule, 
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
     IonicModule,
     TranslateModule.forRoot({
       loader: {
@@ -29,13 +29,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }), 
+    }),
     SharedModule
   ],
   providers: [
-    { 
-      provide: RouteReuseStrategy, 
-      useClass: IonicRouteStrategy 
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
     },
     {
       provide: HTTP_INTERCEPTORS,

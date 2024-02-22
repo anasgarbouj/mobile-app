@@ -1,9 +1,9 @@
+import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, debounce, take, timer } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
-import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
   selector: 'app-labs',
@@ -17,10 +17,12 @@ export class LabsComponent implements OnInit {
   searchTerm: string = '';
   searchTermSubject = new Subject<string>();
 
+  currentPage = 1;
+  pageSize = 5;
+  totalItems: number = 0;
 
   constructor(
     private _router: Router,
-    private popupService: PopupService,
     private readonly labsService: LabsService,
     private cdr: ChangeDetectorRef
   ) {
@@ -31,7 +33,7 @@ export class LabsComponent implements OnInit {
       .subscribe((searchTerm) => {
         console.log('Search term:', searchTerm);
         this.searchTerm = searchTerm;
-        this.getLabs(this.searchTerm)
+        this.getLabs()
       });
   }
 
@@ -39,18 +41,27 @@ export class LabsComponent implements OnInit {
     this.getLabs();
   }
 
-  getLabs(search: string = "") {
-    this.labsService.fetchLabs(search)
+  getLabs(page: number = 1) {
+    let httpParams = new HttpParams();
+    httpParams = httpParams.set("page", page);
+    httpParams = httpParams.set("size", this.pageSize);
+    httpParams = httpParams.set("search", this.searchTerm);
+
+    this.labsService.fetchLabs(httpParams)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
           console.log("fetchLabs Response Info : ", response.info);
           console.log("fetchLabs Response Data : ", response.data);
           this.labs = response.data as ILab[];
-          console.log(this.labs);
+          this.totalItems = response.count;
           this.cdr.detectChanges();
         }
       });
+  }
+
+  onPageChange(page: number) {
+    this.getLabs(page)
   }
 
   navigateToIdentification(item: ILab) {
@@ -64,6 +75,6 @@ export class LabsComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.searchTermSubject.unsubscribe();    
+    this.searchTermSubject.unsubscribe();
   }
 }

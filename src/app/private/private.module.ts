@@ -6,6 +6,7 @@ import { TicketComponent } from './components/ticket/ticket.component';
 import { CalledTicketComponent } from './pages/called-ticket/called-ticket.component';
 import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
 import { IonicModule } from '@ionic/angular';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     CommonModule,
     PrivateRoutingModule,
-    IonicModule
+    IonicModule,
+    SharedModule
   ]
 })
 export class PrivateModule { }

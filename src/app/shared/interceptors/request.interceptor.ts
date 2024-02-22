@@ -19,7 +19,7 @@ import { LoadingController } from "@ionic/angular";
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
     info: string = "";
-    token: string | null;
+    token: string | null = null;
 
     constructor(
         private readonly geolocationService: GeolocationService,
@@ -29,7 +29,6 @@ export class RequestInterceptor implements HttpInterceptor {
         private router: Router,
         public loadingController: LoadingController
     ) {
-        this.token = localStorage.getItem("token")
     }
 
     intercept(
@@ -37,6 +36,7 @@ export class RequestInterceptor implements HttpInterceptor {
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
         // add Authorization token if exists
+        this.token = localStorage.getItem("token")
         if (this.token) {
             request = request.clone({
                 setHeaders: {
@@ -77,6 +77,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                     console.log("interceptor error:", error.status);
                                     // if status is 403
                                     if (error.status === 403) {
+                                        localStorage.removeItem('token')
                                         const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
                                         const errorImageSrc = errorImageSelect()
                                         this.popupService.openPopup(translatedErrorMessage, errorImageSrc);

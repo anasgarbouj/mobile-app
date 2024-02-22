@@ -53,10 +53,9 @@ export class EmailConfirmationComponent implements OnInit {
     this.authService.sendPatientLoginEmail(emailObject).pipe(take(1))
       .subscribe({
         next: (response) => {
-          console.log("Email Sent Response ==>:", response.info);
-          const translatedErrorMessage = this.translate.instant("POPUP.SUCCESS_MESSAGES.VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT")
-          const errorImageSrc = successImageSelect("TICKET_EMAIL_SENT")
-          this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+          const translatedMessage = this.translate.instant(`POPUP.SUCCESS_MESSAGES.${response.info}`)
+          const imageSrc = successImageSelect(response.info)
+          this.popupService.openPopup(translatedMessage, imageSrc);
         }
       })
   }

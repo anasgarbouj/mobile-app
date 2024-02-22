@@ -1,6 +1,7 @@
 <ion-content>
-    <app-ticket [toDelete]="true"
-    [isTicketCalled]="false"
-    ticketTitle="Voulez vous supprimer votre ticket? "
-    waitingTime ="5"></app-ticket>
+    <app-ticket *ngIf="ticket" [ticket]="ticket" [canDelete]="true" ticketTitle="Votre ticket">
+    </app-ticket>
+    <div class="loader-container" *ngIf="!ticket">
+        <app-loader-spinner class="mt-3"></app-loader-spinner>
+    </div>
 </ion-content>

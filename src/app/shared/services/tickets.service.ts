@@ -16,8 +16,12 @@ export class TicketsService {
   private baseUrl = environment.baseUrl;
   private readonly http = inject(HttpClient)
 
+  retrieveTicket(id: number) {
+    return this.http.get<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/retrieve/${id}/`)
+  }
+
   createTicketWithService(ticket: IServiceTicket) {
-    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/create/ticket/service/`, ticket)
+    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/create/service/`, ticket)
   }
 
   createTicketWithAppointment(ticket: IAppointmentTicket) {

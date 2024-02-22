@@ -12,15 +12,15 @@ import { Platform } from '@ionic/angular';
 export class AccessDeniedComponent implements OnInit {
 
   constructor(
-    private platform: Platform, 
+    private platform: Platform,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.platform.is('mobileweb')) {
       console.log("Application oppened in mobile browser ..");
       console.log("redirecting to home page ..");
-      this.router.navigate(['/home']);
+      this.router.navigate(['/']);
     }
   }
 

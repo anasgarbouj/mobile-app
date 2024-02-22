@@ -1,13 +1,14 @@
 import { IService } from '../../../shared/interfaces/service';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject, debounce, take, timer } from 'rxjs';
-import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { LabServicesService } from 'src/app/shared/services/lab-services.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
+import { successImageSelect } from 'src/app/shared/types/image-switch';
 
 @Component({
   selector: 'app-service-list',
@@ -23,7 +24,6 @@ export class ServiceListComponent implements OnInit {
   searchTermSubject = new Subject<string>();
   private configId: number | null = null;
 
-  private ticketServiceInfoMapper = new TicketServiceInfoMapper(this.popupService)
 
   constructor(
     private _router: Router,
@@ -32,6 +32,7 @@ export class ServiceListComponent implements OnInit {
     private route: ActivatedRoute,
     private readonly labServicesService: LabServicesService,
     private readonly ticketServices: TicketsService,
+    private translate: TranslateService
   ) {
     this.searchTermSubject
       .pipe(
@@ -80,14 +81,20 @@ export class ServiceListComponent implements OnInit {
 
     this.ticketServices.createTicketWithService(serviceTicket).pipe(
       take(1)
-    ).subscribe((ticketResponse) => {
+    ).subscribe(async (ticketResponse) => {
       console.log("Ticket Response:", ticketResponse);
       if (ticketResponse && ticketResponse.info) {
-        this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-        console.log("navigating to email confirmation");
         const ticket = ticketResponse.data as ITicket
-        // TODO: navigate to ticket redirection link
-        console.log('todoooooo');
+        const info = ticketResponse.info;
+        const translatedMessage = info
+          ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
+          : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
+        const ImageSrc = successImageSelect(info);
+        await this.popupService.openPopup(
+          translatedMessage,
+          ImageSrc
+        );
+        window.open(ticket.redirection_link, "_self");
       }
     })
   }

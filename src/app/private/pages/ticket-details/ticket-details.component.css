@@ -84,3 +84,9 @@ ion-button.send_btn {
     text-transform: capitalize;
     margin-top: 16px;
 }
+
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

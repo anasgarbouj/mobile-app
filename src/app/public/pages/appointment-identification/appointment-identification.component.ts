@@ -3,12 +3,11 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { take } from 'rxjs';
-import { TicketServiceInfoMapper } from 'src/app/shared/commun/TicketServiceInfoMapper';
 import { IAppointmentTicket } from 'src/app/shared/interfaces/appointment-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
-import { errorImageSelect } from 'src/app/shared/types/image-switch';
+import { errorImageSelect, successImageSelect } from 'src/app/shared/types/image-switch';
 import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
 
 @Component({
@@ -23,12 +22,8 @@ export class AppointmentIdentificationComponent implements OnInit {
   cameraActive: boolean = false;
 
   private stopScanning: boolean = false;
-  private ticketServiceInfoMapper = new TicketServiceInfoMapper(
-    this.popupService
-  );
 
   constructor(
-    private _router: Router,
     private readonly ticketServices: TicketsService,
     private popupService: PopupService,
     private translate: TranslateService
@@ -75,16 +70,19 @@ export class AppointmentIdentificationComponent implements OnInit {
         .createTicketWithAppointment(appointmentTicket)
         .pipe(take(1))
         .subscribe({
-          next: (ticketResponse) => {
+          next: async (ticketResponse: any) => {
             if (ticketResponse && ticketResponse.info) {
-              this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-              const ticket = ticketResponse.data as ITicket;
-              console.log(
-                'Appointment Ticket ID to Send to email page : ',
-                ticket.ticket_id
+              const ticket = ticketResponse.data as ITicket
+              const info = ticketResponse.info;
+              const translatedMessage = info
+                ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
+                : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
+              const ImageSrc = successImageSelect(info);
+              await this.popupService.openPopup(
+                translatedMessage,
+                ImageSrc
               );
-              // TODO: navigate to ticket redirection link
-              console.log('todoooooo');
+              window.open(ticket.redirection_link, "_self");
             }
           },
           error: async (err) => {
@@ -116,16 +114,19 @@ export class AppointmentIdentificationComponent implements OnInit {
       .createTicketWithAppointment(appointmentTicket)
       .pipe(take(1))
       .subscribe({
-        next: (ticketResponse) => {
+        next: async (ticketResponse) => {
           if (ticketResponse && ticketResponse.info) {
-            this.ticketServiceInfoMapper.mapSuccessInfo(ticketResponse.info);
-            const ticket = ticketResponse.data as ITicket;
-            console.log(
-              'Appointment Ticket ID to Send to email page : ',
-              ticket.ticket_id
+            const ticket = ticketResponse.data as ITicket
+            const info = ticketResponse.info;
+            const translatedMessage = info
+              ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
+              : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
+            const ImageSrc = successImageSelect(info);
+            await this.popupService.openPopup(
+              translatedMessage,
+              ImageSrc
             );
-            // TODO: navigate to ticket redirection link
-            console.log('todoooooo');
+            window.open(ticket.redirection_link, "_self");
           }
         },
         error: async (err) => {

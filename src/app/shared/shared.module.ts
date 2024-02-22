@@ -9,6 +9,8 @@ import { LOAD_WASM, NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
 
 LOAD_WASM().subscribe();
 
@@ -19,12 +21,14 @@ LOAD_WASM().subscribe();
     DividerComponent,
     // Popups
     MessagePopupComponent,
+    LoaderSpinnerComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     TranslateModule,
     FormsModule,
+    NgbPaginationModule,
     IonicModule.forRoot({
       innerHTMLTemplatesEnabled: true
     })
@@ -36,6 +40,8 @@ LOAD_WASM().subscribe();
     IonicModule,
     NgxScannerQrcodeModule,
     TranslateModule,
+    NgbPaginationModule,
+    LoaderSpinnerComponent,
     FormsModule
   ]
 })

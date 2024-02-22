@@ -3,11 +3,14 @@
         "SUCCESS_MESSAGES": {
             "DEFAULT": "operation executed successfully",
             "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT": "The connection link has been successfully sent to your email.",
-            "TICKET_EMAIL_SENT": "The requested ticket was sent to the email address provided."
+            "TICKET_EMAIL_SENT": "The requested ticket was sent to the email address provided.",
+            "SCHEDULE_ACTIVITY_ALREADY_TREATED": "Appointment already processed",
+            "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it.",
+            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it."
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "an error has occurred, try again",
-            "FORBIDDEN": "You don't have authorization to view this page",
+            "FORBIDDEN": "Sorry, the link has expired, please request a new link.",
             "INVALID_ENTRY": "Invalid entry(s)",
             "INVALID_EMAIL": "Please check your Email.",
             "UNKNOWN_KIOSK_GROUP": "Sorry, the laboratory you scanned does not exist. Please scan the QR code again.",
@@ -28,6 +31,8 @@
             "CREATE_TICKET_ERROR": "An error occurred during ticket creation.",
             "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_NOT_SENT": "Unable to send authentication email, try again",
             "VIRTUAL_TICKET_PATIENT_EMAIL_ERROR": "An error occurred while sending the authentication email",
+            "TICKET_NOT_FOUND": "Ticket not found",
+            "RETRIEVE_TICKET_ERROR": "An error occurred during the retrieval of the ticket",
             "UNKOWN_ERROR": "an error occurred, please try again later. if the error persists, contact the administrator",
             "msg1": "You are too far from the laboratory. Please stay nearby until your scheduled appointment time. \n\n Your ticket will be automatically deleted if you are not near the laboratory 15 minutes before the scheduled time"
         }

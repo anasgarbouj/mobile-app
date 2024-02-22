@@ -16,6 +16,11 @@
         <app-lab-card (click)="navigateToIdentification(lab)" *ngFor="let lab of labs | appSearch : searchTerm"
           name="{{lab.kiosk_group_name}}" address="Adresse {{lab.kiosk_group_geo_address}}"></app-lab-card>
       </ion-list>
+      <div class="pagination-container">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="currentPage" [pageSize]="pageSize"
+          (pageChange)="onPageChange($event)">
+        </ngb-pagination>
+      </div>
     </ng-container>
     <ng-template #elseTemplate>
       <div class="custom_wrapper">

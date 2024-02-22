@@ -5,10 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './private.component.html',
   styleUrls: ['./private.component.css'],
 })
-export class PrivateComponent  implements OnInit {
+export class PrivateComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
 }
