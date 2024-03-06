@@ -1,5 +1,4 @@
 <ion-content>
-  <app-count-down-time-tracker></app-count-down-time-tracker>
     <app-ticket *ngIf="ticket" [ticket]="ticket" [canDelete]="true" ticketTitle="Votre ticket">
     </app-ticket>
     <div class="loader-container" *ngIf="!ticket">

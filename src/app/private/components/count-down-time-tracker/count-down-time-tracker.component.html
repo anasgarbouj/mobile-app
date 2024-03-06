@@ -2,7 +2,7 @@
   <h3>Validation du ticket</h3>
   <p class="text">Vous devez valider votre ticket chaque 15 minutes <br> Le ticket sera supprimé automatiquement sinon!</p>
   <div class="countdown-container">
-    <span class="minutes">{{ minutes }}</span><span class="separator">:</span><span class="seconds">{{ seconds }}</span>
+    <span class="minutes">{{ minutes | appTwoDigitNumber }}</span><span class="separator">:</span><span class="seconds">{{ seconds | appTwoDigitNumber }}</span>
   </div>
 
   <ion-button  expand="block" class="validation-btn" (click)="resetTimer()" *ngIf="timerRunning" >Valider</ion-button>

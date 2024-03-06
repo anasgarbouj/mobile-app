@@ -10,7 +10,7 @@ import { TicketsService } from 'src/app/shared/services/tickets.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketDetailsComponent implements OnInit {
-  private ticketId: number | null = null;
+  ticketId: number | null = null;
   ticket: any;
   paramMapSubscription: Subscription | null = null;
   queryParamsSubscription: Subscription | null = null;

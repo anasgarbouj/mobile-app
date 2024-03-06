@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
+import { TwoDigitNumberPipe } from './filters/twoDigitNumber.pipe';
 
 LOAD_WASM().subscribe();
 
@@ -21,7 +22,8 @@ LOAD_WASM().subscribe();
     DividerComponent,
     // Popups
     MessagePopupComponent,
-    LoaderSpinnerComponent
+    LoaderSpinnerComponent,
+    TwoDigitNumberPipe,
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ LOAD_WASM().subscribe();
     TranslateModule,
     NgbPaginationModule,
     LoaderSpinnerComponent,
-    FormsModule
+    FormsModule,
+    TwoDigitNumberPipe,
   ]
 })
 export class SharedModule { }
