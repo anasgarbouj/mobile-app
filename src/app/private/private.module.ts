@@ -7,6 +7,7 @@ import { CalledTicketComponent } from './pages/called-ticket/called-ticket.compo
 import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
 import { IonicModule } from '@ionic/angular';
 import { SharedModule } from '../shared/shared.module';
+import { CountDownTimeTrackerComponent } from './components/ticket/count-down-time-tracker/count-down-time-tracker.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SharedModule } from '../shared/shared.module';
     PrivateComponent,
     TicketComponent,
     CalledTicketComponent,
-    TicketDetailsComponent
+    TicketDetailsComponent,
+    CountDownTimeTrackerComponent
   ],
   imports: [
     CommonModule,

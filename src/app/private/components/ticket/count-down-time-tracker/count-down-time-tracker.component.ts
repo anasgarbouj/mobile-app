@@ -1,6 +1,5 @@
-import { Component, Input, OnDestroy, OnInit, Output ,ChangeDetectorRef} from '@angular/core';
+import { Component, OnDestroy, OnInit ,ChangeDetectorRef} from '@angular/core';
 import { Subscription, interval } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-count-down-time-tracker',

@@ -16,7 +16,6 @@ import { ServiceCardComponent } from './components/service-card/service-card.com
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { SearchPipe } from "../shared/filters/search.pipe";
-import { CountDownTimeTrackerComponent } from './components/count-down-time-tracker/count-down-time-tracker.component';
 
 
 @NgModule({
@@ -32,7 +31,6 @@ import { CountDownTimeTrackerComponent } from './components/count-down-time-trac
         AppointmentIdentificationComponent,
         SquareRoundedIconButtonComponent,
         ServiceCardComponent,
-        CountDownTimeTrackerComponent
     ],
     imports: [
         CommonModule,
