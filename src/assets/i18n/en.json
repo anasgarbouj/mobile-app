@@ -33,6 +33,7 @@
             "VIRTUAL_TICKET_PATIENT_EMAIL_ERROR": "An error occurred while sending the authentication email",
             "TICKET_NOT_FOUND": "Ticket not found",
             "RETRIEVE_TICKET_ERROR": "An error occurred during the retrieval of the ticket",
+            "VALIDATE_TICKET_ERROR": "An error has occurred while validating your ticket.",
             "UNKOWN_ERROR": "an error occurred, please try again later. if the error persists, contact the administrator",
             "msg1": "You are too far from the laboratory. Please stay nearby until your scheduled appointment time. \n\n Your ticket will be automatically deleted if you are not near the laboratory 15 minutes before the scheduled time"
         }

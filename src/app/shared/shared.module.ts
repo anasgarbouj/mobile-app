@@ -11,6 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
+import { ExpiredPopupComponent } from './components/popups/expired-popup/expired-popup.component';
 
 LOAD_WASM().subscribe();
 
@@ -21,6 +22,7 @@ LOAD_WASM().subscribe();
     DividerComponent,
     // Popups
     MessagePopupComponent,
+    ExpiredPopupComponent,
     LoaderSpinnerComponent,
   ],
   imports: [
