@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, take } from 'rxjs';
+import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { TicketsService } from 'src/app/shared/services/tickets.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketDetailsComponent implements OnInit {
-  private ticketId: number | null = null;
+  ticketId: number | null = null;
+  ticketLastValidationDate: Date = new Date();
   ticket: any;
   paramMapSubscription: Subscription | null = null;
   queryParamsSubscription: Subscription | null = null;
@@ -43,7 +45,8 @@ export class TicketDetailsComponent implements OnInit {
     this.ticketService.retrieveTicket(id).pipe(
       take(1)
     ).subscribe((res) => {
-      this.ticket = res.data;
+      this.ticket = res.data as ITicket;
+      this.ticketLastValidationDate = new Date(this.ticket.ticket_validation_date)
       this.cdr.detectChanges();
     })
   }

@@ -21,7 +21,7 @@ LOAD_WASM().subscribe();
     DividerComponent,
     // Popups
     MessagePopupComponent,
-    LoaderSpinnerComponent
+    LoaderSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -42,7 +42,7 @@ LOAD_WASM().subscribe();
     TranslateModule,
     NgbPaginationModule,
     LoaderSpinnerComponent,
-    FormsModule
+    FormsModule,
   ]
 })
 export class SharedModule { }

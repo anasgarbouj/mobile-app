@@ -87,8 +87,8 @@ export class ServiceListComponent implements OnInit {
         const ticket = ticketResponse.data as ITicket
         const info = ticketResponse.info;
         const translatedMessage = info
-          ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
-          : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
+          ? this.translate.instant(`POPUP.SUCCESS_MESSAGES.${info}`)
+          : this.translate.instant('POPUP.SUCCESS_MESSAGES.DEFAULT');
         const ImageSrc = successImageSelect(info);
         await this.popupService.openPopup(
           translatedMessage,

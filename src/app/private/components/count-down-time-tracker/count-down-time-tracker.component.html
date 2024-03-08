@@ -1,0 +1,15 @@
+<div class="container">
+  <h3>Validation du ticket</h3>
+  <p class="text">Vous devez valider votre ticket chaque 15 minutes <br> Le ticket sera supprimé automatiquement sinon!
+  </p>
+  <div class="countdown-container">
+    <span class="minutes">
+      {{ diffDate | date: "mm" }}
+    </span>
+    <span class="separator">:</span>
+    <span class="seconds">
+      {{ diffDate | date: "ss" }}
+    </span>
+  </div>
+  <ion-button expand="block" class="validation-btn" (click)="resetTimer()" *ngIf="timerRunning">Valider</ion-button>
+</div>
