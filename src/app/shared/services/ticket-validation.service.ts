@@ -12,7 +12,7 @@ export class TicketValidationService {
   constructor( private readonly http: HttpClient) { }
 
   public sendTicketValidation(ticket_id : number|null){
-    return this.http.post<any>(`${this.baseUrl}/virtual_ticket/ticket/validate/`,ticket_id)
+    return this.http.post<any>(`${this.baseUrl}/virtual_ticket/ticket/validate/`, {ticket_id})
   }
 
 }

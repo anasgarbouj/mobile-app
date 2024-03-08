@@ -14,85 +14,64 @@ import { TicketValidationService } from 'src/app/shared/services/ticket-validati
   styleUrls: ['./count-down-time-tracker.component.css'],
 })
 export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
-  @Input()
-  ticketId: number | null = null;
+  @Input() ticketId: number | null = null;
+  @Input() ticketValidationDate: Date = new Date();
 
   private interval$!: Subscription;
-  public minutes: number = 0;
-  public seconds: number = 0;
+  public diffDate: Date = new Date();
   public timerRunning: boolean = false;
-  private timeFromBack: Date = new Date('March  6, 2024  16:14:00');
 
   constructor(
     private cdRef: ChangeDetectorRef,
     private readonly ticketValidationService: TicketValidationService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.calculateRemainingTime();
-    if (this.minutes > 0 || this.seconds > 0) {
-      this.startTimer();
-    } else {
-      this.minutes = 0;
-      this.seconds = 0;
-      console.log('Time is over');
-      this.timerRunning = false;
-    }
+    this.checkDateDiff();
   }
 
-  ngOnDestroy() {
-    this.stopTimer();
-    this.resetTimer();
+  checkDateDiff(){
+    if (this.ticketValidationDate && (this.diffDate <= (new Date(this.ticketValidationDate.getTime() + (15 * 60000))))) {
+      this.startTimer();
+    } else {
+      this.diffDate = new Date();
+      this.diffDate.setMinutes(0);
+      this.diffDate.setSeconds(0);
+      console.log('Time is over');
+      this.timerRunning = false;
+      this.cdRef.detectChanges();
+    }
   }
 
   startTimer() {
     this.timerRunning = true;
     this.interval$ = interval(1000).subscribe(() => {
-      this.decrementTime();
+      this.calculateRemainingTime()
       this.cdRef.markForCheck(); //  trigger change detection
     });
   }
 
-  stopTimer() {
-    this.interval$.unsubscribe();
-    this.resetTimer();
-    this.ticketValidationService.sendTicketValidation(this.ticketId).pipe(take(1)).subscribe((res)=>{console.log("Ticket Validation :",res);
-    });
-  }
-
   resetTimer() {
-    this.minutes = 0;
-    this.seconds = 0;
+    this.interval$.unsubscribe();
+    this.ticketValidationService.sendTicketValidation(this.ticketId).pipe(take(1)).subscribe((res) => {
+      this.diffDate = new Date();
+      this.ticketValidationDate = new Date(res.ticket_validation_date+"Z");
+      this.checkDateDiff();
+    });
   }
 
   calculateRemainingTime() {
     this.timerRunning = true;
     const now = new Date();
-    const difference = Math.abs(now.getTime() - this.timeFromBack.getTime());
-
+    const differenceInMilliseconds = Math.abs(now.getTime() - (this.ticketValidationDate.getTime()));
     const maxTimeInMs = 15 * 60 * 1000; // 15 minutes in milliseconds
-    // Calculate remaining time based on max allowed time (15 mins)
-    this.minutes = Math.floor(
-      Math.max(0, maxTimeInMs - difference) / (1000 * 60)
-    );
-    this.seconds = Math.floor(
-      (Math.max(0, maxTimeInMs - difference) % (1000 * 60)) / 1000
-    );
+
+    this.diffDate = new Date();
+    this.diffDate.setMinutes((Math.max(0, maxTimeInMs - differenceInMilliseconds) / (1000 * 60)));
+    this.diffDate.setSeconds((Math.max(0, maxTimeInMs - differenceInMilliseconds) % (1000 * 60)) / 1000);
   }
 
-  private decrementTime() {
-    this.seconds--;
-    if (this.seconds < 0) {
-      this.seconds = 59;
-      this.minutes--;
-    }
-
-    if (this.minutes <= 0 && this.seconds == 0) {
-      this.stopTimer();
-      // TODO: notify backend to delete ticket if finished time and no ticket validation
-      console.log('Time is over');
-      this.timerRunning = false;
-    }
+  ngOnDestroy() {
+    this.interval$.unsubscribe();
   }
-
 }

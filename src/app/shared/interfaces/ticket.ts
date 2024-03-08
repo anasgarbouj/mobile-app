@@ -16,5 +16,6 @@ export interface ITicket {
   ticket_waiting_mode_service: string,
   configuration_info: IConfigurationInfo
   ticket_room_name: string,
-  redirection_link: string
+  redirection_link: string,
+  ticket_validation_date: string
 }

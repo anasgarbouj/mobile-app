@@ -15,7 +15,7 @@ import { SquareRoundedIconButtonComponent } from './components/square-rounded-ic
 import { ServiceCardComponent } from './components/service-card/service-card.component';
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
-import { SearchPipe } from "../shared/filters/search.pipe";
+import { SearchPipe } from "../shared/pipes/search.pipe";
 
 
 @NgModule({
