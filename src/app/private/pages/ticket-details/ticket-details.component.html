@@ -1,6 +1,6 @@
 <ion-content>
     <app-count-down-time-tracker *ngIf="ticket" [ticketId]="ticket.ticket_id" [ticketValidationDate]="ticketLastValidationDate"></app-count-down-time-tracker>
-    <app-ticket *ngIf="ticket" [ticket]="ticket" [canDelete]="true" ticketTitle="Votre ticket">
+    <app-ticket *ngIf="ticket" [ticket]="ticket" [canDelete]="true" ticketTitle="">
     </app-ticket>
     <div class="loader-container" *ngIf="!ticket">
         <app-loader-spinner class="mt-3"></app-loader-spinner>
