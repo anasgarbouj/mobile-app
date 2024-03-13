@@ -1,5 +1,7 @@
 export function errorImageSelect(info: string = ""): string {
     switch (info) {
+        case "TICKET_EXPIRED":
+            return "assets/images/trash.svg"
         case "FAR_KIOSK_GROUP":
             return "assets/images/geolocation.svg"
         case "TICKET_EMAIL_NOT_SENT":

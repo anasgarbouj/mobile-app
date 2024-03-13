@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MessagePopupComponent } from '../components/popups/message-popup/message-popup.component';
+import { ExpiredPopupComponent } from '../components/popups/expired-popup/expired-popup.component';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class PopupService {
     private modalService: NgbModal
   ) { }
 
-  async openPopup(message: string, imageSrc: string = "") {
+  async openPopup(message: string, imageSrc: string = "", isDefault: boolean= true) {
     return new Promise((resolve, reject) => {
 
       if (this.isModalOpen) {
@@ -22,7 +23,7 @@ export class PopupService {
         this.modalQueue.push(() => this.openPopup(message, imageSrc));
       } else {
         // Open modal
-        const modalRef = this.modalService.open(MessagePopupComponent, {
+        const modalRef = this.modalService.open(isDefault ? MessagePopupComponent : ExpiredPopupComponent, {
           centered: true,
           modalDialogClass: 'custom-diag'
         })

@@ -77,11 +77,18 @@ export class RequestInterceptor implements HttpInterceptor {
                                     console.log("interceptor error:", error.status);
                                     // if status is 403
                                     if (error.status === 403) {
-                                        localStorage.removeItem('token')
-                                        const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
-                                        const errorImageSrc = errorImageSelect()
-                                        this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
-                                        this.router.navigateByUrl('/home');
+                                        if (error.error?.info && error.error?.info.includes("FAR_KIOSK_GROUP" , "TICKET_EXPIRED")) {
+                                            this.info = error.error?.info ? error.error.info : "";
+                                            const translatedErrorMessage = this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`)
+                                            const errorImageSrc = errorImageSelect(this.info)
+                                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc, this.info == "TICKET_EXPIRED" ? false : true);    
+                                        } else {
+                                            localStorage.removeItem('token')
+                                            const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
+                                            const errorImageSrc = errorImageSelect()
+                                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+                                            this.router.navigateByUrl('/home');
+                                        }
                                     }
                                     // some urls errors have to be handled mannally
                                     else if (!manualErrorsUrls.some((subUrl: string) => request.url.includes(subUrl))) {

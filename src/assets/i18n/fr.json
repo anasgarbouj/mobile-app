@@ -32,6 +32,7 @@
             "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_NOT_SENT": "Impossible d'envoyer l'e-mail de connexion, réessayez",
             "VIRTUAL_TICKET_PATIENT_EMAIL_ERROR": "Une erreur s'est produite lors de l'envoi de l'email de connexion",
             "TICKET_NOT_FOUND": "Ticket introuvable",
+            "VALIDATE_TICKET_ERROR": "Une erreur s'est produite lors de la validation de votre ticket.",
             "RETRIEVE_TICKET_ERROR": "Une erreur s'est produite lors de la récupération du ticket.",
             "UNKOWN_ERROR": "Une erreur s'est produite, veuillez réessayer plus tard. si l'erreur persiste, contactez l'administrateur",
             "msg1": "Vous êtes trop loin du laboratoire. Veuillez rester à proximité jusqu'à l'heure prévue de votre rendez-vous. \n\n Votre ticket sera automatiquement supprimé si vous n'êtes pas près du laboratoire 15 min avant l'heure prévue."
