@@ -77,10 +77,11 @@ export class RequestInterceptor implements HttpInterceptor {
                                     console.log("interceptor error:", error.status);
                                     // if status is 403
                                     if (error.status === 403) {
-                                        if (error.error?.info && error.error?.info == "TICKET_EXPIRED") {
-                                            const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.TICKET_EXPIRED")
-                                            const errorImageSrc = errorImageSelect("TICKET_EXPIRED")
-                                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc, false);    
+                                        if (error.error?.info && error.error?.info.includes("FAR_KIOSK_GROUP" , "TICKET_EXPIRED")) {
+                                            this.info = error.error?.info ? error.error.info : "";
+                                            const translatedErrorMessage = this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`)
+                                            const errorImageSrc = errorImageSelect(this.info)
+                                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc, this.info == "TICKET_EXPIRED" ? false : true);    
                                         } else {
                                             localStorage.removeItem('token')
                                             const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
