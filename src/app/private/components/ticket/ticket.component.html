@@ -1,28 +1,26 @@
-<ion-content>
-  <div class="custom-container">
-    <p class="title">{{ticketTitle}} :</p>
-    <div class="ticket-container">
-      <p class="ticket-title">{{ticket.configuration_info.configuration_owner}}</p>
-      <p class="ticket-text">{{ticket.configuration_info.configuration_owner_info}}</p>
-      <p class="ticket-text">Vous étes enregistré pour le service</p>
-      <p class="ticket-medium-title">{{ticket.ticket_name_service}}</p>
-      <p class="ticket-text">Vous serez appelé sur le moniteur<br>vidéo avec le numéro de ticket</p>
-      <p class="ticket-big-title" *ngIf="!ticket.ticket_status.includes('CALLED')">
-        {{ticket.ticket_prefix_service}}{{ticket.ticket_number}}
-      </p>
-      <p class="ticket-called-big-title" *ngIf="ticket.ticket_status.includes('CALLED')">
-        {{ticket.ticket_prefix_service}}{{ticket.ticket_number}} > {{ticket.ticket_room_name}}
-      </p>
-      <p class="ticket-text">Votre temps d'attente est estimé a {{ticket.ticket_time_waiting}} min</p>
-      <br>
-      <img src="/assets/images/bars.svg" alt="code a barres">
-      <br>
-      <p class="ticket-text">Votre ticket a été imprimé le<br>{{ticket.ticket_created_date | date:'dd/MM/yyyy' : 'UTC'}}
-        à {{ticket.ticket_created_date | date:'HH:mm' : 'UTC'}}</p>
-      <p class="ticket-small-text">{{ticket.configuration_info.configuration_website}}</p>
-
-    </div>
-    <ion-button class="send_btn" expand="block" *ngIf="canDelete">Supprimer</ion-button>
+<div class="custom-container">
+  <p class="title">{{ticketTitle}} :</p>
+  <div class="ticket-container">
+    <p class="ticket-title">{{ticket.configuration_info.configuration_owner}}</p>
+    <p class="ticket-text">{{ticket.configuration_info.configuration_owner_info}}</p>
+    <p class="ticket-text">Vous étes enregistré pour le service</p>
+    <p class="ticket-medium-title">{{ticket.ticket_name_service}}</p>
+    <p class="ticket-text">Vous serez appelé sur le moniteur<br>vidéo avec le numéro de ticket</p>
+    <p class="ticket-big-title" *ngIf="!ticket.ticket_status.includes('CALLED')">
+      {{ticket.ticket_prefix_service}}{{ticket.ticket_number}}
+    </p>
+    <p class="ticket-called-big-title" *ngIf="ticket.ticket_status.includes('CALLED')">
+      {{ticket.ticket_prefix_service}}{{ticket.ticket_number}} > {{ticket.ticket_room_name}}
+    </p>
+    <p class="ticket-text">Votre temps d'attente est estimé a {{ticket.ticket_time_waiting}} min</p>
+    <br>
+    <img src="/assets/images/bars.svg" alt="code a barres">
+    <br>
+    <p class="ticket-text">Votre ticket a été imprimé le<br>{{ticket.ticket_created_date | date:'dd/MM/yyyy'}}
+      à {{ticket.ticket_created_date | date:'HH:mm'}}</p>
+    <p class="ticket-small-text">{{ticket.configuration_info.configuration_website}}</p>
 
   </div>
-</ion-content>
+  <ion-button class="send_btn" expand="block" *ngIf="canDelete">Supprimer</ion-button>
+
+</div>
