@@ -50,8 +50,11 @@ export class RequestInterceptor implements HttpInterceptor {
             switchMap(([position, loader]) => {
                 loader.present()
                 if (position && (position.lat && position.long)) {
+                    const timezoneOffset = new Date().getTimezoneOffset();    
+                    const timezone = `${timezoneOffset > 0 ? 'M' : 'P'}${(Math.floor(Math.abs(timezoneOffset) / 60)).toString().padStart(2, '0')}:${(Math.abs(timezoneOffset) % 60).toString().padStart(2, '0')}`;                    
                     request = request.clone({
                         params: request.params
+                            .set('timezone_offset', timezone)
                             .set('lat', position.lat?.toString())
                             .set('long', position.long?.toString())
                     });

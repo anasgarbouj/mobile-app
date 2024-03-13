@@ -14,6 +14,7 @@ export class EmailService {
 
   constructor() { }
 
+  // not used anymore
   sendTicketViaEmail(email: IEmail) {
     return this.http.post<IResponse<any>>(`${this.baseUrl}/virtual_ticket/ticket/email/`, email)
   }
