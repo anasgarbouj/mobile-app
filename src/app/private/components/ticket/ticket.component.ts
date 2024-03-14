@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core/dist/lib/translate.service';
 import { take } from 'rxjs';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
-import { errorImageSelect } from 'src/app/shared/types/image-switch';
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-ticket',
