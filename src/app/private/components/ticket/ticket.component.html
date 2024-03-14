@@ -21,6 +21,6 @@
     <p class="ticket-small-text">{{ticket.configuration_info.configuration_website}}</p>
 
   </div>
-  <ion-button class="send_btn" expand="block" *ngIf="canDelete">Supprimer</ion-button>
+  <ion-button class="send_btn" expand="block" *ngIf="canDelete" (click)="deleteTicket()">Supprimer</ion-button>
 
 </div>
