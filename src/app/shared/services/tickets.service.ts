@@ -27,4 +27,8 @@ export class TicketsService {
   createTicketWithAppointment(ticket: IAppointmentTicket) {
     return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/create/schedule-activity/`, ticket)
   }
+
+  deleteTicket(id : number){
+    return this.http.delete<IResponse<any>>(`${this.baseUrl}/virtual_ticket/ticket/delete/${id}/`)
+  }
 }
