@@ -2,9 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
-import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
-import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: 'app-ticket',
@@ -20,8 +18,6 @@ export class TicketComponent implements OnInit {
   constructor(
     private readonly ticketService: TicketsService,
     private _router: Router,
-    private popupService: PopupService,
-    private translate: TranslateService
     ) { }
 
   ngOnInit() { }
