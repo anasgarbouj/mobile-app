@@ -36,7 +36,8 @@
             "VALIDATE_TICKET_ERROR": "An error has occurred while validating your ticket.",
             "UNKOWN_ERROR": "an error occurred, please try again later. if the error persists, contact the administrator",
             "msg1": "You are too far from the laboratory. Please stay nearby until your scheduled appointment time. \n\n Your ticket will be automatically deleted if you are not near the laboratory 15 minutes before the scheduled time",
-            "DELETE_TICKET_ERROR" : "Error deleting ticket. Please try again or contact support."
+            "DELETE_TICKET_ERROR" : "Error deleting ticket. Please try again or contact support.",
+            "NOT_NEARBY" :"You are far from the lab, please make sure to  be in close proximity or else your ticket will be deleted."
         }
     }
 }
