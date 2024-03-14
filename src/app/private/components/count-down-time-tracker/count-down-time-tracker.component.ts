@@ -5,8 +5,11 @@ import {
   ChangeDetectorRef,
   Input,
 } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription, interval, take } from 'rxjs';
+import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketValidationService } from 'src/app/shared/services/ticket-validation.service';
+import { errorImageSelect } from 'src/app/shared/types/image-switch';
 
 @Component({
   selector: 'app-count-down-time-tracker',
@@ -20,10 +23,13 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   private interval$!: Subscription;
   public diffDate: Date = new Date();
   public timerRunning: boolean = false;
+  private isNearby : boolean = false ;
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    private readonly ticketValidationService: TicketValidationService
+    private readonly ticketValidationService: TicketValidationService,
+    private popupService: PopupService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -51,12 +57,22 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
     });
   }
 
-  resetTimer() {
+  async resetTimer() {
     this.interval$.unsubscribe();
-    this.ticketValidationService.sendTicketValidation(this.ticketId).pipe(take(1)).subscribe((res) => {
+    this.ticketValidationService.sendTicketValidation(this.ticketId).pipe(take(1)).subscribe(async (res) => {
       this.diffDate = new Date();
       this.ticketValidationDate = new Date(res.ticket_validation_date+"Z");
       this.checkDateDiff();
+      this.isNearby = res.is_nearby ;
+      if(!this.isNearby){
+        const translatedErrorMessage =this.translate.instant(`POPUP.ERROR_MESSAGES.NOT_NEARBY`)
+        const errorImageSrc = errorImageSelect("");
+        await this.popupService.openPopup(
+          translatedErrorMessage,
+          errorImageSrc
+        );
+      }
+
     });
   }
 
