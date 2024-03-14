@@ -52,8 +52,8 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   }
 
   resetTimer() {
-    this.interval$.unsubscribe();
     this.ticketValidationService.sendTicketValidation(this.ticketId).pipe(take(1)).subscribe((res) => {
+      this.interval$.unsubscribe();
       this.diffDate = new Date();
       this.ticketValidationDate = new Date(res.ticket_validation_date+"Z");
       this.checkDateDiff();
