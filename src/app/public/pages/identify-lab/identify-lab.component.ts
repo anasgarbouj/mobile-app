@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { map, take } from 'rxjs';

@@ -36,7 +36,9 @@
             "RETRIEVE_TICKET_ERROR": "Une erreur s'est produite lors de la récupération du ticket.",
             "UNKOWN_ERROR": "Une erreur s'est produite, veuillez réessayer plus tard. si l'erreur persiste, contactez l'administrateur",
             "msg1": "Vous êtes trop loin du laboratoire. Veuillez rester à proximité jusqu'à l'heure prévue de votre rendez-vous. \n\n Votre ticket sera automatiquement supprimé si vous n'êtes pas près du laboratoire 15 min avant l'heure prévue.",
-            "DELETE_TICKET_ERROR" : "Erreur de suppression du ticket. Veuillez réessayer ou contacter le support."
+            "DELETE_TICKET_ERROR" : "Erreur de suppression du ticket. Veuillez réessayer ou contacter le support.",
+            "NOT_NEARBY" :"Vous êtes loin du laboratoire, assurez-vous d'être à proximité, sinon votre ticket sera supprimé."
+
         }
     }
 }
