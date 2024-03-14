@@ -13,8 +13,11 @@ import { TicketsService } from 'src/app/shared/services/tickets.service';
 })
 export class TicketDetailsComponent implements OnInit {
   ticketId: number | null = null;
-  ticketLastValidationDate: Date = new Date();
+  kiosGroupId: string | null = null;
+
   ticket: any;
+  ticketLastValidationDate: Date = new Date();
+  
   paramMapSubscription: Subscription | null = null;
   queryParamsSubscription: Subscription | null = null;
 
@@ -27,6 +30,10 @@ export class TicketDetailsComponent implements OnInit {
   ) {
     this.paramMapSubscription = this.route.paramMap.subscribe(params => {
       this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
+      this.kiosGroupId = params.get('kioskGroupId')
+      if (this.kiosGroupId) {
+        this.labsService.setKioskGroupId(this.kiosGroupId)
+      }
     });
   }
 
@@ -34,11 +41,10 @@ export class TicketDetailsComponent implements OnInit {
     this.queryParamsSubscription = this.route.queryParams.subscribe(queryParams => {
       if ("token" in queryParams && queryParams['token']) {
         localStorage.setItem('token', queryParams['token'])
-        this.labsService.setKioskGroupId(queryParams['kiosk_group_id'])
         if (this.ticketId) {
-          this.router.navigate([`private/ticket/${this.ticketId}`], { replaceUrl: true })
+          this.router.navigate([`private/ticket/${this.ticketId}/${this.kiosGroupId}`], { replaceUrl: true })
         }
-      } else if (localStorage.hasOwnProperty("token") && this.ticketId) {
+      } else if (localStorage.hasOwnProperty("token") && this.ticketId && this.kiosGroupId) {
         this.getTicket(this.ticketId);
       }
     });

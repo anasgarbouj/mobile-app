@@ -80,7 +80,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                     console.log("interceptor error:", error.status);
                                     // if status is 403
                                     if (error.status === 403) {
-                                        if (error.error?.info && error.error?.info.includes("FAR_KIOSK_GROUP" , "TICKET_EXPIRED")) {
+                                        if (error.error?.info && (error.error?.info === "FAR_KIOSK_GROUP" || error.error?.info === "TICKET_EXPIRED")) {
                                             this.info = error.error?.info ? error.error.info : "";
                                             const translatedErrorMessage = this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`)
                                             const errorImageSrc = errorImageSelect(this.info)
