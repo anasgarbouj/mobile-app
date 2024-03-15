@@ -19,6 +19,9 @@ import { errorImageSelect } from 'src/app/shared/types/image-switch';
 export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   @Input() ticketId: number | null = null;
   @Input() ticketValidationDate: Date = new Date();
+  @Input() ticketNumber : number = 0 ;
+  @Input() servicePrefix : string = "" ;
+
 
   private interval$!: Subscription;
   public diffDate: Date = new Date();
@@ -71,6 +74,9 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
           translatedErrorMessage,
           errorImageSrc
         );
+      }
+      if(res.info ="TICKET_CALLED"){
+        this.popupService.openCalledTicketPopup(this.servicePrefix,this.ticketNumber,res.ticket_room_name)
       }
 
     });
