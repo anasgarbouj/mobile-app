@@ -67,7 +67,10 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
       this.ticketValidationDate = new Date(res.ticket_validation_date+"Z");
       this.checkDateDiff();
       this.isNearby = res.is_nearby ;
-      if(!this.isNearby){
+
+      if(res.info ==="TICKET_CALLED"){
+        this.popupService.openCalledTicketPopup(this.servicePrefix,this.ticketNumber,res.ticket_room_name)
+      }else if(!this.isNearby){
         const translatedErrorMessage =this.translate.instant(`POPUP.ERROR_MESSAGES.NOT_NEARBY`)
         const errorImageSrc = errorImageSelect("");
         await this.popupService.openPopup(
@@ -75,9 +78,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
           errorImageSrc
         );
       }
-      if(res.info ==="TICKET_CALLED"){
-        this.popupService.openCalledTicketPopup(this.servicePrefix,this.ticketNumber,res.ticket_room_name)
-      }
+
 
     });
   }
