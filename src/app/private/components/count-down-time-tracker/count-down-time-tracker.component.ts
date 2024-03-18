@@ -75,7 +75,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
           errorImageSrc
         );
       }
-      if(res.info ="TICKET_CALLED"){
+      if(res.info ==="TICKET_CALLED"){
         this.popupService.openCalledTicketPopup(this.servicePrefix,this.ticketNumber,res.ticket_room_name)
       }
 
