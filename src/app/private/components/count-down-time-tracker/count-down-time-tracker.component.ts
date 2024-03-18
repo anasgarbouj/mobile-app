@@ -19,6 +19,9 @@ import { errorImageSelect } from 'src/app/shared/types/image-switch';
 export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   @Input() ticketId: number | null = null;
   @Input() ticketValidationDate: Date = new Date();
+  @Input() ticketNumber : number = 0 ;
+  @Input() servicePrefix : string = "" ;
+
 
   private interval$!: Subscription;
   public diffDate: Date = new Date();
@@ -64,7 +67,10 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
       this.ticketValidationDate = new Date(res.ticket_validation_date+"Z");
       this.checkDateDiff();
       this.isNearby = res.is_nearby ;
-      if(!this.isNearby){
+
+      if(res.info ==="TICKET_CALLED"){
+        this.popupService.openCalledTicketPopup(this.servicePrefix,this.ticketNumber,res.ticket_room_name)
+      }else if(!this.isNearby){
         const translatedErrorMessage =this.translate.instant(`POPUP.ERROR_MESSAGES.NOT_NEARBY`)
         const errorImageSrc = errorImageSelect("");
         await this.popupService.openPopup(
@@ -72,6 +78,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
           errorImageSrc
         );
       }
+
 
     });
   }

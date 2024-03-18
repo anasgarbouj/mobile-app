@@ -12,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoaderSpinnerComponent } from './components/loader-spinner/loader-spinner.component';
 import { ExpiredPopupComponent } from './components/popups/expired-popup/expired-popup.component';
+import { CalledTicketPopupComponent } from './components/popups/called-ticket-popup/called-ticket-popup.component';
 
 LOAD_WASM().subscribe();
 
@@ -24,6 +25,7 @@ LOAD_WASM().subscribe();
     MessagePopupComponent,
     ExpiredPopupComponent,
     LoaderSpinnerComponent,
+    CalledTicketPopupComponent
   ],
   imports: [
     CommonModule,
