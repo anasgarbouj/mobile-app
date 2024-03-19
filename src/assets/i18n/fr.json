@@ -5,8 +5,8 @@
             "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT": "Le lien de connexion a été envoyé avec succès à votre email.",
             "TICKET_EMAIL_SENT": "Votre ticket demandé a été envoyé à l’e-mail fourni.",
             "SCHEDULE_ACTIVITY_ALREADY_TREATED": "Rendez-vous déjà traité",
-            "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Votre ticket a été créé avec succès, vérifiez votre boîte de réception e-mail pour le vérifier.",
-            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Votre ticket a été créé avec succès, vérifiez votre boîte de réception e-mail pour le vérifier."
+            "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Votre ticket a été créé avec succès. Veuillez vérifier votre boîte de réception e-mail pour le consulter.",
+            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Votre ticket a été créé avec succès. Veuillez vérifier votre boîte de réception e-mail pour le consulter."
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "Une erreur s'est produite, essayez à nouveau",
