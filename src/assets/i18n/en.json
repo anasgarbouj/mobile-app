@@ -7,7 +7,9 @@
             "SCHEDULE_ACTIVITY_ALREADY_TREATED": "Appointment already processed",
             "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it.",
             "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it.",
-            "TICKET_DELETED"   : "Your ticket has been successfully deleted"
+            "TICKET_DELETED"   : "Your ticket has been successfully deleted",
+            "TICKET_SUCCESSFULLY_TREATED":"Your ticket has been successfully processed and you will be automatically redirected to the home page."
+
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "an error has occurred, try again",

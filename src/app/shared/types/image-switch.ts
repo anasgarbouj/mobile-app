@@ -23,6 +23,8 @@ export function successImageSelect(info: string = ""): string {
             return "assets/images/email_sent.svg"
         case "TICKET_DELETED" :
             return "assets/images/valid_check.svg"
+        case "TICKET_SUCCESSFULLY_TREATED":
+            return "assets/images/valid_check.svg"
         default:
             return ""
     }

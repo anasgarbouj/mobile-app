@@ -22,7 +22,7 @@ export class CalledTicketPopupComponent  implements OnInit {
   ngOnInit() {}
 
   public dismiss() {
-    this.activeModel.dismiss()
+    this.activeModel.close()
   }
 
 }
