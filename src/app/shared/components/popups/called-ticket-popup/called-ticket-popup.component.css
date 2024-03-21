@@ -21,6 +21,16 @@
   text-transform: uppercase;
   margin: 0px;
 }
+
+.custom-ticket span {
+  color: #59C318;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 32px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0px;
+}
 .custom-img {
   width: 75px;
   height: auto;

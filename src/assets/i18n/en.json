@@ -6,7 +6,8 @@
             "TICKET_EMAIL_SENT": "The requested ticket was sent to the email address provided.",
             "SCHEDULE_ACTIVITY_ALREADY_TREATED": "Appointment already processed",
             "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it.",
-            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it."
+            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Your ticket has been successfully created, check your email inbox to review it.",
+            "TICKET_DELETED"   : "Your ticket has been successfully deleted"
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "an error has occurred, try again",

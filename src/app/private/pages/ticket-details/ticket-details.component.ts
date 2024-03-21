@@ -17,7 +17,7 @@ export class TicketDetailsComponent implements OnInit {
 
   ticket: any;
   ticketLastValidationDate: Date = new Date();
-  
+
   paramMapSubscription: Subscription | null = null;
   queryParamsSubscription: Subscription | null = null;
 
