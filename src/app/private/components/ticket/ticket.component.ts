@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
+import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
+import { successImageSelect } from 'src/app/shared/types/image-switch';
 
 @Component({
   selector: 'app-ticket',
@@ -18,6 +21,8 @@ export class TicketComponent implements OnInit {
   constructor(
     private readonly ticketService: TicketsService,
     private _router: Router,
+    private popupService : PopupService,
+    private translate: TranslateService,
     ) { }
 
   ngOnInit() { }
@@ -28,6 +33,9 @@ export class TicketComponent implements OnInit {
         console.log("delete ticket ", res);
         if(res.info === "TICKET_DELETED"){
           //delete token from local storage and redirect to email page
+          const translatedMessage = this.translate.instant(`POPUP.SUCCESS_MESSAGES.${res.info}`);
+          const imageSrc = successImageSelect(res.info);
+          this.popupService.openPopup(translatedMessage, imageSrc);
           localStorage.removeItem('token');
           this._router.navigate(['/email']);
         }

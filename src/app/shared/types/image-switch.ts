@@ -21,6 +21,8 @@ export function successImageSelect(info: string = ""): string {
         case "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS":
         case "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT":
             return "assets/images/email_sent.svg"
+        case "TICKET_DELETED" :
+            return "assets/images/valid_check.svg"
         default:
             return ""
     }
