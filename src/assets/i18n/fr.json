@@ -8,6 +8,7 @@
             "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Votre ticket a été créé avec succès, vérifiez votre boîte de réception e-mail pour le vérifier.",
             "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Votre ticket a été créé avec succès, vérifiez votre boîte de réception e-mail pour le vérifier.",
             "TICKET_DELETED"   : "Votre ticket a été supprimé avec succès"
+
         },
         "ERROR_MESSAGES": {
             "DEFAULT": "Une erreur s'est produite, essayez à nouveau",
