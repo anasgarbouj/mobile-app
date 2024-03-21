@@ -10,7 +10,7 @@
       {{ticket.ticket_prefix_service}}{{ticket.ticket_number}}
     </p>
     <p class="ticket-called-big-title" *ngIf="ticket.ticket_status.includes('CALLED')">
-      {{ticket.ticket_prefix_service}}{{ticket.ticket_number}} > {{ticket.ticket_room_name}}
+      {{ticket.ticket_prefix_service}}{{ticket.ticket_number}} <span *ngIf="ticket.ticket_room_name">></span> {{ticket.ticket_room_name}}
     </p>
     <p class="ticket-text">Votre temps d'attente est estimé a {{ticket.ticket_time_waiting}} min</p>
     <br>
