@@ -7,7 +7,7 @@
         Votre ticket a été appelé avec succès, veuillez vous diriger vers la salle indiquée.
       </p>
       <p class="custom-ticket text-justify">
-        {{servicePrefix}}{{ticketNumber}} > {{ticketRoom}}
+        {{servicePrefix}}{{ticketNumber}} <span *ngIf="ticketRoom">></span> {{ticketRoom}}
       </p>
       <br>
   </div>
