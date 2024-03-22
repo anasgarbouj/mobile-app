@@ -44,14 +44,17 @@ export class RequestInterceptor implements HttpInterceptor {
                 },
             });
         }
-
+        // Skip intercepting translation requests and pass them through
+        if (request.url.includes('/assets/i18n/')) {
+          return next.handle(request);
+      }
         // Check geolocation and modify the request
         return forkJoin([from(this.geolocationService.getCurrentPosition()), from(this.loadingController.create())]).pipe(
             switchMap(([position, loader]) => {
                 loader.present()
                 if (position && (position.lat && position.long)) {
-                    const timezoneOffset = new Date().getTimezoneOffset();    
-                    const timezone = `${timezoneOffset > 0 ? 'M' : 'P'}${(Math.floor(Math.abs(timezoneOffset) / 60)).toString().padStart(2, '0')}:${(Math.abs(timezoneOffset) % 60).toString().padStart(2, '0')}`;                    
+                    const timezoneOffset = new Date().getTimezoneOffset();
+                    const timezone = `${timezoneOffset > 0 ? 'M' : 'P'}${(Math.floor(Math.abs(timezoneOffset) / 60)).toString().padStart(2, '0')}:${(Math.abs(timezoneOffset) % 60).toString().padStart(2, '0')}`;
                     request = request.clone({
                         params: request.params
                             .set('timezone_offset', timezone)
@@ -84,7 +87,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                             this.info = error.error?.info ? error.error.info : "";
                                             const translatedErrorMessage = this.translate.instant(`POPUP.ERROR_MESSAGES.${this.info}`)
                                             const errorImageSrc = errorImageSelect(this.info)
-                                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc, this.info == "TICKET_EXPIRED" ? false : true);    
+                                            this.popupService.openPopup(translatedErrorMessage, errorImageSrc, this.info == "TICKET_EXPIRED" ? false : true);
                                         } else {
                                             localStorage.removeItem('token')
                                             const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
