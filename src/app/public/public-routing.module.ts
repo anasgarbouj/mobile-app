@@ -11,6 +11,7 @@ import { PublicComponent } from './public.component';
 import { geolocationGuard } from '../shared/guards/geolocation.guard';
 import { LabGuard } from '../shared/guards/lab.guard';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { PlatformCompatibilityGuard } from '../shared/guards/platform.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: EmailConfirmationComponent
+        component: EmailConfirmationComponent,
+        canActivate: [PlatformCompatibilityGuard]
       },
       {
         path: 'home',

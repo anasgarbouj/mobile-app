@@ -49,6 +49,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
       this.diffDate <=
         new Date(this.ticketValidationDate.getTime() + 15 * 60000)
     ) {
+      this.calculateRemainingTime();
       this.startTimer();
     } else {
       this.diffDate = new Date();
