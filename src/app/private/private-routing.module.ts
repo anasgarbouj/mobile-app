@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrivateComponent } from './private.component';
 import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
 import { AuthGuard } from '../shared/guards/auth.guard';
+import { PlatformCompatibilityGuard } from '../shared/guards/platform.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     children: [
       {
         path: ':ticketId/:kioskGroupId',
-        component: TicketDetailsComponent
+        component: TicketDetailsComponent,
+        canActivate: [PlatformCompatibilityGuard]
       },
       {
         path: 'ticket/:ticketId/:kioskGroupId',

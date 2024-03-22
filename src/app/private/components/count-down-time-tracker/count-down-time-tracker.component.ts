@@ -40,6 +40,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.calculateRemainingTime();
     this.checkDateDiff();
   }
 
