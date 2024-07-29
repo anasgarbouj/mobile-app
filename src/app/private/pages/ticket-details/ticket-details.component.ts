@@ -15,7 +15,7 @@ export class TicketDetailsComponent implements OnInit {
   ticketId: number | null = null;
   kiosGroupId: string | null = null;
 
-  ticket: any;
+  ticket: ITicket | undefined;
   ticketLastValidationDate: Date = new Date();
 
   paramMapSubscription: Subscription | null = null;
@@ -55,6 +55,7 @@ export class TicketDetailsComponent implements OnInit {
       take(1)
     ).subscribe((res) => {
       this.ticket = res.data as ITicket;
+      console.log("Checking ticket data in ticket-details-component",this.ticket);
       this.ticketLastValidationDate = new Date(this.ticket.ticket_validation_date)
       this.cdr.detectChanges();
     })

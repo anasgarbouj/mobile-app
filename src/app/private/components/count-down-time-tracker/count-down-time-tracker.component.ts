@@ -42,6 +42,8 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.calculateRemainingTime();
     this.checkDateDiff();
+    console.log("Check values of ","ticket number :" ,this.ticketNumber, "Service prefix :",this.servicePrefix);
+
   }
 
   checkDateDiff() {
@@ -82,6 +84,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
         this.isNearby = res.is_nearby;
 
         if (res.info === 'TICKET_CALLED') {
+          console.log("Check values of ","ticket number :" ,this.ticketNumber, "Service prefix :",this.servicePrefix);
           await this.popupService.openCalledTicketPopup(
             this.servicePrefix,
             this.ticketNumber,
