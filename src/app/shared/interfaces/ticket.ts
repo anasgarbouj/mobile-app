@@ -1,6 +1,7 @@
 import { IConfigurationInfo } from "./configuration-info";
 
 export interface ITicket {
+servicePrefix: string;
   ticket_id: number,
   ticket_status: string,
   ticket_color_service: string,
