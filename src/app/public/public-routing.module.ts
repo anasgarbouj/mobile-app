@@ -20,38 +20,39 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: EmailConfirmationComponent,
+        component: HomeComponent,
         canActivate: [PlatformCompatibilityGuard]
       },
       {
         path: 'home',
         component: HomeComponent,
-        canActivate: [AuthGuard]
+        canActivate: [geolocationGuard,PlatformCompatibilityGuard]
+        //canActivate: [PlatformCompatibilityGuard]
       },
       {
         path: 'identify-lab',
         component: IdentifyLabComponent,
-        canActivate: [AuthGuard, geolocationGuard]
+        canActivate: [geolocationGuard]
       },
       {
         path: 'labs',
         component: LabsComponent,
-        canActivate: [AuthGuard, geolocationGuard]
+        canActivate: [geolocationGuard]
       },
       {
         path: 'main-app/:configId',
         component: MainPageComponent,
-        canActivate: [AuthGuard, LabGuard, geolocationGuard]
+        canActivate: [LabGuard, geolocationGuard]
       },
       {
         path: 'service-list/:configId',
         component: ServiceListComponent,
-        canActivate: [AuthGuard, LabGuard, geolocationGuard]
+        canActivate: [LabGuard, geolocationGuard]
       },
       {
         path: 'identify-appointment',
         component: AppointmentIdentificationComponent,
-        canActivate: [AuthGuard, LabGuard, geolocationGuard]
+        canActivate: [LabGuard, geolocationGuard]
       }
     ]
   }

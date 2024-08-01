@@ -19,7 +19,6 @@ import { LoadingController } from "@ionic/angular";
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
     info: string = "";
-    token: string | null = null;
 
     constructor(
         private readonly geolocationService: GeolocationService,
@@ -35,19 +34,16 @@ export class RequestInterceptor implements HttpInterceptor {
         request: HttpRequest<any>,
         next: HttpHandler
     ): Observable<HttpEvent<any>> {
-        // add Authorization token if exists
-        this.token = localStorage.getItem("token")
-        if (this.token) {
-            request = request.clone({
-                setHeaders: {
-                    Authorization: this.token,
-                },
-            });
-        }
-        // Skip intercepting translation requests and pass them through
-        if (request.url.includes('/assets/i18n/')) {
+
+        // Skip intercepting translation requests and qr code related requests and pass them through
+        if (
+          request.url.includes('/assets/i18n/') ||
+          request.url.includes('/virtual_ticket/geo-search/scan-qr/') ||
+          request.url.includes('/virtual_ticket/ticket/create/schedule-activity/')
+      ) {
           return next.handle(request);
       }
+
         // Check geolocation and modify the request
         return forkJoin([from(this.geolocationService.getCurrentPosition()), from(this.loadingController.create())]).pipe(
             switchMap(([position, loader]) => {
@@ -89,7 +85,7 @@ export class RequestInterceptor implements HttpInterceptor {
                                             const errorImageSrc = errorImageSelect(this.info)
                                             this.popupService.openPopup(translatedErrorMessage, errorImageSrc, this.info == "TICKET_EXPIRED" ? false : true);
                                         } else {
-                                            localStorage.removeItem('token')
+
                                             const translatedErrorMessage = this.translate.instant("POPUP.ERROR_MESSAGES.FORBIDDEN")
                                             const errorImageSrc = errorImageSelect()
                                             this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
