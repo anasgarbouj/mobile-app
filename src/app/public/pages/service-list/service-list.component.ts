@@ -94,6 +94,7 @@ export class ServiceListComponent implements OnInit {
           translatedMessage,
           ImageSrc
         );
+        console.log("Ticket redirect link"+ticket.redirection_link);
         window.open(ticket.redirection_link, "_self");
       }
     })

@@ -1,11 +1,4 @@
 <ion-content>
-    <app-count-down-time-tracker *ngIf="ticket"
-    [ticketId]="ticket.ticket_id"
-    [ticketValidationDate]="ticketLastValidationDate"
-    [ticketNumber]="ticket.ticket_number"
-    [servicePrefix]="ticket.ticket_prefix_service">
-    </app-count-down-time-tracker>
-
     <app-ticket *ngIf="ticket" [ticket]="ticket" [canDelete]="true" ticketTitle="">
     </app-ticket>
     <div class="loader-container" *ngIf="!ticket">
