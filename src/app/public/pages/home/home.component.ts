@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
     this.geolocationService.getCurrentPosition().then((position) => {
       if (position) {
         console.log('User currently at position :', position);
-        this._router.navigate(['/identify-lab']);
+        this._router.navigate(['/labs']);
       }
     });
   }

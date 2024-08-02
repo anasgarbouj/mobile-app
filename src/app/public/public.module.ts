@@ -16,6 +16,7 @@ import { ServiceCardComponent } from './components/service-card/service-card.com
 import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { SearchPipe } from "../shared/pipes/search.pipe";
+import { MainMenuPageComponent } from './pages/main-menu/main-menu-page.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { SearchPipe } from "../shared/pipes/search.pipe";
         AppointmentIdentificationComponent,
         SquareRoundedIconButtonComponent,
         ServiceCardComponent,
+        MainMenuPageComponent
     ],
     imports: [
         CommonModule,

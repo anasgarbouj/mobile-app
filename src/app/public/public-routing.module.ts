@@ -12,6 +12,7 @@ import { geolocationGuard } from '../shared/guards/geolocation.guard';
 import { LabGuard } from '../shared/guards/lab.guard';
 import { AuthGuard } from '../shared/guards/auth.guard';
 import { PlatformCompatibilityGuard } from '../shared/guards/platform.guard';
+import { MainMenuPageComponent } from './pages/main-menu/main-menu-page.component';
 
 const routes: Routes = [
   {
@@ -20,14 +21,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: HomeComponent,
+        component: MainMenuPageComponent,
+        canActivate: [PlatformCompatibilityGuard]
+      },
+      {
+        path: 'main-menu',
+        component: MainMenuPageComponent,
         canActivate: [PlatformCompatibilityGuard]
       },
       {
         path: 'home',
         component: HomeComponent,
         canActivate: [geolocationGuard,PlatformCompatibilityGuard]
-        //canActivate: [PlatformCompatibilityGuard]
       },
       {
         path: 'identify-lab',
