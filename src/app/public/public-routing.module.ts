@@ -33,6 +33,8 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent,
         canActivate: [geolocationGuard,PlatformCompatibilityGuard]
+        // canActivate: [geolocationGuard]
+
       },
       {
         path: 'identify-lab',

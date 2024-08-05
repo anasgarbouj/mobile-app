@@ -84,9 +84,10 @@ export class TicketDetailsComponent implements OnInit {
     .subscribe(async (res) => {
       this.isNearby = res.is_nearby;
       if (res.info === 'TICKET_CALLED') {
-        console.log("Check values of ","ticket number :" ,this.ticket?.ticket_number, "Service prefix :",this.ticket?.servicePrefix);
+        clearInterval(this.checkTicketInterval);
+        console.log("Check values of ","ticket number :" ,this.ticket?.ticket_number, "Service prefix :",this.ticket?.ticket_prefix_service);
         await this.popupService.openCalledTicketPopup(
-          this.ticket?.servicePrefix,
+          this.ticket?.ticket_prefix_service,
           this.ticket?.ticket_number,
           res.ticket_room_name
         );
@@ -97,6 +98,7 @@ export class TicketDetailsComponent implements OnInit {
           translatedSuccessMessage,
           successImgSrc
         );
+
         this.router.navigate(["/identify-lab"]);
 
       } else if (!this.isNearby) {
@@ -118,6 +120,9 @@ export class TicketDetailsComponent implements OnInit {
     }
     if (this.queryParamsSubscription) {
       this.queryParamsSubscription.unsubscribe();
+    }
+    if (this.checkTicketInterval) {
+      clearInterval(this.checkTicketInterval);
     }
   }
 }
