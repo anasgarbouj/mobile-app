@@ -58,7 +58,7 @@ export class PopupService {
        modalRef.componentInstance.servicePrefix =servicePrefix;
        modalRef.componentInstance.ticketNumber = ticketNumber;
        modalRef.componentInstance.ticketRoom = ticketRoom ;
-       console.log('Opening modal with:', { servicePrefix, ticketNumber, ticketRoom });
+      //  console.log('Opening modal with:', { servicePrefix, ticketNumber, ticketRoom });
 
        modalRef.result.finally(() => {
         this.isModalOpen = false;

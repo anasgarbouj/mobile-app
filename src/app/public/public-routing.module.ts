@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CheckGpsPermissionComponent } from './pages/check-gps-permission/check-gps-permission.component';
-import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 import { LabsComponent } from './pages/labs/labs.component';
-import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
 import { AppointmentIdentificationComponent } from './pages/appointment-identification/appointment-identification.component';
 import { PublicComponent } from './public.component';
 import { geolocationGuard } from '../shared/guards/geolocation.guard';
 import { LabGuard } from '../shared/guards/lab.guard';
 import { MainMenuPageComponent } from './pages/main-menu/main-menu-page.component';
+import { TicketTypeComponent } from './pages/ticket-type/ticket-type.component';
 
 const routes: Routes = [
   {
@@ -28,18 +27,18 @@ const routes: Routes = [
 
       },
       {
-        path: 'identify-lab',
-        component: IdentifyLabComponent,
-        canActivate: [geolocationGuard]
-      },
-      {
         path: 'labs',
         component: LabsComponent,
         canActivate: [geolocationGuard]
       },
       {
-        path: 'main-app',
-        component: MainPageComponent,
+        path: 'labs/:laboName',
+        component: LabsComponent,
+        canActivate: [geolocationGuard]
+      },
+      {
+        path: 'ticket-type',
+        component: TicketTypeComponent,
         canActivate: [LabGuard, geolocationGuard]
       },
       {

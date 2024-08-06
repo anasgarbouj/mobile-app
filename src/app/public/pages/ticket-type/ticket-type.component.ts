@@ -1,19 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-main-page',
-  templateUrl: './main-page.component.html',
-  styleUrls: ['./main-page.component.css'],
+  selector: 'ticket-type-page',
+  templateUrl: './ticket-type.component.html',
+  styleUrls: ['./ticket-type.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageComponent implements OnInit {
+export class TicketTypeComponent implements OnInit {
 
   private configId: number | null = null;
 
   constructor(
     private _router: Router,
-    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +23,7 @@ export class MainPageComponent implements OnInit {
   }
 
   navigateToIdentification() {
-    console.log("identification clicked");
+    // console.log("identification clicked");
     this._router.navigate([`/identify-appointment`])
   }
 }

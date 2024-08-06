@@ -14,6 +14,9 @@ export class HeaderComponent {
   ) { }
 
   naviagteToHome() {
-    this.router.navigateByUrl("/", { replaceUrl: true });
+    this.router.navigate(['/'])
+      .then(() => {
+        window.location.reload();
+      });
   }
 }

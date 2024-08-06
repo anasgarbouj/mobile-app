@@ -3,14 +3,12 @@ import { Injectable } from '@angular/core';
 import { IResponse, PResponse } from '../interfaces/api-response';
 import { ILab } from '../interfaces/Lab';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class LabsService {
-  private kioskGroupIdSubject = new BehaviorSubject<string | null>(null);
   private baseUrl: string = environment.baseUrl;
 
   constructor(

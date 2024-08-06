@@ -10,7 +10,7 @@ export class PublicComponent  implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("test_public")
+    // console.log("test_public")
   }
 
 }

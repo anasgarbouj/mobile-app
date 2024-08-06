@@ -18,9 +18,12 @@ export class AccessDeniedComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.platform.is('mobileweb')) {
-      console.log("Application oppened in mobile browser ..");
-      console.log("redirecting to home page ..");
-      this.router.navigate(['/']);
+      // console.log("Application oppened in mobile browser ..");
+      // console.log("redirecting to home page ..");
+      this.router.navigate(['/'])
+        .then(() => {
+          window.location.reload();
+        });
     }
   }
 

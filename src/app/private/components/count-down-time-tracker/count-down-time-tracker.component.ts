@@ -42,7 +42,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.calculateRemainingTime();
     this.checkDateDiff();
-    console.log("Check values of ","ticket number :" ,this.ticketNumber, "Service prefix :",this.servicePrefix);
+    // console.log("Check values of ","ticket number :" ,this.ticketNumber, "Service prefix :",this.servicePrefix);
 
   }
 
@@ -58,7 +58,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
       this.diffDate = new Date();
       this.diffDate.setMinutes(0);
       this.diffDate.setSeconds(0);
-      console.log('Time is over');
+      // console.log('Time is over');
       this.timerRunning = false;
       this.cdRef.detectChanges();
     }
@@ -84,7 +84,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
         this.isNearby = res.is_nearby;
 
         if (res.info === 'TICKET_CALLED') {
-          console.log("Check values of ","ticket number :" ,this.ticketNumber, "Service prefix :",this.servicePrefix);
+          // console.log("Check values of ","ticket number :" ,this.ticketNumber, "Service prefix :",this.servicePrefix);
           await this.popupService.openCalledTicketPopup(
             this.servicePrefix,
             this.ticketNumber,
@@ -97,7 +97,7 @@ export class CountDownTimeTrackerComponent implements OnInit, OnDestroy {
             translatedSuccessMessage,
             successImgSrc
           );
-          this.router.navigate(["/identify-lab"]);
+          this.router.navigate(["/"]);
 
         } else if (!this.isNearby) {
           const translatedErrorMessage = this.translate.instant(

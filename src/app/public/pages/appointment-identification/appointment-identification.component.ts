@@ -9,6 +9,7 @@ import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
 import { errorImageSelect, successImageSelect } from 'src/app/shared/types/image-switch';
 import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
+import { LabsService } from 'src/app/shared/services/labs.service';
 
 @Component({
   selector: 'app-appointment-identification',
@@ -26,7 +27,8 @@ export class AppointmentIdentificationComponent implements OnInit {
   constructor(
     private readonly ticketServices: TicketsService,
     private popupService: PopupService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private labsService: LabsService
   ) { }
 
   ngOnInit(): void { }
@@ -47,7 +49,7 @@ export class AppointmentIdentificationComponent implements OnInit {
       );
       this.cameraActive = true;
     }
-    console.log(fn, this.cameraActive);
+    // console.log(fn, this.cameraActive);
 
     if (fn === 'stop') {
       action[fn]().subscribe((r: any) => console.log(fn, r), alert);
@@ -61,10 +63,12 @@ export class AppointmentIdentificationComponent implements OnInit {
 
       // TODO: REPETTIVE CODE 1
       const appointmentTicket: IAppointmentTicket = {
-        schedule_activity_filler_appointment_id: event[0].value
+        schedule_activity_filler_appointment_id: event[0].value,
+      kiosk_group_id : this.labsService.getKioskGroupIfValue()
+
       };
 
-      console.log('Appointment Ticket Object ---', appointmentTicket);
+      // console.log('Appointment Ticket Object ---', appointmentTicket);
 
       this.ticketServices
         .createTicketWithAppointment(appointmentTicket)
@@ -102,13 +106,14 @@ export class AppointmentIdentificationComponent implements OnInit {
   }
 
   submitData() {
-    console.log("TEST APPOINTMENT ID ---", this.appointmentId);
+    // console.log("TEST APPOINTMENT ID ---", this.appointmentId);
     // TODO: REPETTIVE CODE 2
     const appointmentTicket: IAppointmentTicket = {
       schedule_activity_filler_appointment_id: this.appointmentId,
+      kiosk_group_id : this.labsService.getKioskGroupIfValue()
     };
 
-    console.log('Appointment Ticket Object ---', appointmentTicket);
+    // console.log('Appointment Ticket Object ---', appointmentTicket);
 
     this.ticketServices
       .createTicketWithAppointment(appointmentTicket)
@@ -130,22 +135,13 @@ export class AppointmentIdentificationComponent implements OnInit {
           }
         },
         error: async (err) => {
-          const info = err.error?.info ? err.error.info : '';
-          const translatedErrorMessage = info
-            ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
-            : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
-          const errorImageSrc = errorImageSelect(info);
-          await this.popupService.openPopup(
-            translatedErrorMessage,
-            errorImageSrc
-          );
           this.stopScanning = false;
         },
       });
   }
 
   ngOnDestroy() {
-    console.log('Closing camera ...');
+    // console.log('Closing camera ...');
     if (this.cameraActive) {
       this.action["stop"]().subscribe({
         next: (res) => {

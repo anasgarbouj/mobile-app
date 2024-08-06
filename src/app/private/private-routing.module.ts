@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateComponent } from './private.component';
 import { TicketDetailsComponent } from './pages/ticket-details/ticket-details.component';
-import { AuthGuard } from '../shared/guards/auth.guard';
-import { PlatformCompatibilityGuard } from '../shared/guards/platform.guard';
 
 const routes: Routes = [
   {

@@ -19,6 +19,6 @@ export class ExpiredPopupComponent {
 
   returnToHome() {
     this.activeModel.close(false)
-    this.router.navigate(['/identify-lab']);
+    this.router.navigate(['/']);
   }
 }

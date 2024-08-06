@@ -13,6 +13,7 @@ import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { errorImageSelect } from 'src/app/shared/types/image-switch';
 import { NgxScannerQrcodeComponent } from 'ngx-scanner-qrcode';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-main-menu-page',
@@ -35,6 +36,7 @@ export class MainMenuPageComponent implements OnInit, OnDestroy {
     private popupService: PopupService,
     private translate: TranslateService
   ) { 
+    localStorage.clear();
   }
 
   ngOnInit() { 
@@ -84,8 +86,13 @@ export class MainMenuPageComponent implements OnInit, OnDestroy {
   }
 
   private processQRCode(event: ScannerQRCodeResult[], scannerId: number) {
+  const url = event[0].value; // http://localhost:4200/gps/test3
+  const parts = url.split('/'); // Split the URL by '/'
+  const testPart = parts[parts.length - 1]; // Get the last part
+  // console.log(testPart);
+    let params = new HttpParams().set('virtual_code', testPart);
     this.labsService
-      .fetchLabsByQrCode(event[0].value)
+      .fetchLabs(params)
       .pipe(
         take(1),
         map((res) => {
@@ -95,8 +102,23 @@ export class MainMenuPageComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           const lab = response.data as ILab[];
-          this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString());
-          this._router.navigate([`/main-app/${lab[0].configuration}`], { replaceUrl: true });
+          // console.log(lab.length);
+          if (lab.length){
+            // console.log("labo found");
+            this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString());
+            this.ngOnDestroy()
+            this._router.navigate([`service-list`]);
+          }
+          else {
+            // console.log("0 labo found")
+            if (scannerId === 1) {
+              this.stopScanning1 = false;
+            } else if (scannerId === 2) {
+              this.stopScanning2 = false;
+            }
+          };
+          
+          
         },
         error: async (err) => {
           const info = err.error?.info ? err.error.info : '';
@@ -115,7 +137,7 @@ export class MainMenuPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('Closing cameras ...');
+    // console.log('Closing cameras ...');
     if (this.cameraActive1) {
       this.scanner1.stop().subscribe({
         next: (res) => {

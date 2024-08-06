@@ -21,22 +21,22 @@ export class CheckGpsPermissionComponent implements OnInit {
   }
 
   async checkGpsPermission() {
-    console.log('Checking GPS permission...');
+    // console.log('Checking GPS permission...');
     this.geolocationService.getCurrentPosition().then((position) => {
-      console.log("position : ",position);
+      // console.log("position : ",position);
       if (position) {
-        console.log('User currently at position :', position);
-        console.log("navigate to /labs");
+        // console.log('User currently at position :', position);
+        // console.log("navigate to /labs");
         this._router.navigate(['/labs']);
-        console.log("complete to /labs");
+        // console.log("complete to /labs");
 
       }
     });
-    console.log('Checking GPS  completed...');
+    // console.log('Checking GPS  completed...');
   }
 
   reload() {
-    console.log('Reloading...');
+    // console.log('Reloading...');
     window.location.reload();
   }
 }

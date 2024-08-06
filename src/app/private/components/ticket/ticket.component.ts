@@ -38,8 +38,8 @@ export class TicketComponent implements OnInit {
           const translatedMessage = this.translate.instant(`POPUP.SUCCESS_MESSAGES.${res.info}`);
           const imageSrc = successImageSelect(res.info);
           this.popupService.openPopup(translatedMessage, imageSrc);
-          localStorage.removeItem('token');
-          this._router.navigate(['/email']);
+          localStorage.clear();
+          this._router.navigate(['/']);
         }
       }
     })

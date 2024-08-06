@@ -18,7 +18,7 @@ class PermissionsService {
     if (id != null) {
       return true
     } else {
-      this.router.navigate(['/identify-lab'])
+      this.router.navigate(['/'])
       return false
     }
   }

@@ -16,8 +16,8 @@ function urlB64ToUint8Array(base64String) {
 }
 
 self.addEventListener('push', function(event) {
-  console.log('[Service Worker] Push Received.');
-  console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+  // console.log('[Service Worker] Push Received.');
+  // console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
 
   const title = 'Xtendtv Virtual Ticket';
   const options = {
@@ -30,7 +30,7 @@ self.addEventListener('push', function(event) {
 });
 
 self.addEventListener('notificationclick', function(event) {
-  console.log('[Service Worker] Notification click Received.');
+  // console.log('[Service Worker] Notification click Received.');
 
   event.notification.close();
 
@@ -40,7 +40,7 @@ self.addEventListener('notificationclick', function(event) {
 });
 
 self.addEventListener('pushsubscriptionchange', function(event) {
-  console.log('[Service Worker]: \'pushsubscriptionchange\' event fired.');
+  // console.log('[Service Worker]: \'pushsubscriptionchange\' event fired.');
   const applicationServerPublicKey = localStorage.getItem('applicationServerPublicKey');
   const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
   event.waitUntil(
@@ -50,7 +50,7 @@ self.addEventListener('pushsubscriptionchange', function(event) {
     })
     .then(function(newSubscription) {
       // TODO: Send to application server
-      console.log('[Service Worker] New subscription: ', newSubscription);
+      // console.log('[Service Worker] New subscription: ', newSubscription);
     })
   );
 });

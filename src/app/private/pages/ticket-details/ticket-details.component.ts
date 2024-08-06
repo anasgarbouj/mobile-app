@@ -35,22 +35,21 @@ export class TicketDetailsComponent implements OnInit {
     private translate: TranslateService,
     private readonly labsService: LabsService
   ) {
-    console.log("this TicketDetailsComponent constructor");
+    // console.log("this TicketDetailsComponent constructor");
     this.route.queryParamMap.subscribe(params => {
       this.ticketService.setTicketId(params.get('ticket'))
-      this.ticketId = this.ticketService.getTicketId()
-      console.log(params.get('token'));
       this.ticketService.setTicketToken(params.get('token'))
+      this.ticketId = params.get('ticket')
       this.getTicket(this.ticketId);
     });
   }
 
   ngOnInit() {
-    this.checkTicketInterval = setInterval(() => {
-      console.log("ticket validation triggered");
-      this.checkTicketCall();
+    // this.checkTicketInterval = setInterval(() => {
+    //   console.log("ticket validation triggered");
+    //   this.checkTicketCall();
 
-    }, 50000);
+    // }, 50000);
   }
 
   getTicket(id: any) {
@@ -58,7 +57,6 @@ export class TicketDetailsComponent implements OnInit {
       take(1)
     ).subscribe((res) => {
       this.ticket = res.data as ITicket;
-      console.log("Checking ticket data in ticket-details-component",this.ticket);
       this.ticketLastValidationDate = new Date(this.ticket.ticket_validation_date)
       this.cdr.detectChanges();
     })
@@ -73,7 +71,7 @@ export class TicketDetailsComponent implements OnInit {
       this.isNearby = res.is_nearby;
       if (res.info === 'TICKET_CALLED') {
         clearInterval(this.checkTicketInterval);
-        console.log("Check values of ","ticket number :" ,this.ticket?.ticket_number, "Service prefix :",this.ticket?.ticket_prefix_service);
+        // console.log("Check values of ","ticket number :" ,this.ticket?.ticket_number, "Service prefix :",this.ticket?.ticket_prefix_service);
         await this.popupService.openCalledTicketPopup(
           this.ticket?.ticket_prefix_service,
           this.ticket?.ticket_number,
@@ -87,7 +85,7 @@ export class TicketDetailsComponent implements OnInit {
           successImgSrc
         );
 
-        this.router.navigate(["/identify-lab"]);
+        this.router.navigate(["/"]);
 
       } else if (!this.isNearby) {
         const translatedErrorMessage = this.translate.instant(

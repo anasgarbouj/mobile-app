@@ -1,9 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject, debounce, take, timer } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject, debounce, map, take, timer } from 'rxjs';
 import { ILab } from 'src/app/shared/interfaces/Lab';
 import { LabsService } from 'src/app/shared/services/labs.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { errorImageSelect } from 'src/app/shared/types/image-switch';
+
 
 @Component({
   selector: 'app-labs',
@@ -12,7 +16,7 @@ import { LabsService } from 'src/app/shared/services/labs.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LabsComponent implements OnInit {
-
+  laboName: any;
   labs: ILab[] = [];
   searchTerm: string = '';
   searchTermSubject = new Subject<string>();
@@ -24,10 +28,12 @@ export class LabsComponent implements OnInit {
   constructor(
     private _router: Router,
     private readonly labsService: LabsService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
+    private popupService: PopupService,
+    private translate: TranslateService,
+    private router: Router,
   ) {
-    // console.log("LabsComponent Constructor");
-    
     this.searchTermSubject
       .pipe(
         debounce(() => timer(1000))
@@ -39,7 +45,15 @@ export class LabsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getLabs();
+    this.route.params.subscribe(params => {
+      this.laboName = params['laboName'] || null;
+
+      if (this.laboName) {
+        this.navigateToIdentificationLabo();
+      } else {
+        this.getLabs();
+      }
+    });
   }
 
   getLabs(page: number = 1) {
@@ -52,8 +66,6 @@ export class LabsComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          // console.log("fetchLabs Response Info : ", response.info);
-          // console.log("fetchLabs Response Data : ", response.data);
           this.labs = response.data as ILab[];
           this.totalItems = response.count;
           this.cdr.detectChanges();
@@ -66,9 +78,49 @@ export class LabsComponent implements OnInit {
   }
 
   navigateToIdentification(item: ILab) {
-    // console.log("clicked on: " + item);
     this.labsService.setKioskGroupId(item.kiosk_group_id.toString())
-    this._router.navigate([`/main-app`]);
+    this._router.navigate([`/ticket-type`]);
+  }
+
+  navigateToIdentificationLabo() {
+    let params = new HttpParams().set('virtual_code', this.laboName);
+    this.labsService
+      .fetchLabs(params)
+      .pipe(
+        take(1),
+        map((res) => {
+          return { info: res.info, data: res.data };
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          const lab = response.data as ILab[];
+          // console.log(lab.length);
+          if (lab.length){
+            // console.log("labo found");
+            this.labsService.setKioskGroupId(lab[0].kiosk_group_id.toString());
+            this.ngOnDestroy()
+            this._router.navigate([`service-list`]);
+          }
+          else {
+            // console.log("0 labo found")
+            this.router.navigate(['/'])
+            .then(() => {
+              window.location.reload();
+            });
+          };
+          
+          
+        },
+        error: async (err) => {
+          const info = err.error?.info ? err.error.info : '';
+          const translatedErrorMessage = info
+            ? this.translate.instant(`POPUP.ERROR_MESSAGES.${info}`)
+            : this.translate.instant('POPUP.ERROR_MESSAGES.DEFAULT');
+          const errorImageSrc = errorImageSelect(info);
+          await this.popupService.openPopup(translatedErrorMessage, errorImageSrc);
+        },
+      });
   }
 
   onSearch(searchTerm: string) {
