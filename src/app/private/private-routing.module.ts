@@ -11,15 +11,10 @@ const routes: Routes = [
     component: PrivateComponent,
     children: [
       {
-        path: ':ticketId/:kioskGroupId',
+        path: 'ticket',
         component: TicketDetailsComponent,
-        canActivate: [PlatformCompatibilityGuard]
-      },
-      {
-        path: 'ticket/:ticketId/:kioskGroupId',
-        canActivate: [AuthGuard],
-        component: TicketDetailsComponent
-      },
+        // canActivate: [PlatformCompatibilityGuard]
+      }
     ]
   }
 ];

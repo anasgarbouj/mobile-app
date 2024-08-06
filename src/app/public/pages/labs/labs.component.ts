@@ -26,12 +26,13 @@ export class LabsComponent implements OnInit {
     private readonly labsService: LabsService,
     private cdr: ChangeDetectorRef
   ) {
+    // console.log("LabsComponent Constructor");
+    
     this.searchTermSubject
       .pipe(
-        debounce(() => timer(3000))
+        debounce(() => timer(1000))
       )
       .subscribe((searchTerm) => {
-        console.log('Search term:', searchTerm);
         this.searchTerm = searchTerm;
         this.getLabs()
       });
@@ -51,8 +52,8 @@ export class LabsComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (response) => {
-          console.log("fetchLabs Response Info : ", response.info);
-          console.log("fetchLabs Response Data : ", response.data);
+          // console.log("fetchLabs Response Info : ", response.info);
+          // console.log("fetchLabs Response Data : ", response.data);
           this.labs = response.data as ILab[];
           this.totalItems = response.count;
           this.cdr.detectChanges();
@@ -65,9 +66,9 @@ export class LabsComponent implements OnInit {
   }
 
   navigateToIdentification(item: ILab) {
-    console.log("clicked on: " + item);
+    // console.log("clicked on: " + item);
     this.labsService.setKioskGroupId(item.kiosk_group_id.toString())
-    this._router.navigate([`/main-app/${item.configuration}`]);
+    this._router.navigate([`/main-app`]);
   }
 
   onSearch(searchTerm: string) {

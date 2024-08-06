@@ -5,8 +5,8 @@
             "VIRTUAL_TICKET_PATIENT_LOGIN_EMAIL_SENT": "Le lien de connexion a été envoyé avec succès à votre email.",
             "TICKET_EMAIL_SENT": "Votre ticket demandé a été envoyé à l’e-mail fourni.",
             "SCHEDULE_ACTIVITY_ALREADY_TREATED": "Rendez-vous déjà traité",
-            "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Votre ticket a été créé avec succès, vérifiez votre boîte de réception e-mail pour le vérifier.",
-            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Votre ticket a été créé avec succès, vérifiez votre boîte de réception e-mail pour le vérifier.",
+            "CREATE_TICKET_WITH_SERVICE_SUCCESS": "Votre ticket a été créé avec succès",
+            "CREATE_TICKET_SCHEDULE_ACTIVITY_SUCCESS": "Votre ticket a été créé avec succès",
             "TICKET_DELETED"   : "Votre ticket a été supprimé avec succès",
             "TICKET_SUCCESSFULLY_TREATED":"Votre ticket a été traité avec succès et vous serez automatiquement redirigé vers la page d'accueil."
 
@@ -14,7 +14,7 @@
         "ERROR_MESSAGES": {
             "DEFAULT": "Une erreur s'est produite, essayez à nouveau",
             "FORBIDDEN": "Désolé, le lien est expiré, veuillez demander un nouveau lien.",
-            "INVALID_ENTRY": "Entrée(s) invalide(s)",
+            "INVALID_ENTRY": "Merci de vérifier si le GPS est activé.",
             "INVALID_EMAIL": "Merci de vérifier votre Email.",
             "UNKNOWN_KIOSK_GROUP": "Désolé, le laboratoire scanné n'existe pas, merci de scanner à nouveau le QR code.",
             "INVALID_KIOSK_GROUP": "Désolé, le laboratoire scannée n'est pas valide, veuillez réessayez plus tard.",

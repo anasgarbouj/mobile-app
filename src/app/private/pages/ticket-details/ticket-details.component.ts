@@ -5,7 +5,6 @@ import { Subscription, take } from 'rxjs';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { TicketValidationService } from 'src/app/shared/services/ticket-validation.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
 import { errorImageSelect, successImageSelect } from 'src/app/shared/types/image-switch';
 
@@ -16,7 +15,7 @@ import { errorImageSelect, successImageSelect } from 'src/app/shared/types/image
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TicketDetailsComponent implements OnInit {
-  ticketId: number | null = null;
+  ticketId: any;
   kiosGroupId: string | null = null;
 
   ticket: ITicket | undefined;
@@ -34,39 +33,28 @@ export class TicketDetailsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private popupService: PopupService,
     private translate: TranslateService,
-    private readonly ticketValidationService: TicketValidationService,
     private readonly labsService: LabsService
   ) {
-    this.paramMapSubscription = this.route.paramMap.subscribe(params => {
-      this.ticketId = params.get('ticketId') ? Number(params.get('ticketId')) : null;
-      this.kiosGroupId = params.get('kioskGroupId')
-      if (this.kiosGroupId) {
-        this.labsService.setKioskGroupId(this.kiosGroupId)
-      }
+    console.log("this TicketDetailsComponent constructor");
+    this.route.queryParamMap.subscribe(params => {
+      this.ticketService.setTicketId(params.get('ticket'))
+      this.ticketId = this.ticketService.getTicketId()
+      console.log(params.get('token'));
+      this.ticketService.setTicketToken(params.get('token'))
+      this.getTicket(this.ticketId);
     });
   }
 
   ngOnInit() {
-    this.queryParamsSubscription = this.route.queryParams.subscribe(queryParams => {
-      if ("token" in queryParams && queryParams['token']) {
-        localStorage.setItem('token', queryParams['token'])
-        if (this.ticketId) {
-          this.router.navigate([`private/ticket/${this.ticketId}/${this.kiosGroupId}`], { replaceUrl: true })
-        }
-      } else if (localStorage.hasOwnProperty("token") && this.ticketId && this.kiosGroupId) {
-        this.getTicket(this.ticketId);
-      }
-    });
-
     this.checkTicketInterval = setInterval(() => {
       console.log("ticket validation triggered");
       this.checkTicketCall();
 
-    }, 5000);
+    }, 50000);
   }
 
-  getTicket(id: number) {
-    this.ticketService.retrieveTicket(id).pipe(
+  getTicket(id: any) {
+    this.ticketService.retrieveTicket({"ticket_id":id, "kiosk_group_id":this.labsService.getKioskGroupIfValue()}).pipe(
       take(1)
     ).subscribe((res) => {
       this.ticket = res.data as ITicket;
@@ -78,8 +66,8 @@ export class TicketDetailsComponent implements OnInit {
 
 
   async checkTicketCall(){
-    this.ticketValidationService
-    .sendTicketValidation(this.ticketId)
+    this.ticketService
+    .sendTicketValidation({"ticket_id":this.ticketId, "kiosk_group_id":this.labsService.getKioskGroupIfValue()})
     .pipe(take(1))
     .subscribe(async (res) => {
       this.isNearby = res.is_nearby;

@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PublicRoutingModule } from './public-routing.module';
-import { HomeComponent } from './pages/home/home.component';
+import { CheckGpsPermissionComponent } from './pages/check-gps-permission/check-gps-permission.component';
 import { LabsComponent } from './pages/labs/labs.component';
 import { LabCardComponent } from './components/lab-card/lab-card.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 import { PublicComponent } from './public.component';
-import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
 import { AppointmentIdentificationComponent } from './pages/appointment-identification/appointment-identification.component';
@@ -22,11 +20,10 @@ import { MainMenuPageComponent } from './pages/main-menu/main-menu-page.componen
 @NgModule({
     declarations: [
         PublicComponent,
-        HomeComponent,
+        CheckGpsPermissionComponent,
         LabsComponent,
         LabCardComponent,
         IdentifyLabComponent,
-        EmailConfirmationComponent,
         MainPageComponent,
         ServiceListComponent,
         AppointmentIdentificationComponent,

@@ -14,8 +14,8 @@ class PermissionsService {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const exists = this.labService.checkKioskGroupId();
-    if (exists) {
+    const id = this.labService.getKioskGroupIfValue;
+    if (id != null) {
       return true
     } else {
       this.router.navigate(['/identify-lab'])

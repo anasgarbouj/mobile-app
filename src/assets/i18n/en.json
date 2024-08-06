@@ -14,7 +14,7 @@
         "ERROR_MESSAGES": {
             "DEFAULT": "an error has occurred, try again",
             "FORBIDDEN": "Sorry, the link has expired, please request a new link.",
-            "INVALID_ENTRY": "Invalid entry(s)",
+            "INVALID_ENTRY": "Merci de vérifier si le GPS est activé.",
             "INVALID_EMAIL": "Please check your Email.",
             "UNKNOWN_KIOSK_GROUP": "Sorry, the laboratory you scanned does not exist. Please scan the QR code again.",
             "INVALID_KIOSK_GROUP": "Sorry, the scanned lab is invalid, please try again later.",

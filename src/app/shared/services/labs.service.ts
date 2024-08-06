@@ -18,15 +18,12 @@ export class LabsService {
   ) { }
 
   setKioskGroupId(id: string) {
-    this.kioskGroupIdSubject.next(id);
+    localStorage.setItem("kiosk_group_id",id)
   }
 
-  getKioskGroupId() {
-    return this.kioskGroupIdSubject.asObservable();
-  }
 
-  checkKioskGroupId(): boolean {
-    return this.kioskGroupIdSubject.value ? true : false;
+  getKioskGroupIfValue(){
+    return localStorage.getItem("kiosk_group_id")
   }
 
   public fetchLabs(params: HttpParams) {

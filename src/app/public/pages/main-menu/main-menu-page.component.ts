@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   OnDestroy,
   OnInit,
@@ -35,9 +34,11 @@ export class MainMenuPageComponent implements OnInit, OnDestroy {
     private readonly labsService: LabsService,
     private popupService: PopupService,
     private translate: TranslateService
-  ) { }
+  ) { 
+  }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
   public handle(action: NgxScannerQrcodeComponent, fn: string, scannerId: number): void {
     const playDeviceFacingBack = (devices: any[]) => {
@@ -135,6 +136,6 @@ export class MainMenuPageComponent implements OnInit, OnDestroy {
 
   navigateToLabs() {
     console.log('Navigating to labs page ...');
-    this._router.navigate(['/home'], { replaceUrl: true });
+    this._router.navigate(['/labs'], { replaceUrl: true });
   }
 }

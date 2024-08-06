@@ -6,6 +6,7 @@ import { Subject, debounce, take, timer } from 'rxjs';
 import { IServiceTicket } from 'src/app/shared/interfaces/service-ticket';
 import { ITicket } from 'src/app/shared/interfaces/ticket';
 import { LabServicesService } from 'src/app/shared/services/lab-services.service';
+import { LabsService } from 'src/app/shared/services/labs.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { TicketsService } from 'src/app/shared/services/tickets.service';
 import { successImageSelect } from 'src/app/shared/types/image-switch';
@@ -32,35 +33,31 @@ export class ServiceListComponent implements OnInit {
     private route: ActivatedRoute,
     private readonly labServicesService: LabServicesService,
     private readonly ticketServices: TicketsService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private labsService: LabsService
   ) {
-    this.searchTermSubject
-      .pipe(
-        debounce(() => timer(3000))
-      )
-      .subscribe((searchTerm) => {
-        console.log('Search term:', searchTerm);
-        this.searchTerm = searchTerm;
-        if (this.configId) {
-          this.getLabRelatedServices(this.configId, this.searchTerm);
-        }
-      });
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.configId = params.get('configId') ? Number(params.get('configId')) : null;
-      if (this.configId) {
-        this.getLabRelatedServices(this.configId);
-      }
+        this.getLabRelatedServices();
     });
+
+    this.searchTermSubject
+      .pipe(
+        debounce(() => timer(1000))
+      )
+      .subscribe((searchTerm) => {
+        // console.log('Search term:', searchTerm);
+        this.searchTerm = searchTerm;
+          this.getLabRelatedServices(this.searchTerm);
+      });
   }
 
-  getLabRelatedServices(configId: number, search: string = "") {
-    console.log(this.configId, "----");
-    this.labServicesService.fetchServices(configId, search).pipe(take(1)).subscribe({
+  getLabRelatedServices(search: string = "") {
+    this.labServicesService.fetchServices(this.labsService.getKioskGroupIfValue(),search).pipe(take(1)).subscribe({
       next: (res: any) => {
-        console.log("FETCH SERVICES :", res);
+        // console.log("FETCH SERVICES :", res);
         this.services = res.data;
         this.cdr.detectChanges();
         return { info: res.info, data: res.data }
@@ -76,6 +73,7 @@ export class ServiceListComponent implements OnInit {
     console.log("clicked on " + item.service_name);
     const serviceTicket: IServiceTicket = {
       service_id: item.service_id,
+      kiosk_group_id : this.labsService.getKioskGroupIfValue()
     };
     console.log("Ticket Object---", serviceTicket);
 

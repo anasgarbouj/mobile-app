@@ -17,19 +17,10 @@ export class MainPageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.configId = params.get('configId') ? Number(params.get('configId')) : null;
-    });
   }
 
   navigateToServiceList() {
-    console.log("no rdv clicked");
-    if (this.configId) {
-      this._router.navigate([`/service-list/${this.configId}`])
-    } else {
-      // TODO: ADD ERROR POPUP
-      console.log("configId value ERROR: ", this.configId);
-    }
+      this._router.navigate([`/service-list`])
   }
 
   navigateToIdentification() {

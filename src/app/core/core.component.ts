@@ -14,10 +14,10 @@ export class CoreComponent {
     private platform: Platform,
     private router: Router
   ) {
-    console.log("Checking browser compatibility..");
-    if (!this.platform.is('mobileweb')) {
-      this.router.navigate(['/access-denied']);
-      console.log("Cannot open app in this device...");
-    }
+    // console.log("Checking browser compatibility..");
+    // if (!this.platform.is('mobileweb')) {
+    //   this.router.navigate(['/access-denied']);
+    //   console.log("Cannot open app in this device...");
+    // }
   }
 }

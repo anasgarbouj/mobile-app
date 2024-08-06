@@ -48,4 +48,27 @@ export class GeolocationService {
       return null;
     }
   }
+  public getCurrentPositionStatic(): Promise<{ lat: number; long: number } | null> {
+    return new Promise((resolve) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            resolve({
+              lat: position.coords.latitude,
+              long: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error requesting User Location:", error);
+            resolve(null); // Return null in case of error
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser');
+        resolve(null); // Return null if geolocation is not supported
+      }
+    });
+  }
+  
+  
 }

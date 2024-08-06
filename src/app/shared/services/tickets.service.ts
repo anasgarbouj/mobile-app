@@ -16,8 +16,30 @@ export class TicketsService {
   private baseUrl = environment.baseUrl;
   private readonly http = inject(HttpClient)
 
-  retrieveTicket(id: number) {
-    return this.http.get<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/retrieve/${id}/`)
+
+  setTicketId(id: any) {
+    localStorage.setItem("ticket_id",id)
+  }
+
+
+  getTicketId(){
+    return localStorage.getItem("ticket_id")
+  }
+
+  setTicketToken(id: any) {
+    localStorage.setItem("token",id)
+  }
+
+
+  getTicketToken(){
+    return localStorage.getItem("token")
+  }
+
+  retrieveTicket(val:any) {
+    return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/retrieve/`,val)
+  }
+  public sendTicketValidation(val:any){
+    return this.http.post<any>(`${this.baseUrl}/virtual_ticket/ticket/validate/`, val)
   }
 
   createTicketWithService(ticket: IServiceTicket) {
@@ -28,7 +50,7 @@ export class TicketsService {
     return this.http.post<IResponse<ITicket>>(`${this.baseUrl}/virtual_ticket/ticket/create/schedule-activity/`, ticket)
   }
 
-  deleteTicket(id : number){
-    return this.http.delete<IResponse<any>>(`${this.baseUrl}/virtual_ticket/ticket/delete/${id}/`)
+  deleteTicket(val:any){
+    return this.http.post<IResponse<any>>(`${this.baseUrl}/virtual_ticket/ticket/delete/`,val)
   }
 }

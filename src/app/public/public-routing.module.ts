@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
+import { CheckGpsPermissionComponent } from './pages/check-gps-permission/check-gps-permission.component';
 import { IdentifyLabComponent } from './pages/identify-lab/identify-lab.component';
 import { LabsComponent } from './pages/labs/labs.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ServiceListComponent } from './pages/service-list/service-list.component';
 import { AppointmentIdentificationComponent } from './pages/appointment-identification/appointment-identification.component';
-import { EmailConfirmationComponent } from './pages/email-confirmation/email-confirmation.component';
 import { PublicComponent } from './public.component';
 import { geolocationGuard } from '../shared/guards/geolocation.guard';
 import { LabGuard } from '../shared/guards/lab.guard';
-import { AuthGuard } from '../shared/guards/auth.guard';
-import { PlatformCompatibilityGuard } from '../shared/guards/platform.guard';
 import { MainMenuPageComponent } from './pages/main-menu/main-menu-page.component';
 
 const routes: Routes = [
@@ -22,18 +19,12 @@ const routes: Routes = [
       {
         path: '',
         component: MainMenuPageComponent,
-        canActivate: [PlatformCompatibilityGuard]
-      },
+        // canActivate: [PlatformCompatibilityGuard]
+      }
+      ,
       {
-        path: 'main-menu',
-        component: MainMenuPageComponent,
-        canActivate: [PlatformCompatibilityGuard]
-      },
-      {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [geolocationGuard,PlatformCompatibilityGuard]
-        // canActivate: [geolocationGuard]
+        path: 'check-gps-permission',
+        component: CheckGpsPermissionComponent,
 
       },
       {
@@ -47,12 +38,12 @@ const routes: Routes = [
         canActivate: [geolocationGuard]
       },
       {
-        path: 'main-app/:configId',
+        path: 'main-app',
         component: MainPageComponent,
         canActivate: [LabGuard, geolocationGuard]
       },
       {
-        path: 'service-list/:configId',
+        path: 'service-list',
         component: ServiceListComponent,
         canActivate: [LabGuard, geolocationGuard]
       },
