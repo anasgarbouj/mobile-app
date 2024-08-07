@@ -30,7 +30,7 @@ export class TicketComponent implements OnInit {
   ngOnInit() { }
 
   deleteTicket(){
-    this.ticketService.deleteTicket({"ticket_id":this.ticket.ticket_id, "kiosk_group_id":this.labsService.getKioskGroupIfValue()}).pipe(take(1)).subscribe({
+    this.ticketService.deleteTicket({"ticket_id":this.ticket.ticket_id, "kiosk_group_id":this.labsService.getKioskGroupIdValue()}).pipe(take(1)).subscribe({
       next : (res) =>{
         console.log("delete ticket ", res);
         if(res.info === "TICKET_DELETED"){

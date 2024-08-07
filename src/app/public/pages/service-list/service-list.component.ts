@@ -55,7 +55,7 @@ export class ServiceListComponent implements OnInit {
   }
 
   getLabRelatedServices(search: string = "") {
-    this.labServicesService.fetchServices(this.labsService.getKioskGroupIfValue(),search).pipe(take(1)).subscribe({
+    this.labServicesService.fetchServices(this.labsService.getKioskGroupIdValue(),search).pipe(take(1)).subscribe({
       next: (res: any) => {
         // console.log("FETCH SERVICES :", res);
         this.services = res.data;
@@ -73,7 +73,7 @@ export class ServiceListComponent implements OnInit {
     console.log("clicked on " + item.service_name);
     const serviceTicket: IServiceTicket = {
       service_id: item.service_id,
-      kiosk_group_id : this.labsService.getKioskGroupIfValue()
+      kiosk_group_id : this.labsService.getKioskGroupIdValue()
     };
     console.log("Ticket Object---", serviceTicket);
 

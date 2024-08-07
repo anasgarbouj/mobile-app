@@ -64,7 +64,7 @@ export class AppointmentIdentificationComponent implements OnInit {
       // TODO: REPETTIVE CODE 1
       const appointmentTicket: IAppointmentTicket = {
         schedule_activity_filler_appointment_id: event[0].value,
-      kiosk_group_id : this.labsService.getKioskGroupIfValue()
+      kiosk_group_id : this.labsService.getKioskGroupIdValue()
 
       };
 
@@ -110,7 +110,7 @@ export class AppointmentIdentificationComponent implements OnInit {
     // TODO: REPETTIVE CODE 2
     const appointmentTicket: IAppointmentTicket = {
       schedule_activity_filler_appointment_id: this.appointmentId,
-      kiosk_group_id : this.labsService.getKioskGroupIfValue()
+      kiosk_group_id : this.labsService.getKioskGroupIdValue()
     };
 
     // console.log('Appointment Ticket Object ---', appointmentTicket);

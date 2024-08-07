@@ -20,16 +20,12 @@ export class LabsService {
   }
 
 
-  getKioskGroupIfValue(){
+  getKioskGroupIdValue(){
     return localStorage.getItem("kiosk_group_id")
   }
 
   public fetchLabs(params: HttpParams) {
     return this.http.get<PResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/filter-labs/`, { params: params });
   }
-
-  public fetchLabsByQrCode(qrCodeValue: string = '') {
-    let params = new HttpParams().set('virtual_code', qrCodeValue);
-    return this.http.get<IResponse<ILab>>(`${this.baseUrl}/virtual_ticket/geo-search/scan-qr/`, { params: params })
-  }
+  
 }

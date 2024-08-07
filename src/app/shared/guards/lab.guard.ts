@@ -14,7 +14,7 @@ class PermissionsService {
   ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const id = this.labService.getKioskGroupIfValue;
+    const id = this.labService.getKioskGroupIdValue;
     if (id != null) {
       return true
     } else {

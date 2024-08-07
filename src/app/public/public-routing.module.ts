@@ -24,7 +24,6 @@ const routes: Routes = [
       {
         path: 'check-gps-permission',
         component: CheckGpsPermissionComponent,
-
       },
       {
         path: 'labs',
@@ -48,6 +47,12 @@ const routes: Routes = [
       },
       {
         path: 'identify-appointment',
+        component: AppointmentIdentificationComponent,
+        canActivate: [LabGuard, geolocationGuard]
+      }
+      ,
+      {
+        path: 'labs/:qrcode',
         component: AppointmentIdentificationComponent,
         canActivate: [LabGuard, geolocationGuard]
       }

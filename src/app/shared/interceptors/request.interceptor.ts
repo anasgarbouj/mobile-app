@@ -45,8 +45,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
     // Skip intercepting translation requests and qr code related requests and pass them through
     if (
-      request.url.includes('/assets/i18n/') ||
-      request.url.includes('/virtual_ticket/geo-search/scan-qr/') 
+      request.url.includes('/assets/i18n/')
       // ||request.url.includes('/virtual_ticket/ticket/create/schedule-activity/')
     ) {
       return next.handle(request);

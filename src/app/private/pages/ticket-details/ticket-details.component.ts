@@ -53,7 +53,7 @@ export class TicketDetailsComponent implements OnInit {
   }
 
   getTicket(id: any) {
-    this.ticketService.retrieveTicket({"ticket_id":id, "kiosk_group_id":this.labsService.getKioskGroupIfValue()}).pipe(
+    this.ticketService.retrieveTicket({"ticket_id":id, "kiosk_group_id":this.labsService.getKioskGroupIdValue()}).pipe(
       take(1)
     ).subscribe((res) => {
       this.ticket = res.data as ITicket;
@@ -65,7 +65,7 @@ export class TicketDetailsComponent implements OnInit {
 
   async checkTicketCall(){
     this.ticketService
-    .sendTicketValidation({"ticket_id":this.ticketId, "kiosk_group_id":this.labsService.getKioskGroupIfValue()})
+    .sendTicketValidation({"ticket_id":this.ticketId, "kiosk_group_id":this.labsService.getKioskGroupIdValue()})
     .pipe(take(1))
     .subscribe(async (res) => {
       this.isNearby = res.is_nearby;
