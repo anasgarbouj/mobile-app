@@ -1,7 +1,0 @@
-{
-  "name": "xtendtv_virtual_ticket_application",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
